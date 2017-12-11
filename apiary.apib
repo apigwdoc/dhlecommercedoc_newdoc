@@ -455,19 +455,8 @@ Recommended sequence for the Label service call is following:
 + Response 202 (application/json)
     + Attributes (ResponseFormat)
 
-+ Response 400  (application/json)
-Bad Request - Invalid URI parameters or querystring
-    + Attributes (ErrResponseFormatError)
-
 + Response 401  (application/json)
-    { "message" : "Unauthorized Access - Invalid token or Authentication Header parameter" }
-
-+ Response 429  (application/json)
-    { "message" : "Too many requests in given amount of time"}
-
-+ Response 503  (application/json)
     + Attributes (ErrResponseFormatError)
-    { "message" : "Service Unavailable"}
 
 ## Order Manifest [/v1/Shipping/manifest]
 **Manifesting** (sometimes refered to as *Close-out*) describes the process of transmitting your final shipments to us before the physical transfer of the shipments.<br/><br/>
@@ -516,29 +505,24 @@ Bad Request - Invalid URI parameters or querystring
 
 # Group Fulfillment
 The Fulfillment API provides you an interface for the order management operations.
-___
+
 **API Authentication:** All API operations require `Access Token` to be passed in the Authorization Header for each request. The token type is an OAuth 2.0 Bearer token.<br/><br/> 
 >**Note:** *[here](#reference/authentication) you can find more information how to to retrive the `Access Token`.* 
 
-The Access Token is valid for 5h so it is not necessary to request the token for each request. Developers should implement the client application in a way that the token will be requested again only after it expires.
-<br/><br/> 
-**Access Token Lifecycle:** When you recieve an Access Token, it is valid for defined amount of time (5h). During this time you don't have to request new token per each request, but you can simply reuse the same token to access API resources, until the token expires.When you recieve an Access Token, it is valid for defined amount of time (5h). During this time you don't have to request new token per each request, but you can simply reuse the same token to access API resources, until the token expires. The invalid token or token expiration will be indicated by HTTP Status Code 401 Unauthorized, then your application has to request new Access Token.
+**Access Token Lifecycle:** When you recieve an Access Token, it is valid for defined amount of time (5h).<br/><br/> 
+During this time you don't have to request new token per each request, but you can simply reuse the same token to access API resources, until the token expires.<br/><br/> 
 The invalid token or token expiration will be indicated by HTTP Status Code 401 Unauthorized, then your application has to request new Access Token.
-___
-**Required Parameters:** The parameters could be mandatory, optional and conditionally-optional. The conditionally-optional parameters are marked as optional parameters, where at least one or a combination has to be part of the API call. The specific list of conditionally-optional parameters will be highlighted in a table in each particular API operation section.
 
-| Parameter        | Type           | Description  |Example  |
-| -----------------|----------------|--------------|---------|
-`XXX`        | XXX                  | XXX       |XXX        |
-___
-**Available API JSON Schemas:**
-Here you can download full archive of the JSON Schemas for the Fulfillment API.
-| JSON Schema     | Description    |URL Link  |
-| ----------------|----------------|----------|
-`Request Schema`  | XXX            | XXX      |
+**API Parameters:** The parameters could be mandatory, optional and conditionally-optional. The conditionally-optional parameters are marked as optional parameters, where at least one or a combination has to be part of the API call. <br/><br/>
+The specific list of conditionally-optional parameters will be highlighted in a table in each particular API operation section.
 
-## Items [/v1/fulfillment/items]
-INTROTEXT
+**API JSON Schemas:** Here you can download full archive of the JSON Schemas for the Fulfillment API.
+___
+| Schemas to download | Description    | URL Link  |
+| --------------------|----------------|-----------|
+`Request Schemas`     | Request schemas description           | [download](https://api-qa.dhlecommerce.com/efulfillment/v1/schema/request)       |
+`Response Schemas`    | Response schemas description           | [download](https://api-qa.dhlecommerce.com/efulfillment/v1/schema/response)       |
+`API definition`      | API definition in swagger 2.0           | [download](https://api-qa.dhlecommerce.com/efulfillment/v1/swagger)       |
 ___
 **Required Parameters:** 
 
@@ -547,26 +531,129 @@ ___
 `XXX`        | XXX                  | XXX       |XXX        |
 
 ___
+**Available API calls:**
+INTRODUCTIONTEXT2
+
+## Items [/v1/fulfillment/item]
 
 **Implementation Examples:** 
 - *Add a new product to your portfolio*: XXXXX
 - *Change parameters within a selected item*: XXXXX
 - *Get the latest list of items managed*: XXXXX
-
 ___
 **Available API calls:**
 INTRODUCTIONTEXT2
 
-### Create item [GET]
-+ Response 201 (application/json)
+### Create item [POST]
+The API operation for Create Item.
 
-### Update item [POST]
-+ Response 201 (application/json)
++ Headers 
+    Authorization: Bearer [place OAuth access token here, without brackets]
+    Content-Type: application/json
 
-### Get item list [UPDATE]
-+ Response 201 (application/json)
++ Request (application/json)
+    + Attributes ()
 
-## Group Sales Orders [/v1/fulfillment/sales_orders/]
++ Response 201 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 400 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 401 (application/json)
+    + Attributes (ResponseFormat)
+    
++ Response 421 (application/json)
+    + Attributes (ResponseFormat)    
+
++ Response 429 (application/json)
+    + Attributes (ResponseFormat) 
+    
++ Response 503 
+    + Attributes (ResponseFormat)
+    
+
+## List [/v1/fulfillment/item/list/{accountNumber}{?itemId,status,page}]
+
+### Get Item list [GET]
+The API operation for Get Item List. The optional parameters of the API operation are conditional. Following combinations of are allowed, when calling the API operation.
+
+|Input Parameters   |Returned Values|
+|-------------------|---------------|
+|accountNumber      |Returns items by account number|
+|accountNumber && itemId|Returns item by account number and item id|
+|accountNumber && status && page|Returns page with filtered items by status and account number. **Page is optional.**|
+
++ Headers 
+    Authorization: Bearer [place OAuth access token here, without brackets]
+    Content-Type: application/json
+    
++ Parameters 
+    + accountNumber :  (string, required)
+        Account Number
+    + itemId : (string, optional)
+        Item Id
+    + status : (enum[string], optional)
+        Item Status
+        + Members
+            + Reserved
+            + Cancelled
+            + Scheduled
+            + Back Ordered
+            + Released
+            + Sent to Node
+            + Shipped
+            + Held
+            + Ready for WMS
+            + Waved
+            + Picked
+            + Manifested
+            + Created
+    + page : (string, optional)
+        Page
+
++ Response 200 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 400 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 401 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 429 (application/json)
+    + Attributes (ResponseFormat) 
+    
++ Response 503 (application/json)
+    + Attributes (ResponseFormat)
+
+## Update [/v1/fulfillment/item/update]
+### Get Item list [POST]
+The API operation for Update Item
+
++ Headers 
+    Authorization: Bearer [place OAuth access token here, without brackets]
+    Content-Type: application/json
+
++ Request (application/json)
+    + Attributes ()
+    
++ Response 200 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 400 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 401 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 429 (application/json)
+    + Attributes (ResponseFormat) 
+    
++ Response 503 (application/json)
+    + Attributes (ResponseFormat)
+
+## Sales Orders [/v1/fulfillment/order/]
 INTROTEXT
 ___
 **Required Parameters:** 
@@ -584,132 +671,308 @@ ___
 **Available API calls:**
 INTRODUCTIONTEXT2
 
-### Create sales orders [POST]
-+ Response 201 (application/json)
+### Create Sales Order [POST]
+The API operation for Create Sales Order.
 
-### Get sales order list [GET]
-+ Response 201 (application/json)
-### Udpate sales order status [UPDATE]
++ Request (application/json)
+    + Attributes ()
++ Headers 
+    Authorization: Bearer [place OAuth access token here, without brackets]
+    Content-Type: application/json
+    
++ Response 202 (application/json)
+    + Attributes (ResponseFormat)
 
-+ Response 201 (application/json)
++ Response 400 (application/json)
+    + Attributes (ResponseFormat)
 
-## Purchase Orders [/v1/fulfillment/purchase_orders/]
-INTROTEXT
-___
-**Required Parameters:** 
++ Response 401 (application/json)
+    + Attributes (ResponseFormat)
 
-| Parameter        | Type           | Description  |Example  |
-| -----------------|----------------|--------------|---------|
-`XXX`        | XXX                  | XXX       |XXX        |
++ Response 429 (application/json)
+    + Attributes (ResponseFormat) 
+    
++ Response 503 (application/json)
+    + Attributes (ResponseFormat)
 
-___
+## Back Sales Order List [/v1/fulfillment/order/backorderlist/{accountNumber}{?accountNumber,dateFrom,dateTo,page}]
 
-**Implementation Examples:** 
-- *Add a new order that is supposed to be fulfilled*: XXXXX
-- *Get the latest list of sales orders*: XXXXX
+### Get Back Sales Order List [GET]
+
+The API operation for Get Back Sales Order List
+The optional parameters of the API operation are conditional. 
+Following combinations of are allowed, when calling the API operation.
+|Input Parameters                             |Returned Values|
+|---------------------------------------------|---------------|
+|accountNumber                                |Returns all backordered orders|
+|accountNumber && dateFrom && dateTo && page  |Returns page of backordered orders for given date range. **Page, dateFrom and dateTo are optional.**|
+
++ Headers 
+    Authorization: Bearer [place OAuth access token here, without brackets]
+    Content-Type: application/json
+    
++ Parameters 
+    + accountNumber :  (string, required)
+        Account Number
+    + dateFrom : (string, optional)
+        Date From
+    + dateTo : (string, optional)
+        Date To
+    + page : (string, optional)
+        Page    
+
++ Response 200 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 400 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 401 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 429 (application/json)
+    + Attributes (ResponseFormat) 
+    
++ Response 503 (application/json)
+    + Attributes (ResponseFormat)
+
+## Back Sales Order List [/v1/fulfillment/order/acknowledgement/{accountNumber}/{orderNumber}/{orderSubmissionId}]
+
+### Sales Order Acknowledgement [GET]
+The API operation for Get Sales Order Acknowledgement
++ Headers 
+    Authorization: Bearer [place OAuth access token here, without brackets]
+    Content-Type: application/json
+    
++ Parameters 
+    + accountNumber :  (string, required)
+        Account Number
+    + orderNumber :  (string, required)
+        Sales Order Number
+    + orderSubmissionId :  (string, required)
+        Sales Order Submission Id   
+
++ Response 200 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 400 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 401 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 429 (application/json)
+    + Attributes (ResponseFormat) 
+    
++ Response 503 (application/json)
+    + Attributes (ResponseFormat)
+
+## Sales Order Status [/v1/fulfillment/order/status/{accountNumber}{?accountNumber}]
+
+### Sales Order Status [GET]
+The API operation for Get Sales Order Status
+The optional parameters of the API operation are conditional. 
+Following combinations of are allowed, when calling the API operation. 
+|Input Parameters                     |Returned Values|
+|-------------------------------------|---------------|
+|orderNumber                          |Returns status of given order|
+|status && page                      |Returns page with filtered orders by status. **Page is optional.**|\n|dateFrom && status && page\t          |Returns page with filtered orders from defined date. **Status and page are optional.**|\n|dateTo && status && page\t            |Returns page with filtered orders by status and to defined date. **Status and page are optional.**|\n|dateFrom && dateTo && status && page\t|Returns page with filtered orders by status for defined date range. **Status and page are optional.**|\n"
+
++ Headers 
+    Authorization: Bearer [place OAuth access token here, without brackets]
+    Content-Type: application/json
+    
++ Parameters 
+    + accountNumber :  (string, required)
+        Account Number
+    + orderNumber :  (string, optional)
+        Sales Order Number
+    + dateFrom : (string, optional)
+        Date From
+    + dateTo : (string, optional)
+        Date To
+    + status : (enum[string], optional)
+        Status
+        + Members
+            + Reserved
+            + Cancelled
+            + Scheduled
+            + Back Ordered
+            + Released
+            + Sent to Node
+            + Shipped
+            + Held
+            + Ready for WMS
+            + Waved
+            + Picked
+            + Manifested
+            + Created
+    + page : (string, optional)
+        Page   
+
++ Response 200 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 400 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 401 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 429 (application/json)
+    + Attributes (ResponseFormat) 
+    
++ Response 503 (application/json)
+    + Attributes (ResponseFormat)
+
+## Sales Order Details [/v1/fulfillment/order/details/{accountNumber}/{orderNumber}]
+The API operation for Get Sales Order Details
++ Headers 
+    Authorization: Bearer [place OAuth access token here, without brackets]
+    Content-Type: application/json
+    
++ Parameters 
+    + accountNumber :  (string, required)
+        Account Number
+    + orderNumber :  (string, required)
+        Sales Order Number
+
++ Response 200 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 400 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 401 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 429 (application/json)
+    + Attributes (ResponseFormat) 
+    
++ Response 503 (application/json)
+    + Attributes (ResponseFormat)
+
+## Purchase Order [/v1/fulfillment/purchaseorder]
+
+### Create Purchase Order [POST]
+The API operation for Create Purchase Order.
+
++ Headers 
+    Authorization: Bearer [place OAuth access token here, without brackets]
+    Content-Type: application/json
+    
++ Request (application/json)
+    + Attributes (RequestFormat)
+
++ Response 200 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 400 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 401 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 429 (application/json)
+    + Attributes (ResponseFormat) 
+    
++ Response 503 (application/json)
+    + Attributes (ResponseFormat)
+
+##  Purchase Order Acknowledgement [/v1/fulfillment/purchaseorder/acknowledgement/{accountNumber}/{orderNumber}/{orderSubmissionId}]
+The API operation for Get Purchase Order Acknowledgement
+
+Purchase Order Acknowledgement
+### Get Purchase Order Acknowledgement [GET]
+The API operation for Get Purchase Order Acknowledgement
++ Headers 
+    Authorization: Bearer [place OAuth access token here, without brackets]
+    Content-Type: application/json
+    
++ Parameters 
+    + accountNumber :  (string, required)
+        Account Number
+    + orderNumber :  (string, required)
+        Sales Order Number
+    + orderSubmissionId :  (string, required)
+        Purchase Order Submission Id 
+
++ Response 200 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 400 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 401 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 429 (application/json)
+    + Attributes (ResponseFormat) 
+    
++ Response 503 (application/json)
+    + Attributes (ResponseFormat)
+
+##  Cancel Purchase Order [/v1/fulfillment/purchaseorder/cancel]
+
+### Cancel Purchase Order [POST]
+The API operation for Cancel Purchase Order
++ Headers 
+    Authorization: Bearer [place OAuth access token here, without brackets]
+    Content-Type: application/json
+    
++ Request (application/json)
+    + Attributes (RequestFormat)
+
++ Response 200 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 400 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 401 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 429 (application/json)
+    + Attributes (ResponseFormat) 
+    
++ Response 503 (application/json)
+    + Attributes (ResponseFormat)
+
+## Purchase Order Details [/v1/fulfillment/purchaseorder/details/{accountNumber}/{orderNumber}]
+### Purchase Order Details [POST]    
+The API operation for Get Purchase Order Details.
+
++ Headers 
+    Authorization: Bearer [place OAuth access token here, without brackets]
+    Content-Type: application/json
+    
++ Parameters 
+    + accountNumber :  (string, required)
+        Account Number
+    + orderNumber :  (string, required)
+        Sales Order Number
+    + orderSubmissionId :  (string, required)
+        Purchase Order Submission Id 
+
++ Request (application/json)
+    + Attributes (RequestFormat)        
+
++ Response 200 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 400 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 401 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 429 (application/json)
+    + Attributes (ResponseFormat) 
+    
++ Response 503 (application/json)
+    + Attributes (ResponseFormat)
 
 
-___
-**Available API calls:**
-INTRODUCTIONTEXT2
-
-### Create purchase orders [POST]
-+ Response 201 (application/json)
-
-### Cancel purchase order [DELETE]
-
-+ Response 201 (application/json)
-
-### Update purchase order status [UPDATE]
-
-+ Response 201 (application/json)
-
-
-
-## Return Order [/v1/fulfillment/return/]
-INTROTEXT
-___
-**Required Parameters:** 
-
-| Parameter        | Type           | Description  |Example  |
-| -----------------|----------------|--------------|---------|
-`XXX`        | XXX                  | XXX       |XXX        |
-
-___
-
-**Implementation Examples:** 
-- *XXX*: XXXXX
-- *XXX*: XXXXX
-
-
-___
-**Available API calls:**
-INTRODUCTIONTEXT2
-
-### Create return order [POST]
-+ Response 201 (application/json)
-
-### Cancel return order [DELETE]
-
-+ Response 201 (application/json)
-
-### Update return order status [UPDATE]
-
-+ Response 201 (application/json)
-
-
-
-## Shipments [/v1/fulfillment/shipments/]
-INTROTEXT
-___
-**Required Parameters:** 
-
-| Parameter        | Type           | Description  |Example  |
-| -----------------|----------------|--------------|---------|
-`XXX`        | XXX                  | XXX       |XXX        |
-
-___
-**Implementation Examples:** 
-- *XXX*: XXXXX
-- *XXX*: XXXXX
-___
-**Available API calls:**
-INTRODUCTIONTEXT2
-
-### Create shipment [POST]
-+ Response 201 (application/json)
-
-### Cancel shipment [DELETE]
-+ Response 201 (application/json)
-
-### Update shipment status [UPDATE]
-
-+ Response 201 (application/json)
-
-
-
-## Stock [/v1/fulfillment/stock/]
-INTROTEXT
-___
-**Required Parameters:** 
-
-| Parameter        | Type           | Description  |Example  |
-| -----------------|----------------|--------------|---------|
-`XXX`        | XXX                  | XXX       |XXX        |
-
-___
-**Implementation Examples:** 
-- *XXX*: XXXXX
-- *XXX*: XXXXX
-___
-**Available API calls:**
-INTRODUCTIONTEXT2
-
-### Get Stock information  [GET]
-+ Response 201 (application/json)
-
-### Update stock [POST]
-+ Response 201 (application/json)
 
 # Data Structures
 
