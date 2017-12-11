@@ -1,0 +1,874 @@
+FORMAT: 1A
+HOST: https://czchoapint222.prg-dc.dhl.com:6443
+AUTHOR: DHL eCommerce
+
+# NEW Global DHL eCommerce API
+Welcome at the global DHL eCommerce API. <br/><br/>
+To find out more about the logistic services we offer, please check out [DHL eCommerce Products](http://www.dhl.com/eCommerce). <br/><br/>
+To [Sign up](#introduction/access-&-sign-up) for becoming a DHL eCommerce API consumer and receive your credentials, please contact us via: [integration@dhl.com](mailto:Integration@dhl.com). 
+Ideally provide your DHL eCommerce customer account number.<br/><br/>
+You can contact us [here](#introduction/access-&-sign-up) for more details.<br/><br/> 
+
+To find out more about **alternative integration channels**, as for example our file-based EDI integrations for high volume data exchange or the multiple third party solutions, we offer towards typical ERP systems, Webshop systems, etc,. please check out our [global integration website](http://www.dhl.com/integration).
+___
+
+
+## About this API
+DHL eCommerce provides this **global API** to enable open integration channels for our customers, clients and partners. <br/><br/>
+The API is provided as **REST API** using **OAuth 2.0** for authentication and authorization and **JSON format** for request and response messages.<br/><br/>
+The API uses **HTTPS (over SSL) protocol**, the HTTP GET is used to retrieve data and HTTP POST is used to create, update or delete data. 
+<br/>
+    
+    >**Note:** *Usage of HTTP PUT and DELETE is not enabled.*
+
+The **service endpoints** available via this APIs have been build along side your eCommerce experience as underneath graphic indicates:
+![(TO BE added)The eCommerce journey](http://utzfu.synology.me/DHL/APIARY/overview.png)
+___
+
+## Get Started
+1. [Sign up](#introduction/access-&-sign-up) for becoming a DHL eCommerce API consumer and receive your credentials. <br/><br/>
+    >**Note:** *Please provide your DHL eCommerce customer account number in your sign up request.*
+2. After signing up [Get Your Access Token](#reference/authentication).
+3. Understand our [Environments](#introduction/available-environments) setup.
+4. Construct your REST API request, using our access-&-sign-up API reference documenation for existing API service domains [Shipping](#reference/shipping) and [Fulfillment](#reference/fulfillment).
+
+
+## Available environments
+DHL eCommerce provides **Production** environment as well as **Sandbox** for development and testing.<br/><br/> 
+Access to both environments is managed and you have to use OAuth 2.0 `Access Token`, when accessing the API resources. <br/><br/>
+Access Token could be requested via [Get Access Token API](#introduction/access-&-sign-up), where you have to provide your API credentials: `Client_ID` and `Client_Secret`. 
+
+>**Note:** *You will have different identities for Production and Sandbox environment.*
+
+
+### Sandbox
+You can use the Sandbox environment for development and testing purpose.<br/><br/>
+**Sandbox Base URL:** `https://api-qa.dhlecommerce.com`<br/><br/>
+Sandbox provides the same APIs as Production environment. 
+>**Note:** *The APIs exposed on Sandbox could be called directly from this documentation.*
+
+For ease of access you can leverage the default API credentials:<br/>
+ 
+`Client_id: e9ed82a8-4237-4185-8e36-47264aa9e718`
+
+`Client_secret: b1ed1bfa-689b-4d5b-bbf2-39dde64ccb64`<br/>
+
+which could be used to request Access Token for the Sandbox APIs. 
+
+![TEST- or SANDBOX ENVIRONMENT](https://api-qa.dhlecommerce.com/apidoc/images/sandbox.png)
+>**Note:** *Please have in mind that these credentials have more strict rate limits applied, therefore you can experience 429 HTTP Status code.*
+
+### Production
+For production purpose you have to use Production environment.<br/><br/>
+**Production Base URL:** `https://api.dhlecommerce.com` <br/>
+
+Production evironment hosts the same APIs as Sandbox, but with different base URL.
+
+![PRODUCTION ENVIRONMENT](https://api-qa.dhlecommerce.com/apidoc/images/prod.png)
+>**Important note:** *Please keep in mind that Sandbox credentials does not apply for production environment and you have to use production set of credentials provided to you during onboarding.*
+
+### Rate limits
+
+For all API calls there is a rate limit applied.<br/><br/> 
+Default limit is set to for each client to **5 requests** per second per API call. <br/><br/>
+When the limit is reached you will recieve an HTTP Status code 429: Too many requests.
+
+**HTTP Response Status Code 429**
+
+````
+{
+"reasons": [{"msg" : "Too many requests in a given amount of time"}],
+"details": {
+            "msgId": "Id-135725589d........."
+            }
+}
+````
+___
+
+## Access & Sign up
+To request access for our Production and Sandbox environments you have to sign up.<br/> 
+
+To sign up with your DHL eCommerce `customer account number` and obtain obtain the credentials please contact us directly via [api.ecom@dhl.com](mailto:api.ecom@dhl.com). 
+
+>**Note:** *DHL eCommerce `customer account number` is required for the API sign up processs. To get your `customer account number` please get in touch with your regional DHL eCommerce sales organisation.*
+
+
+>**Note:** *The Sandbox environment is accessible directly from this documentation page, where you can leverage the predefined test requests in [Reference](#reference/authentication) section.*
+
+___
+
+## Versioning & Release notes
+Here on this page, the latest version of our global DHL eCommerce API is beeing documented. Currently this is **V.1**. Older versions do not yet exist - as soon as a newer version is published, the release notes as well as the links to older version is shown underneath.
+___
+
+## API Health (!TO BE CREATED YET!)
+We as DHL eCommerce constantly monitor our APIs performance to keep it up all the time and with the maximum response times. In case there is the unlikely event of a downtime or a non perfect reponse time, please check the underneath status on single call level:
+
+| API GROUP             | STATUS    | UPTIME        |RESPONSE TIME  |
+| ----------------------|-----------|---------------|---------------|
+**Authenthification**   |  ![AUTH](http://utzfu.synology.me/DHL/APIARY/up.png)   |    98.4%      |122ms          |
+**Shipping**            |  ![SHIP](http://utzfu.synology.me/DHL/APIARY/slow.png)    |    100%       |1232ms         |
+**Fullfillment**        |  ![eFF](http://utzfu.synology.me/DHL/APIARY/up.png)    |    99.32%     |133ms          |
+**VAS**                 |  ![VAS](http://utzfu.synology.me/DHL/APIARY/down.png)      |    0%         |NA             |
+
+___
+
+## Help, Links & Support (!TO BE MADE SHORTER!)
+Coding against logistic APIs is not always fun - we know! To ensure you the best possible support, we developed a variety of options for you, to resolve any issues experienced. Underneath, we give you an overview on where you might find help for any possible question comming up on your side of the screen: 
+- *Products and services* offered by DHL eCommerce and where to get more information on if they are available at your location, what they offer you and your customers etc. via: http://www.dhl.com/eCommerce 
+- *Glossary & Logistic terms* can be confusing too - so get a good, searchable overview on all the specific terms we use, please check the consolidated Glossary of DHL eCommerce here: http://www.dhl.com/integration-glossary
+- *Frequently asked questions* on our API are listed on http://www.dhl.com/integration-faqs - so please check if other user might have had the same question as you before.
+- *Integration Alternatives* might come into place if you identify integration requirements on your side that can not be sufficiently covered by our API. So you might experience extremely growing shipping volumes that make you favor more efficienct file based integrations. DHL eCommerce also offers webbased user interfaces to manage and process your orders and shipments as well as a variety of standard integrations into the most commonly used webshop systems. If you need more information on those alternatives, check out our integration page via: http://www.dhl.com/integration. Furthermore, if you are a customer exclusivily working out of the Asia-Pacific region or out of the US, you can also use our DHL eCommerce regional APIs: (Asia-Pacific) https://sandbox.dhlecommerce.asia/API/docs/v2/overview.html or for the (US) http://api.dhlglobalmail.com/docs/v2/. Please also bear in mind that from a mid to longterm perspective we will migrate both regional APIs into our global one.
+- *Contacting us* somehow requires you to get in touch with your regional sales organisation since they can forward you to your local integration expert knowing your requirements best. Alternatively, you can also get in touch with us via an email to integration@dhl.com. To get most efficient support here, please let us know your DHL eCommerce customer account number as well as your local distribution center. Please bear in mind that we can only support your DHL eCommerce related inquires here, so for DHL Express, DHL Paket or other DHL business units, please approach your local business partner first - thanks in advance!
+
+# Group API Responses
+Eachtime you request our API you receive one of HTTP response code listed underneath.<br/><br/>
+In case you do not get any response code back at all, please check the [API health](#introduction/api-health) first to see whether or not there is an issue on our backend side. <br/><br/>
+In case the API status is **live**, please check the calls you composed, your links as well as the credentials or token used.<br/><br/>
+___
+- **200** `OK` - the request was successful (some calls may also return 201 instead).
+___
+- **201** `Created` - the request was successful and a resource was created.
+___
+- **204** `No Content` - the request was successful but there is no representation to return (i.e. the response is empty).
+___
+- **400** `Bad Request` - the request could not be understood or was missing required parameters. An invalid URI parameters or querystring was used.
+___
+- **401** `Unauthorized` - authentication failed or user doesn't have permissions for requested operation. Invalid client id and secret provided
+___
+- **402** `Unauthorized` - Some tesxt
+___
+- **403** `Forbidden` - access denied.
+___
+- **404** `Not Found` - resource was not found.
+___
+- **405** `Method Not Allowed` - Requested method is not supported for resource.
+___
+- **429** `Too many requests` -  You called the API too often in a given timeframe and exceeded the rate limits.
+___
+- **503** `Service unavailable` - The service you requested is not available
+___
+
+
+# Group Authentication
+
+The API provides OAuth 2.0 Access Token with various authorization scopes. The Access Token can be used to authorize access for the DHL eCommerce Global APIs.
+
+## Access Token [/account/v1/auth/accesstoken]
+
+### Get Access Token [GET]
+
+The Get Access Token API call provides OAuth 2.0 Bearer token with authorization scope, assigned to your client id, which will grants you an access to the Global DHL eCommerce APIs.
+
+The API operation is secured by HTTP Basic authentication, therefore you have to provide **client_id** and **client_secret** as an username and password, when calling the API.
+
+**Example:**
+        
+1. You will receive `client_id` and `client_secret` from DHL representative in following format.<br/>
+Credentials bellow could be used in this Sandbox environment to get the Access Token.
+    ````
+    Client_id: e9ed82a8-4237-4185-8e36-47264aa9e718
+    Client_secret: b1ed1bfa-689b-4d5b-bbf2-39dde64ccb64
+    ````
+2. When passing the `client_id` and `client_secret` via HTTPS request, using HTTP Basic authentication, you have to
+populate HTTP Header Authorization in following format.
+
+    > **Note:** *`Client_id` and `client_secret` has to be encoded in base64-encoding. There is a `space` characeter between Basic and the base64-encoded string. There is a `:` character between the client_id and client_secret, when encoded in base64-encoding.*
+    
+    ````
+    Authorization: Basic base64-encoded(client_id:client_secret)
+    Authorization: Basic ZTllZDgyYTgtNDIzNy00MTg1LThlMzYtNDcyNjRhYTllNzE4OmIxZWQxYmZhLTY4OWItNGQ1Yi1iYmYyLTM5ZGRlNjRjY2I2NA==
+    ````
+    > **Note:** *You can test the Get Access Token API directly from the documentation page. The Authorization HTTP Header was populated for you in the Console View on the right side of the screen.* 
+
+3. You will receive following response in the JSON format.
+
+    ````
+      {
+      "access_token": "FPOJnYACcqZV8YL5Vkm4Ae7nJMvWZDWOJBvD0rtM15BgttWgQEplsQ",
+      "token_type": "Bearer",
+      "expires_in": 18000,
+      "scope": "efulfillment"
+      }
+    ````      
+    
+Understanding of the response fields:
+  
+`access_token:` Contains Access Token string for the Fulfillment API authentication and authorization.<br/><br/>
+
+`token_type:` Type of the OAuth 2.0 access token. Default value is "Bearer".<br/><br/>
+
+`expires_in:` Time to live of the access token. Default value is 18000 seconds / 5 hours. After this time the token expires. <br/><br/>
+
+`scope:` Authorization scope of access token. Default value for Fulfillment API is "efulfillment". Could contain multiple scope values, which will be separated by space character.<br/><br/>
+     
+
++ Request
+    There is no body for the request, the API operation will return the Access Token in the Response, when the GET request will be authenticated via HTTP Basic by providing [client_id] and client_secret 
+
+      + Headers
+    
+            Accept: application-json
+            Authorization: Basic ZTllZDgyYTgtNDIzNy00MTg1LThlMzYtNDcyNjRhYTllNzE4OmIxZWQxYmZhLTY4OWItNGQ1Yi1iYmYyLTM5ZGRlNjRjY2I2NA==
+            
+    
++ Response 200 (application/json)
+
+    + Headers
+        
+            X-CorrelationId: Unique transaction id of your request
+    + Body
+            
+            {
+                "access_token":"BvRVUq77c1ubeTqCABXz4daftyFPElLZ5kvLeQqRNb5nT2iFi6aU4L",
+                "token_type":"Bearer",
+                "expires_in":18000,
+                "scope":"shipping label"
+            }
+        
+
+## Access Token Info [/account/v1/auth/accesstoken/info{?token}]
+
+### Get Access Token Info [GET]
+
+The Get Access Token Info API call provides an information about the issued token.
+
++ Parameters
+    + token (optional, string) ... Access Token string
+    
++ Response 200 (application/json)
+Successful response in case you provided valid Access Token
+
+    + Headers
+        
+            X-CorrelationId: Unique transaction id of your request
+    + Body
+    
+            {
+              "audience" : "b0601394-d106-4bca-a825-af40b7422640",
+              "user_id" : "b0601394-d106-4bca-a825-af40b7422640",
+              "scope" : "shipping",
+              "expires_in" : 15951
+            }
+        
+
++ Response 400 (application/json)
+Bad request in case you provided token, which already expired.
+
+    + Headers
+        
+            X-CorrelationId: Unique transaction id of your request
+    + Body
+        
+            {
+              "error" : "invalid_token",
+              "error_description" : "The presented token is invalid or expired."
+            }
+
++ Response 400 (application/json)
+Bad request in case you did not provided the expected URI parameter.
+
+    + Headers
+        
+            X-CorrelationId: Unique transaction id of your request
+    + Body       
+    
+            {
+              "error" : "invalid_request",
+              "error_description" : "The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed."
+            }
+
+## Revoke Access Token [/account/v1/auth/accesstoken/revocation{?token}]
+
+### Revoke Access Token [GET]
+
+The Revoke Access Tokne API call provides you an option to revoke your Access Token, which not yet expired.
+
++ Parameters
+    + token (optional, string) ... Access Token string
+    
++ Response 200 (application/json)
+
+    + Headers
+        
+            X-CorrelationId: Unique transaction id of your request
+    + Body
+    
+            [
+                {
+                    "message":"Access token revocation processed."
+                }
+            ]
+            
+
+## KPS Management [/account/v1/kps/{store}/{userId}]
+
+### Get User [GET]
+
+The Get All Users API call returns all user ids, which are stored in the particular KPS Store.
+
++ Parameters
+    + store (required, string) ... KPS user store
+    + userId (optional, string) ... User Id
+    
+    
++ Response 200 (application/json)
+
+    + Headers
+        
+            X-CorrelationId: Unique transaction id of your request
+    + Body
+    
+             [
+                {
+                    "auth_scope": "scope1",
+                    "user_id": "testUser1",
+                    "password": "*****"
+                },
+                {
+                    "auth_scope": "scope2",
+                    "user_id": "testUser2",
+                    "password": "*****"
+                }
+            ]
+
+
+
+# Group Shipping
+Our global shipping API provides you with everything you need to bring your orders to your customers - for your domestic- as well as for your international ones.<br/><br/>
+Starting with receiving shipping options via label creation and manifesting of your shipments to ensure a smooth handover to the creation of tracking updates - all within one API. 
+You can use Shipping API for the Order Manifest and Label generation (PDF, PNG and ZPL formats).<br/><br/>
+
+**API Authentication:** All API operations require `Access Token` to be passed in the Authorization Header for each request. The token type is an OAuth 2.0 Bearer token.<br/><br/> 
+>**Note:** *[here](#reference/authentication) you can find more information how to to retrive the `Access Token`.* 
+
+The Access Token is valid for 5h so it is not necessary to request the token for each request. Developers should implement the client application in a way that the token will be requested again only after it expires.
+
+
+## Create Label [/v1/shipping/label{?format,labelSize,pageSize,layout}]
+
+Now that you know the shipping product you want to use, you can use the API calls described here to create the labels you need for this.<br/><br/>
+No matter if they are domestic labels, labels for your international shipments or if it is a postal or a commercial shipment - here you will receive them all.<br/><br/>
+Furthermore, by creation of the shipping label you will receive a unique tracking code for your customer that is bound to the label you created.<br/><br/>
+
+**Implementation Examples:** 
+- *Create a Label*: XXXXX
+- *XXX*: XXXXX
+___
+
+**Available API calls:**
+INTRODUCTIONTEXT2
+
+### Create Label [POST]
+
+Purpose of this service is to generate labels for single mail item only (single package object).<br/><br/>
+The benefit of this service is that it is synchronous and returns label contents directly in the response, so it is no necessity to download the labels afterwards.<br/><br/>
+
+To use the Shipping and Label calls, you may use the following accounts and additional settings.
+
+| International Shipping | Codes          | Comments            |
+| -----------------------|----------------|---------------------|
+|Pickup account          | 5317861        | International labels 
+|Distribution center     | HKHKG1         | International labels
+|Product                 | PPS            | Parcel Plus, trackable
+
+| US Domestic            | Codes          | Comments            |
+| -----------------------|----------------|---------------------|
+|Pickup account          | 5330434        |  
+|Distribution center     | USATL1         | 
+|Product                 | 631            | 
+
+| Thailand Domestic      | Codes          | Comments            |
+| -----------------------|----------------|---------------------|
+|Pickup account          | 5999999130     |  
+|Distribution center     | THBKK1         | 
+|Product                 | PDO            | 
+|Currency                | THB            | 
+
+| Chile Domestic         | Codes          | Comments            |
+| -----------------------|----------------|---------------------|
+|Pickup account          | 1000000012     |  
+|Distribution center     | CLSAN1         | 
+|Product                 | PDO            | 
+|Currency                | CLP            | 
+
+
+| Vietnam Domestic       | Codes          | Comments            |
+| -----------------------|----------------|---------------------|
+|Pickup account          | 5248767454     |  
+|Distribution center     | VNSGN1         | 
+|Product                 | PDO            | 
+___
+
+Recommended sequence for the Label service call is following:
+        
+1. Use clientId to obtain token using the authentication API - see `API Authentication` description above.
+2. Prepare valid JSON request document per schema. Use data above depending on your use-case.
+3. Call Sandbox API. The response message will contain information form the request; additionally it may contain a tracking number (depending on product) and base64-encoded label.
+
++ Headers 
+    Authorization: Bearer [place OAuth access token here, without brackets]
+
++ Parameters
+
+    + format: `PDF` (enum[string], required)
+
+        Mandatory parameter to define file format. One of PNG|ZPL|PDF
+
+        + Default: PNG
+        + Members
+            + `PDF` 
+            + `PNG` 
+            + `ZPL` 
+
+    + labelSize: `4x4` (enum[string], required)
+
+        Mandatory parameter to difine size of the label. One of 4x6|4x4.
+
+        + Default: 4x6
+        + Members
+            + `4x6` 
+            + `4x4` 
+
+    + pageSize: `A4` (enum[string], optional)
+
+        Conditionaly mandatory, only for PDF format. Size of the page in PDF file. One of A4|400x600|400x600.
+
+        + Default: A4
+        + Members
+            + `A4` 
+            + `400x600` 
+            + `400x400` 
+
+    + layout: `1x1` (string, optional)
+
+        Conditionaly mandatory, only for PDF format. Defines way how single labels are layouted on the PDF page. In case of pageSize=A4 it might be 4x1 or 1x1. Otherwise 1x1 is the only option.
+
+        + Default: 1x1
+        + Members
+            + `4x1` 
+            + `1x1` 
+
++ Request (application/json)
+    + Attributes (RequestFormat)
+
++ Response 202 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 400  (application/json)
+Bad Request - Invalid URI parameters or querystring
+    + Attributes (ErrResponseFormatError)
+
++ Response 401  (application/json)
+    { "message" : "Unauthorized Access - Invalid token or Authentication Header parameter" }
+
++ Response 429  (application/json)
+    { "message" : "Too many requests in given amount of time"}
+
++ Response 503  (application/json)
+    + Attributes (ErrResponseFormatError)
+    { "message" : "Service Unavailable"}
+
+## Order Manifest [/v1/Shipping/manifest]
+**Manifesting** (sometimes refered to as *Close-out*) describes the process of transmitting your final shipments to us before the physical transfer of the shipments.<br/><br/>
+Within this process, a document (**the Manifest**) is beeing created sumarizing all the to be shipped items, their total weight as well as associated information on your account.<br/><br/>
+The created document also includes your signature and a barcode. During drop-off or pick-up, this document is scanned by us.<br/><br/>
+___
+**Implementation Examples:** 
+- *Create your first manifest*: XXXXX
+- *Embed the manifest creation into your process*: XXXXX
+
+___
+**Available API calls:**
+INTRODUCTIONTEXT2
+
+### Create Manifest [POST]
+Purpose of this service is to create shipping order manifest.<br/><br/>
+The shipping order manifest (SOM) API uses the same document format / JSON schema like Label service.<br/><br/> 
+It does allow transmission of data for up to 1000 parcels in a single call.<br/><br/>
+The recommended sequence for the SOM call is following:
+
+    1. Use client id to obtain token using the authentication API- see `API Authentication` description above.
+    2. Prepare valid JSON request document per schema. Use data above depending on your use-case.
+    3. Call Sandbox API. The response message will acknowledge success or failure of the call.
+
++ Headers 
+    Authorization: Bearer [place OAuth access token here, without brackets]
+    
++ Request (application/json)
+    + Attributes (RequestFormat)
+
++ Response 201 
+    + Attributes (ResponseFormat)
+    
++ Response 400 
+Bad Request - Invalid URI parameters or querystring
+    + Attributes (ErrResponseFormatError)
+
++ Response 401 
+    { "message" : "Unauthorized Access - Invalid token or Authentication Header parameter"}
+
++ Response 429 
+    { "message" : "Too many requests in given amount of time"}
+
++ Response 503 
+    { "message" : "Service Unavailable"}
+
+# Group Fulfillment
+The Fulfillment API provides you an interface for the order management operations.
+INTROTEXT
+___
+**Required Parameters:** 
+
+| Parameter        | Type           | Description  |Example  |
+| -----------------|----------------|--------------|---------|
+`XXX`        | XXX                  | XXX       |XXX        |
+
+___
+**Available API calls:**
+INTRODUCTIONTEXT2
+
+## Items [/v1/fulfillment/items]
+INTROTEXT
+___
+**Required Parameters:** 
+
+| Parameter        | Type           | Description  |Example  |
+| -----------------|----------------|--------------|---------|
+`XXX`        | XXX                  | XXX       |XXX        |
+
+___
+
+**Implementation Examples:** 
+- *Add a new product to your portfolio*: XXXXX
+- *Change parameters within a selected item*: XXXXX
+- *Get the latest list of items managed*: XXXXX
+
+___
+**Available API calls:**
+INTRODUCTIONTEXT2
+
+### Create item [GET]
++ Response 201 (application/json)
+
+### Update item [POST]
++ Response 201 (application/json)
+
+### Get item list [UPDATE]
++ Response 201 (application/json)
+
+## Group Sales Orders [/v1/fulfillment/sales_orders/]
+INTROTEXT
+___
+**Required Parameters:** 
+
+| Parameter        | Type           | Description  |Example  |
+| -----------------|----------------|--------------|---------|
+`XXX`        | XXX                  | XXX       |XXX        |
+
+___
+**Implementation Examples:** 
+- *Add a new order that is supposed to be fulfilled*: XXXXX
+- *Get the latest list of sales orders*: XXXXX
+
+___
+**Available API calls:**
+INTRODUCTIONTEXT2
+
+### Create sales orders [POST]
++ Response 201 (application/json)
+
+### Get sales order list [GET]
++ Response 201 (application/json)
+### Udpate sales order status [UPDATE]
+
++ Response 201 (application/json)
+
+## Purchase Orders [/v1/fulfillment/purchase_orders/]
+INTROTEXT
+___
+**Required Parameters:** 
+
+| Parameter        | Type           | Description  |Example  |
+| -----------------|----------------|--------------|---------|
+`XXX`        | XXX                  | XXX       |XXX        |
+
+___
+
+**Implementation Examples:** 
+- *Add a new order that is supposed to be fulfilled*: XXXXX
+- *Get the latest list of sales orders*: XXXXX
+
+
+___
+**Available API calls:**
+INTRODUCTIONTEXT2
+
+### Create purchase orders [POST]
++ Response 201 (application/json)
+
+### Cancel purchase order [DELETE]
+
++ Response 201 (application/json)
+
+### Update purchase order status [UPDATE]
+
++ Response 201 (application/json)
+
+
+
+## Return Order [/v1/fulfillment/return/]
+INTROTEXT
+___
+**Required Parameters:** 
+
+| Parameter        | Type           | Description  |Example  |
+| -----------------|----------------|--------------|---------|
+`XXX`        | XXX                  | XXX       |XXX        |
+
+___
+
+**Implementation Examples:** 
+- *XXX*: XXXXX
+- *XXX*: XXXXX
+
+
+___
+**Available API calls:**
+INTRODUCTIONTEXT2
+
+### Create return order [POST]
++ Response 201 (application/json)
+
+### Cancel return order [DELETE]
+
++ Response 201 (application/json)
+
+### Update return order status [UPDATE]
+
++ Response 201 (application/json)
+
+
+
+## Shipments [/v1/fulfillment/shipments/]
+INTROTEXT
+___
+**Required Parameters:** 
+
+| Parameter        | Type           | Description  |Example  |
+| -----------------|----------------|--------------|---------|
+`XXX`        | XXX                  | XXX       |XXX        |
+
+___
+**Implementation Examples:** 
+- *XXX*: XXXXX
+- *XXX*: XXXXX
+___
+**Available API calls:**
+INTRODUCTIONTEXT2
+
+### Create shipment [POST]
++ Response 201 (application/json)
+
+### Cancel shipment [DELETE]
++ Response 201 (application/json)
+
+### Update shipment status [UPDATE]
+
++ Response 201 (application/json)
+
+
+
+## Stock [/v1/fulfillment/stock/]
+INTROTEXT
+___
+**Required Parameters:** 
+
+| Parameter        | Type           | Description  |Example  |
+| -----------------|----------------|--------------|---------|
+`XXX`        | XXX                  | XXX       |XXX        |
+
+___
+**Implementation Examples:** 
+- *XXX*: XXXXX
+- *XXX*: XXXXX
+___
+**Available API calls:**
+INTRODUCTIONTEXT2
+
+### Get Stock information  [GET]
++ Response 201 (application/json)
+
+### Update stock [POST]
++ Response 201 (application/json)
+
+# Data Structures
+
+## RequestFormat (object)
+
+
+### Properties
++ `shipments` (array[Shipment], required) - Container array for one or more shipments
+
+
+## Shipment (object)
+
+
+### Properties
++ `pickupAccount` (string, required) - The DHL eCommerce pickup account number. You will receive this after doing the onboarding with DHL sales.
++ `distributionCenter` (string, required) - Primary DHL eCommerce Distribution center assigned to your products/services. This will be provided during onboarding.
++ `packages` (array[Package], required) - One or more packages. At the moment, only one package is supported by the label service.
+
+
+## Package (object)
+
+
+### Properties
++ `consigneeAddress` (ConsigneeAddress, required) - Address of the consignee
++ `packageDetails` (PackageDetails, required) - Details of one package.
++ `returnAddress` (ReturnAddress, optional) - Address of the returns (if different from shipper)
++ `customsDetails` (array[CustomsDetail], optional) - Details for one or more customs commodities. Only applicable if orderedProduct is an International Product
+
+
+## ConsigneeAddress (object)
+
+
+### Properties
++ `address1` (string, required) - Line 1 of the consignee's street address or delivery location
++ `city` (string, required) - Consignee`s city
++ `country` (string, required) - Two-character ISO consignee address country code
++ `address2` (string, optional) - Line 2 of the consignee's street address or delivery location
++ `address3` (string, optional) - Line 3 of the consignee's street address or delivery location - typically used for addresses to designate province, district, or neighborhood
++ `companyName` (string, optional) - Name of the institution receiving the shipment
++ `email` (string, optional) - Consignee`s email address
++ `idNumber` (string, optional) - Consignee`s identification number
++ `idType` (string, optional) - Denotes the type of identification number provided by the consignee for customs clearance and delivery. Note: Provide if available for DHL Parcel International Direct to S. Korea and China
++ `name` (string, optional) - Name of the person receiving the shipment
++ `phone` (string, optional) - Consignee`s phone number
++ `postalCode` (string, optional) - Consignee`s postal code
++ `state` (string, optional) - Consignee's state, province or territory.
+
+
+## PackageDetails (object)
+
+
+### Properties
++ `currency` (string, required) - Three-letter ISO Currency code
++ `orderedProduct` (string, required) - Identifies the DHL eCommerce product that is to be applied to the shipment. Refer to the product matrix for a list of all available and valid products.
++ `packageId` (string, required) - Unique reference ID for shipment; also referred to as Customer Confirmation Number.
++ `weight` (number, required) - Total shipment content weight. Whole numbers only.
++ `weightUom` (string, required) - The unit of measure for the weight.
++ `billingRef1` (string, optional) - String of characters that can be used to aggregate billing data (may not be unique per parcel). BillingRef1 is also referred to as Reference
++ `billingRef2` (string, optional) - Secondary string of characters that can be used to aggregate billing data (may not be unique per parcel). BillingRef2 is also referred to as Batch.
++ `codAmount` (number, optional) - Amount to collect upon delivery of goods
++ `declaredValue` (number, optional) - Total declared value for the package. While not mandatory, best practice is to provide if available.
++ `deliveryConfirmationNo` (string, optional) - For future-use
++ `dgCategory` (string, optional) - Can contain the dangerous goods category but also more generic information on the contents like for example fragile. In the US just contains the dg category.
++ `dimensionUom` (string, optional) - Dimensional unit of measure for length, width, and height of the package
++ `dutiesPaid` (string, optional) - Indicates whether duties and taxes for the shipment are paid by the shipper (value 'Y') or not ('N'). this is commonly known as Inco terms DDP (Delivered Duties Paid) and DDU (Delivered Duties Unpaid).
++ `insuredValue` (number, optional) - Total insured value of the package
++ `mailType` (number, optional) - Identifies the mail type of the shipment. Refer to the mail type matrix for a list of valid mail types.
++ `packageDesc` (string, optional) - Description of the contents of the package (See reference for general categories)
++ `packageRefName` (string, optional) - For future-use
++ `service` (string, optional) - Shipments orginating and destined to the United States will default to DELCON. Signature confirmation* is also available for certain products at an additional cost (please contact your Sales representative for more details). International shipments will default to the tracking capabilties available to the product/service selected. Shipment tracking is available for all parcel products. Tracking is available through the DHL eCommerce web portal, or through the USPS tracking site.
++ `serviceEndorsement` (number, optional) - Ancillary service endorsements are used to request an addressee’s new address and to provide the USPS with instructions on how to handle undeliverable-as-addressed pieces. The endorsements are the same for all classes of US Domestic mail, but the treatment and cost differ by class of mail. Use of an ancillary service endorsement on a mailpiece obligates the mailer to pay any applicable charges for forwarding, return, and separate address notification charges.
++ `height` (number, optional) - Height dimension of the package (provide if available)
++ `length` (number, optional) - Longest measurement of package (provide if available)
++ `width` (number, optional) - Width dimension of the package (provide if available)
+
+
+## ReturnAddress (object)
+
+
+### Properties
++ `address1` (string, required) - Line 1 of the return street address
++ `city` (string, required) - Return city
++ `country` (string, required) - Two-character ISO return address country code.
++ `address2` (string, optional) - Line 2 of the return street address
++ `address3` (string, optional) - (International Only) Line 3 of the return street address
++ `companyName` (string, optional) - Name of the institution receiving the returned package
++ `name` (string, optional) - Name of the person receiving the returned package
++ `postalCode` (string, optional) - Return postal code
++ `state` (string, optional) - Return state, province or territory
+
+
+## CustomsDetail (object)
+
+
+### Properties
++ `itemDescription` (string, required) - Detailed description of the commodity item - Used for customs clearance. Accuracy and Detail are required.
++ `descriptionExport` (string, optional) - Dedicated description for export customs clearance (iff required to be different from item description)
++ `descriptionImport` (string, optional) - Dedicated description for import customs clearance (iff required to be different from item description)
++ `countryOfOrigin` (string, optional) - 2-Character Country Code for Origin Manufacturer Country of the product
++ `hsCode` (string, optional) - The Harmonized Tariff Schedule is a number assigned to every possible commodity that can be imported or exported from any country. Please do not include any decimals "." in this field.
++ `packagedQuantity` (number, optional) - Quantity of the same item in the package
++ `itemValue` (number, optional) - The commercial value of the commodity (per each)
++ `skuNumber` (string, optional) - SKU #, or item code - Used for product verification on clients website during customs clearance process.
+
+
+## ResponseFormat (object)
+
+
+### Properties
++ `shipments` (array[Shipment8], required) - Container array for one or more shipments
+
+
+## Shipment8 (object)
+
+
+### Properties
++ `pickupAccount`: `5300000` (string, required) - The DHL eCommerce pickup account number. You will receive this after doing the onboarding with DHL sales.
++ `distributionCenter`: `USORD1` (string, required) - Primary DHL eCommerce Distribution center assigned to your products/services. This will be provided during onboarding.
++ `packages`: `USORD1` (array[Package9], required) - One or more packages. At the moment, only one package is supported by the label service.
+
+
+## Package9 (object)
+
+
+### Properties
++ `consigneeAddress` (ConsigneeAddress, required) - Address of the consignee.
++ `packageDetails` (PackageDetails, required) - Details of one package.
++ `returnAddress` (ReturnAddress, optional) - Address of the returns (if different from shipper)
++ `customsDetails` (array[CustomsDetail], optional) - Details for one or more customs commodities. Only applicable if orderedProduct is an International Product
++ `responseDetails` (ResponseDetails, optional) 
+
+
+## ResponseDetails (object)
+
+
+### Properties
++ `labelDetails` (array[LabelDetail], optional) 
++ `trackingNumber` (string, optional) 
++ `trackingNumberStatus` (string, optional) 
+
+
+## LabelDetail (object)
+
+
+### Properties
++ `packageId` (string, optional) 
++ `format` (string, optional) 
++ `templateId` (string, optional) 
++ `labelData` (string, optional) 
+
+
+## Reason (object)
+
+
+### Properties
++ `msg` (string, required) 
+
+
+## Details (object)
+
+
+### Properties
++ `msgId` (string, required) 
+
+
+## ErrResponseFormatError (object)
+
+
+### Properties
++ `reasons` (array[Reason], required) 
++ `details` (Details, required)
