@@ -516,17 +516,26 @@ Bad Request - Invalid URI parameters or querystring
 
 # Group Fulfillment
 The Fulfillment API provides you an interface for the order management operations.
-INTROTEXT
 ___
-**Required Parameters:** 
+**API Authentication:** All API operations require `Access Token` to be passed in the Authorization Header for each request. The token type is an OAuth 2.0 Bearer token.<br/><br/> 
+>**Note:** *[here](#reference/authentication) you can find more information how to to retrive the `Access Token`.* 
+
+The Access Token is valid for 5h so it is not necessary to request the token for each request. Developers should implement the client application in a way that the token will be requested again only after it expires.
+<br/><br/> 
+**Access Token Lifecycle:** When you recieve an Access Token, it is valid for defined amount of time (5h). During this time you don't have to request new token per each request, but you can simply reuse the same token to access API resources, until the token expires.When you recieve an Access Token, it is valid for defined amount of time (5h). During this time you don't have to request new token per each request, but you can simply reuse the same token to access API resources, until the token expires. The invalid token or token expiration will be indicated by HTTP Status Code 401 Unauthorized, then your application has to request new Access Token.
+The invalid token or token expiration will be indicated by HTTP Status Code 401 Unauthorized, then your application has to request new Access Token.
+___
+**Required Parameters:** The parameters could be mandatory, optional and conditionally-optional. The conditionally-optional parameters are marked as optional parameters, where at least one or a combination has to be part of the API call. The specific list of conditionally-optional parameters will be highlighted in a table in each particular API operation section.
 
 | Parameter        | Type           | Description  |Example  |
 | -----------------|----------------|--------------|---------|
 `XXX`        | XXX                  | XXX       |XXX        |
-
 ___
-**Available API calls:**
-INTRODUCTIONTEXT2
+**Available API JSON Schemas:**
+Here you can download full archive of the JSON Schemas for the Fulfillment API.
+| JSON Schema     | Description    |URL Link  |
+| ----------------|----------------|----------|
+`Request Schema`  | XXX            | XXX      |
 
 ## Items [/v1/fulfillment/items]
 INTROTEXT
