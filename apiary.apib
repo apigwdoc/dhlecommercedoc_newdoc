@@ -811,7 +811,7 @@ Following combinations of are allowed, when calling the API operation.
 |Input Parameters                     |Returned Values|
 |-------------------------------------|---------------|
 |orderNumber                          |Returns status of given order|
-|status && page                      |Returns page with filtered orders by status. **Page is optional.**|\n|dateFrom && status && page\t          |Returns page with filtered orders from defined date. **Status and page are optional.**|\n|dateTo && status && page\t            |Returns page with filtered orders by status and to defined date. **Status and page are optional.**|\n|dateFrom && dateTo && status && page\t|Returns page with filtered orders by status for defined date range. **Status and page are optional.**|\n"
+|status && page                      |Returns page with filtered orders by status. **Page is optional.**|\n|dateFrom && status && page          |Returns page with filtered orders from defined date. **Status and page are optional.**|\n|dateTo && status && page            |Returns page with filtered orders by status and to defined date. **Status and page are optional.**|\n|dateFrom && dateTo && status && page|Returns page with filtered orders by status for defined date range. **Status and page are optional.**|\n"
 
 + Headers 
     Authorization: Bearer [place OAuth access token here, without brackets]
@@ -1206,7 +1206,7 @@ Following combinations of are allowed, when calling the API operation.
 |status && page               |Returns page with filtered orders by status. **Page is optional.**|
 |dateFrom && status && page      |Returns page with filtered orders by staus from defined date. **Status and page are optional.**|
 |dateTo && status && page         |Returns page with filtered orders by status to defined date. **Status and page are optional.**|
-|dateFrom && dateTo && status && page\t|Returns page with filtered orders by status for defined date range. **Status and page are optional.**|"
+|dateFrom && dateTo && status && page|Returns page with filtered orders by status for defined date range. **Status and page are optional.**|"
 
 + Headers 
     Accept: application/json
@@ -1420,7 +1420,7 @@ The API operation for Get Return Order List\n\nThe optional parameters of the AP
 |accountNumber && status && page                     |Returns page of filtered orders by status and account number. **Page is optional.**|
 |accountNumber && dateFrom && status && page          |Returns page of filtered orders by status and account number from defined date. **Status and page are optional.**|
 |accountNumber && dateTo && status && page            |Returns page of filtered orders by status and account number to defined date. **Status and page are optional.**|
-|accountNumber && dateFrom && dateTo && status && page\t|Returns page of filtered orders by status and account number for defined date range. **Status and page are optional.**|
+|accountNumber && dateFrom && dateTo && status && page|Returns page of filtered orders by status and account number for defined date range. **Status and page are optional.**|
 
 + Headers 
     Accept: application/json
@@ -1506,12 +1506,12 @@ The API operation for Get Return Order List\n\nThe optional parameters of the AP
 ### Shipment Details [GET]
 The API operation for Get Shipment Details.
 The optional parameters of the API operation are conditional. Following combinations of are allowed, when calling the API operation. 
-|Input Parameters\t\t\t\t\t\t\t\t              |Returned Values|
+|Input Parameters              |Returned Values|
 |---------------------------------------------|-------------------|
-|accountNumber\t\t\t\t\t\t\t\t                |Returns all shipments|
-|accountNumber && orderNumber\t\t\t\t\t        |Returns shipments for given order number|
-|accountNumber && dateFrom && dateTo && page\t|Returns page with shipments for given date range. **Page, dateFrom and dateTo are optional.**|
-|accountNumber && date && page\t\t\t\t\t      |Returns shipments for given date. **Page is optional.**|
+|accountNumber                |Returns all shipments|
+|accountNumber && orderNumber        |Returns shipments for given order number|
+|accountNumber && dateFrom && dateTo && page|Returns page with shipments for given date range. **Page, dateFrom and dateTo are optional.**|
+|accountNumber && date && page      |Returns shipments for given date. **Page is optional.**|
 
 + Headers 
     Accept: application/json
@@ -1759,6 +1759,164 @@ The API operation for Get Inventory Snapshot
         {
             "message": "Service Unavailable"
         }
+
+# Group Shipping
+Our global shipping API provides you with everything you need to bring your orders to your customers - for your domestic- as well as for your international ones.<br/><br/>
+Starting with receiving shipping options via label creation and manifesting of your shipments to ensure a smooth handover to the creation of tracking updates - all within one API. 
+You can use Shipping API for the Order Manifest and Label generation (PDF, PNG and ZPL formats).<br/><br/>
+
+
+**API Authentication:** All API operations require `Access Token` to be passed in the Authorization Header for each request. The token type is an OAuth 2.0 Bearer token.<br/><br/> 
+>**Note:** *[here](#reference/authentication) you can find more information how to to retrive the `Access Token`.* 
+
+The Access Token is valid for 5h so it is not necessary to request the token for each request. Developers should implement the client application in a way that the token will be requested again only after it expires.
+
+
+
+## Create Label [/shipping/v1/label{?format,labelSize,pageSize,layout}]
+
+Now that you know the shipping product you want to use, you can use the API calls described here to create the labels you need for this.<br/><br/>
+No matter if they are domestic labels, labels for your international shipments or if it is a postal or a commercial shipment - here you will receive them all.<br/><br/>
+Furthermore, by creation of the shipping label you will receive a unique tracking code for your customer that is bound to the label you created.<br/><br/>
+
+**Implementation Examples:** 
+- *Create a Label*: XXXXX
+- *XXX*: XXXXX
+___
+
+**Available API calls:**
+INTRODUCTIONTEXT2
+
+### Create Label [POST]
+
+Purpose of this service is to generate labels for single mail item only (single package object).<br/><br/>
+The benefit of this service is that it is synchronous and returns label contents directly in the response, so it is no necessity to download the labels afterwards.<br/><br/>
+
+To use the Shipping and Label calls, you may use the following accounts and additional settings.
+
+| International Shipping | Codes          | Comments            |
+| -----------------------|----------------|---------------------|
+|Pickup account          | 5317861        | International labels |
+|Distribution center     | HKHKG1         | International labels|
+|Product                 | PPS            | Parcel Plus, trackable|
+
+| US Domestic            | Codes          | Comments            |
+| -----------------------|----------------|---------------------|
+|Pickup account          | 5330434        |  |
+|Distribution center     | USATL1         | |
+|Product                 | 631            | |
+
+| Thailand Domestic      | Codes          | Comments            |
+| -----------------------|----------------|---------------------|
+|Pickup account          | 5999999130     |  |
+|Distribution center     | THBKK1         | |
+|Product                 | PDO            | |
+|Currency                | THB            | |
+
+| Chile Domestic         | Codes          | Comments            |
+| -----------------------|----------------|---------------------|
+|Pickup account          | 1000000012     |  |
+|Distribution center     | CLSAN1         | |
+|Product                 | PDO            | |
+|Currency                | CLP            | |
+
+
+| Vietnam Domestic       | Codes          | Comments            |
+| -----------------------|----------------|---------------------|
+|Pickup account          | 5248767454     |  |
+|Distribution center     | VNSGN1         | |
+|Product                 | PDO            | |
+___
+
+Recommended sequence for the Label service call is following:
+        
+1. Use clientId to obtain token using the authentication API - see `API Authentication` description above.
+2. Prepare valid JSON request document per schema. Use data above depending on your use-case.
+3. Call Sandbox API. The response message will contain information form the request; additionally it may contain a tracking number (depending on product) and base64-encoded label.
+
++ Request (application/json)
+    + Headers 
+        Accept: application/json
+        Authorization: Bearer [token]
+        Content-Type: application/json
+    
+    + Attributes (RequestFormat)
+
++ Parameters
+
+    + format: `PDF` (enum[string], required)
+
+        Mandatory parameter to define file format. One of PNG|ZPL|PDF
+
+        + Default: PNG
+
+        + Members
+            + `PDF` 
+            + `PNG` 
+            + `ZPL` 
+
+    + labelSize: `4x4` (enum[string], required)
+
+        Mandatory parameter to difine size of the label. One of 4x6|4x4.
+
+        + Default: 4x6
+        + Members
+            + `4x6` 
+            + `4x4` 
+
+    + pageSize: `A4` (enum[string], optional)
+
+        Conditionaly mandatory, only for PDF format. Size of the page in PDF file. One of A4|400x600|400x600.
+
+        + Default: A4
+        + Members
+            + `A4` 
+            + `400x600` 
+            + `400x400` 
+
+    + layout: `1x1` (string, optional)
+
+        Conditionaly mandatory, only for PDF format. Defines way how single labels are layouted on the PDF page. In case of pageSize=A4 it might be 4x1 or 1x1. Otherwise 1x1 is the only option.
+
+        + Default: 1x1
+        + Members
+            + `4x1` 
+            + `1x1` 
+
+
+        
+        
+## Order Manifest [/v1/Shipping/manifest]
+**Manifesting** (sometimes refered to as *Close-out*) describes the process of transmitting your final shipments to us before the physical transfer of the shipments.<br/><br/>
+Within this process, a document (**the Manifest**) is beeing created sumarizing all the to be shipped items, their total weight as well as associated information on your account.<br/><br/>
+The created document also includes your signature and a barcode. During drop-off or pick-up, this document is scanned by us.<br/><br/>
+___
+**Implementation Examples:** 
+- *Create your first manifest*: XXXXX
+- *Embed the manifest creation into your process*: XXXXX
+
+___
+**Available API calls:**
+INTRODUCTIONTEXT2
+
+### Create Manifest [POST]
+Purpose of this service is to create shipping order manifest.<br/><br/>
+The shipping order manifest (SOM) API uses the same document format / JSON schema like Label service.<br/><br/> 
+It does allow transmission of data for up to 1000 parcels in a single call.<br/><br/>
+The recommended sequence for the SOM call is following:
+
+    1. Use client id to obtain token using the authentication API- see `API Authentication` description above.
+    2. Prepare valid JSON request document per schema. Use data above depending on your use-case.
+    3. Call Sandbox API. The response message will acknowledge success or failure of the call.
+
++ Request (application/json)
+    + Headers 
+        Accept: application/json
+        Authorization: Bearer [token]
+        Content-Type: application/json
+    
+    + Attributes (RequestFormat)
+
 
 # Data Structures
 
@@ -2895,4 +3053,224 @@ The API operation for Get Inventory Snapshot
 + `OrderQuantity` (string, required) 
 + `ShipQuantity` (string, required) 
 + `LotNumber` (string, optional) 
-+ `SerialNumber` (string, optional)
++ `SerialNumber` (string, optional) 
+
+
+## RequestFormat (object)
+
++ `shipments` (array[Shipment2], required) - Container array for one or more shipments
+
+
+## Shipment2 (object)
+
+
+
++ `pickupAccount` (string, required) - The DHL eCommerce pickup account number. You will receive this after doing the onboarding with DHL sales.
++ `distributionCenter` (string, required) - Primary DHL eCommerce Distribution center assigned to your products/services. This will be provided during onboarding.
++ `packages` (array[Package], required) - One or more packages. At the moment, only one package is supported by the label service.
++ `consignmentNumber` (string, optional) - Customer defined number for identifying the consignment (i.e. a consolidation of parcels..
+
+
+## Package (object)
+
+
+
++ `consigneeAddress` (ConsigneeAddress, required) - Address of the consignee.
++ `packageDetails` (PackageDetails, required) - Details of one package.
++ `returnAddress` (ReturnAddress, optional) - Address of the returns (if different from shipper)
++ `customsDetails` (array[CustomsDetail], optional) - Details for one or more customs commodities. Only applicable if orderedProduct is an International Product
+
+
+## ConsigneeAddress (object)
+
+
+
++ `address1` (string, required) - Line 1 of the consignee's street address or delivery location
++ `city` (string, required) - Consignee's city
++ `country` (string, required) - Two-character ISO consignee address country code.
++ `address2` (string, optional) - Line 2 of the consignee's street address or delivery location
++ `address3` (string, optional) - Line 3 of the consignee's street address or delivery location - typically used for addresses to designate province, district, or neighborhood
++ `companyName` (string, optional) - Name of the institution receiving the shipment
++ `email` (string, optional) - Consignee's email address
++ `idNumber` (string, optional) - Consignee's identification number
++ `idType` (string, optional) - Denotes the type of identification number provided by the consignee for customs clearance and delivery. Note: Provide if available for DHL Parcel International Direct to S. Korea and China
++ `name` (string, optional) - Name of the person receiving the shipment
++ `phone` (string, optional) - Consignee's phone number
++ `postalCode` (string, optional) - Consignee's postal code
++ `state` (string, optional) - Consignee's state, province or territory.
+
+
+## PackageDetails (object)
+
+
+
++ `currency` (string, required) - Three-letter ISO Currency code
++ `orderedProduct` (string, required) - Identifies the DHL eCommerce product that is to be applied to the shipment. Refer to the product matrix for a list of all available and valid products.
++ `packageId` (string, required) - Unique reference ID for shipment; also referred to as Customer Confirmation Number.
++ `weight` (number, required) - Total shipment content weight.
++ `weightUom` (enum[string], required) - The unit of measure for the weight.
+    + `kg`
+    + `g`
+    + `lb`
+    + `oz`
+    + `KG`
+    + `G`
+    + `LB`
+    + `OZ`
++ `billingRef1` (string, optional) - String of characters that can be used to aggregate billing data (may not be unique per parcel). BillingRef1 is also referred to as Reference
++ `billingRef2` (string, optional) - Secondary string of characters that can be used to aggregate billing data (may not be unique per parcel). BillingRef2 is also referred to as Batch.
++ `codAmount` (number, optional) - Amount to collect upon delivery of goods
++ `declaredValue` (number, optional) - Total declared value for the package. While not mandatory, best practice is to provide if available.
++ `deliveryConfirmationNo` (string, optional) - For future-use
++ `dgCategory` (string, optional) - Can contain the dangerous goods category but also more generic information on the contents like for example fragile. In the US just contains the dg category.
++ `dimensionUom` (string, optional) - Dimensional unit of measure for length, width, and height of the package
++ `dutiesPaid` (enum[string], optional) - Indicates whether duties and taxes for the shipment are paid by the shipper - DDP (Delivered Duties Paid), DDU (Delivered Duties Unpaid), DAP (Delivered at Place).
+    + `DDU`
+    + `DDP`
+    + `DAP`
++ `insuredValue` (number, optional) - Total insured value of the package
++ `mailType` (enum[number], optional) - Identifies the mail type of the shipment. Refer to the mail type matrix for a list of valid mail types.
+    + `2`
+    + `3`
+    + `6`
+    + `7`
+    + `8`
+    + `9`
+    + `20`
+    + `30`
++ `packageDesc` (string, optional) - Description of the contents of the package (See reference for general categories)
++ `packageRefName` (string, optional) - For future-use
++ `service` (string, optional) - Shipments orginating and destined to the United States will default to DELCON. Signature confirmation* is also available for certain products at an additional cost (please contact your Sales representative for more details). International shipments will default to the tracking capabilties available to the product/service selected. Shipment tracking is available for all parcel products. Tracking is available through the DHL eCommerce web portal, or through the USPS tracking site.
++ `serviceEndorsement` (enum[number], optional) - Ancillary service endorsements are used to request an addressee�s new address and to provide the USPS with instructions on how to handle undeliverable-as-addressed pieces. The endorsements are the same for all classes of US Domestic mail, but the treatment and cost differ by class of mail. Use of an ancillary service endorsement on a mailpiece obligates the mailer to pay any applicable charges for forwarding, return, and separate address notification charges.
+    + `1`
+    + `2`
+    + `3`
+    + `4`
++ `height` (number, optional) - Height dimension of the package (provide if available)
++ `length` (number, optional) - Longest measurement of package (provide if available)
++ `width` (number, optional) - Width dimension of the package (provide if available)
+
+
+## ReturnAddress (object)
+
+
+
++ `address1` (string, required) - Line 1 of the return street address
++ `city` (string, required) - Return city
++ `country` (string, required) - Two-character ISO return address country code.
++ `address2` (string, optional) - Line 2 of the return street address
++ `address3` (string, optional) - (International Only) Line 3 of the return street address
++ `companyName` (string, optional) - Name of the institution receiving the returned package
++ `name` (string, optional) - Name of the person receiving the returned package
++ `postalCode` (string, optional) - Return postal code
++ `state` (string, optional) - Return state, province or territory
+
+
+## CustomsDetail (object)
+
+
+
++ `itemDescription` (string, required) - Detailed description of the commodity item - Used for customs clearance. Accuracy and Detail are required.
++ `packagedQuantity` (number, required) - Quantity of the same item in the package
++ `itemValue` (number, required) - The commercial value of the commodity (per each)
++ `descriptionExport` (string, optional) - Dedicated description for export customs clearance (iff required to be different from item description)
++ `descriptionImport` (string, optional) - Dedicated description for import customs clearance (iff required to be different from item description)
++ `countryOfOrigin` (string, optional) - 2-Character Country Code for Origin Manufacturer Country of the product
++ `hsCode` (string, optional) - The Harmonized Tariff Schedule is a number assigned to every possible commodity that can be imported or exported from any country. Please do not include any decimals "." in this field.
++ `skuNumber` (string, optional) - SKU #, or item code - Used for product verification on clients website during customs clearance process.
+
+
+## ResponseFormat (object)
+
+
+
++ `shipments` (array[Shipment12], required) - Container array for one or more shipments
+
+
+## Shipment12 (object)
+
+
+
++ `pickupAccount`: `5300000` (string, required) - The DHL eCommerce pickup account number. You will receive this after doing the onboarding with DHL sales.
++ `distributionCenter`: `USORD1` (string, required) - Primary DHL eCommerce Distribution center assigned to your products/services. This will be provided during onboarding.
++ `packages`: `USORD1` (array[Package13], required) - One or more packages. At the moment, only one package is supported by the label service.
+
+
+## Package13 (object)
+
+
+
++ `consigneeAddress` (ConsigneeAddress, required) - Address of the consignee.
++ `packageDetails` (PackageDetails15, required) - Details of one package.
++ `returnAddress` (ReturnAddress, optional) - Address of the returns (if different from shipper)
++ `customsDetails` (array[CustomsDetail], optional) - Details for one or more customs commodities. Only applicable if orderedProduct is an International Product
++ `responseDetails` (ResponseDetails, optional) 
+
+
+## PackageDetails15 (object)
+
+
+
++ `currency` (string, required) - Three-letter ISO Currency code
++ `orderedProduct` (string, required) - Identifies the DHL eCommerce product that is to be applied to the shipment. Refer to the product matrix for a list of all available and valid products.
++ `packageId` (string, required) - Unique reference ID for shipment; also referred to as Customer Confirmation Number.
++ `weight` (number, required) - Total shipment content weight. Whole numbers only.
++ `weightUom` (string, required) - The unit of measure for the weight.
++ `billingRef1` (string, optional) - String of characters that can be used to aggregate billing data (may not be unique per parcel). BillingRef1 is also referred to as Reference
++ `billingRef2` (string, optional) - Secondary string of characters that can be used to aggregate billing data (may not be unique per parcel). BillingRef2 is also referred to as Batch.
++ `codAmount` (number, optional) - Amount to collect upon delivery of goods
++ `declaredValue` (number, optional) - Total declared value for the package. While not mandatory, best practice is to provide if available.
++ `deliveryConfirmationNo` (string, optional) - For future-use
++ `dgCategory` (string, optional) - Can contain the dangerous goods category but also more generic information on the contents like for example fragile. In the US just contains the dg category.
++ `dimensionUom` (string, optional) - Dimensional unit of measure for length, width, and height of the package
++ `dutiesPaid` (string, optional) - Indicates whether duties and taxes for the shipment are paid by the shipper (value 'Y') or not ('N'). this is commonly known as Inco terms DDP (Delivered Duties Paid) and DDU (Delivered Duties Unpaid).
++ `insuredValue` (number, optional) - Total insured value of the package
++ `mailType` (number, optional) - Identifies the mail type of the shipment. Refer to the mail type matrix for a list of valid mail types.
++ `packageDesc` (string, optional) - Description of the contents of the package (See reference for general categories)
++ `packageRefName` (string, optional) - For future-use
++ `service` (string, optional) - Shipments orginating and destined to the United States will default to DELCON. Signature confirmation* is also available for certain products at an additional cost (please contact your Sales representative for more details). International shipments will default to the tracking capabilties available to the product/service selected. Shipment tracking is available for all parcel products. Tracking is available through the DHL eCommerce web portal, or through the USPS tracking site.
++ `serviceEndorsement` (number, optional) - Ancillary service endorsements are used to request an addressee�s new address and to provide the USPS with instructions on how to handle undeliverable-as-addressed pieces. The endorsements are the same for all classes of US Domestic mail, but the treatment and cost differ by class of mail. Use of an ancillary service endorsement on a mailpiece obligates the mailer to pay any applicable charges for forwarding, return, and separate address notification charges.
++ `height` (number, optional) - Height dimension of the package (provide if available)
++ `length` (number, optional) - Longest measurement of package (provide if available)
++ `width` (number, optional) - Width dimension of the package (provide if available)
+
+
+## ResponseDetails (object)
+
+
+
++ `labelDetails` (array[LabelDetail], optional) 
++ `trackingNumber` (string, optional) 
++ `trackingNumberStatus` (string, optional) 
+
+
+## LabelDetail (object)
+
+
+
++ `packageId` (string, optional) 
++ `format` (string, optional) 
++ `templateId` (string, optional) 
++ `labelData` (string, optional) 
+
+
+## Reason (object)
+
+
+
++ `msg` (string, required) 
+
+
+## Details (object)
+
+
+
++ `msgId` (string, required) 
+
+
+## ErrResponseFormatError (object)
+
+
+
++ `reasons` (array[Reason], required) 
++ `details` (Details, required)
