@@ -22,10 +22,11 @@ The API uses **HTTPS (over SSL) protocol**, the HTTP GET is used to retrieve dat
     >**Note:** *Usage of HTTP PUT and DELETE is not enabled.*
 
 The **service endpoints** available via this APIs have been build along side your eCommerce experience as underneath graphic indicates:
-<img src="https://czchoapint222.prg-dc.dhl.com:6443/apidoc/API_CustomerJourney.png" width="185" height="126" alt="Planets" usemap="#customerjourney">
+<img src="https://czchoapint222.prg-dc.dhl.com:6443/apidoc/API_CustomerJourney.png" width="185px" height="126px" alt="Planets" usemap="#customerjourney">
 <map name="customerjourney">
-  <area shape="rect" coords="26,64,450,128" alt="shippingapi" href="#reference/shipping">
-  <area shape="rect" coords="0,0,26,210" alt="shippingapi" href="#reference/authentication">
+  <area shape="rect" coords="26,64,448,128" alt="shippingapi" href="https://czchoapint222.prg-dc.dhl.com:6443/apidoc/apidoc-newapidoc.html#/reference/shipping">
+  <area shape="rect" coords="26,128,448,200" alt="filfillmentapi" href="https://czchoapint222.prg-dc.dhl.com:6443/apidoc/apidoc-newapidoc.html#reference/fulfillment">
+  <area shape="rect" coords="0,0,26,210" alt="authenticationapi" href="https://czchoapint222.prg-dc.dhl.com:6443/apidoc/apidoc-newapidoc.html#reference/authentication">
 </map>
 
 
@@ -107,7 +108,7 @@ ___
 Here on this page, the latest version of our global DHL eCommerce API is beeing documented. Currently this is **V.1**. Older versions do not yet exist - as soon as a newer version is published, the release notes as well as the links to older version is shown underneath.
 ___
 
-## API Health (!TO BE CREATED YET!)
+## API Health (...tbd)
 We as DHL eCommerce constantly monitor our APIs performance to keep it up all the time and with the maximum response times. In case there is the unlikely event of a downtime or a non perfect reponse time, please check the underneath status on single call level:
 
 | API GROUP             | STATUS    | UPTIME        |RESPONSE TIME  |
@@ -119,7 +120,7 @@ We as DHL eCommerce constantly monitor our APIs performance to keep it up all th
 
 ___
 
-## Help, Links & Support (!TO BE MADE SHORTER!)
+## Help, Links & Support
 Coding against logistic APIs is not always fun - we know! To ensure you the best possible support, we developed a variety of options for you, to resolve any issues experienced. Underneath, we give you an overview on where you might find help for any possible question comming up on your side of the screen: 
 - *Products and services* offered by DHL eCommerce and where to get more information on if they are available at your location, what they offer you and your customers etc. via: http://www.dhl.com/eCommerce 
 - *Glossary & Logistic terms* can be confusing too - so get a good, searchable overview on all the specific terms we use, please check the consolidated Glossary of DHL eCommerce here: http://www.dhl.com/integration-glossary
@@ -339,176 +340,6 @@ The Get All Users API call returns all user ids, which are stored in the particu
             ]
 
 
-
-# Group Shipping
-Our global shipping API provides you with everything you need to bring your orders to your customers - for your domestic- as well as for your international ones.<br/><br/>
-Starting with receiving shipping options via label creation and manifesting of your shipments to ensure a smooth handover to the creation of tracking updates - all within one API. 
-You can use Shipping API for the Order Manifest and Label generation (PDF, PNG and ZPL formats).<br/><br/>
-
-**API Authentication:** All API operations require `Access Token` to be passed in the Authorization Header for each request. The token type is an OAuth 2.0 Bearer token.<br/><br/> 
->**Note:** *[here](#reference/authentication) you can find more information how to to retrive the `Access Token`.* 
-
-The Access Token is valid for 5h so it is not necessary to request the token for each request. Developers should implement the client application in a way that the token will be requested again only after it expires.
-
-
-## Create Label [/v1/shipping/label{?format,labelSize,pageSize,layout}]
-
-Now that you know the shipping product you want to use, you can use the API calls described here to create the labels you need for this.<br/><br/>
-No matter if they are domestic labels, labels for your international shipments or if it is a postal or a commercial shipment - here you will receive them all.<br/><br/>
-Furthermore, by creation of the shipping label you will receive a unique tracking code for your customer that is bound to the label you created.<br/><br/>
-
-**Implementation Examples:** 
-- *Create a Label*: XXXXX
-- *XXX*: XXXXX
-___
-
-**Available API calls:**
-INTRODUCTIONTEXT2
-
-### Create Label [POST]
-
-Purpose of this service is to generate labels for single mail item only (single package object).<br/><br/>
-The benefit of this service is that it is synchronous and returns label contents directly in the response, so it is no necessity to download the labels afterwards.<br/><br/>
-
-To use the Shipping and Label calls, you may use the following accounts and additional settings.
-
-| International Shipping | Codes          | Comments            |
-| -----------------------|----------------|---------------------|
-|Pickup account          | 5317861        | International labels 
-|Distribution center     | HKHKG1         | International labels
-|Product                 | PPS            | Parcel Plus, trackable
-
-| US Domestic            | Codes          | Comments            |
-| -----------------------|----------------|---------------------|
-|Pickup account          | 5330434        |  
-|Distribution center     | USATL1         | 
-|Product                 | 631            | 
-
-| Thailand Domestic      | Codes          | Comments            |
-| -----------------------|----------------|---------------------|
-|Pickup account          | 5999999130     |  
-|Distribution center     | THBKK1         | 
-|Product                 | PDO            | 
-|Currency                | THB            | 
-
-| Chile Domestic         | Codes          | Comments            |
-| -----------------------|----------------|---------------------|
-|Pickup account          | 1000000012     |  
-|Distribution center     | CLSAN1         | 
-|Product                 | PDO            | 
-|Currency                | CLP            | 
-
-
-| Vietnam Domestic       | Codes          | Comments            |
-| -----------------------|----------------|---------------------|
-|Pickup account          | 5248767454     |  
-|Distribution center     | VNSGN1         | 
-|Product                 | PDO            | 
-___
-
-Recommended sequence for the Label service call is following:
-        
-1. Use clientId to obtain token using the authentication API - see `API Authentication` description above.
-2. Prepare valid JSON request document per schema. Use data above depending on your use-case.
-3. Call Sandbox API. The response message will contain information form the request; additionally it may contain a tracking number (depending on product) and base64-encoded label.
-
-+ Headers 
-    Authorization: Bearer [place OAuth access token here, without brackets]
-
-+ Parameters
-
-    + format: `PDF` (enum[string], required)
-
-        Mandatory parameter to define file format. One of PNG|ZPL|PDF
-
-        + Default: PNG
-        + Members
-            + `PDF` 
-            + `PNG` 
-            + `ZPL` 
-
-    + labelSize: `4x4` (enum[string], required)
-
-        Mandatory parameter to difine size of the label. One of 4x6|4x4.
-
-        + Default: 4x6
-        + Members
-            + `4x6` 
-            + `4x4` 
-
-    + pageSize: `A4` (enum[string], optional)
-
-        Conditionaly mandatory, only for PDF format. Size of the page in PDF file. One of A4|400x600|400x600.
-
-        + Default: A4
-        + Members
-            + `A4` 
-            + `400x600` 
-            + `400x400` 
-
-    + layout: `1x1` (string, optional)
-
-        Conditionaly mandatory, only for PDF format. Defines way how single labels are layouted on the PDF page. In case of pageSize=A4 it might be 4x1 or 1x1. Otherwise 1x1 is the only option.
-
-        + Default: 1x1
-        + Members
-            + `4x1` 
-            + `1x1` 
-
-+ Request (application/json)
-    + Attributes (RequestFormat)
-
-+ Response 202 (application/json)
-    + Attributes (ResponseFormat)
-
-+ Response 401  (application/json)
-    + Attributes (ErrResponseFormatError)
-
-## Order Manifest [/v1/Shipping/manifest]
-**Manifesting** (sometimes refered to as *Close-out*) describes the process of transmitting your final shipments to us before the physical transfer of the shipments.<br/><br/>
-Within this process, a document (**the Manifest**) is beeing created sumarizing all the to be shipped items, their total weight as well as associated information on your account.<br/><br/>
-The created document also includes your signature and a barcode. During drop-off or pick-up, this document is scanned by us.<br/><br/>
-___
-**Implementation Examples:** 
-- *Create your first manifest*: XXXXX
-- *Embed the manifest creation into your process*: XXXXX
-
-___
-**Available API calls:**
-INTRODUCTIONTEXT2
-
-### Create Manifest [POST]
-Purpose of this service is to create shipping order manifest.<br/><br/>
-The shipping order manifest (SOM) API uses the same document format / JSON schema like Label service.<br/><br/> 
-It does allow transmission of data for up to 1000 parcels in a single call.<br/><br/>
-The recommended sequence for the SOM call is following:
-
-    1. Use client id to obtain token using the authentication API- see `API Authentication` description above.
-    2. Prepare valid JSON request document per schema. Use data above depending on your use-case.
-    3. Call Sandbox API. The response message will acknowledge success or failure of the call.
-
-+ Headers 
-    Authorization: Bearer [place OAuth access token here, without brackets]
-    
-+ Request (application/json)
-    + Attributes (RequestFormat)
-
-+ Response 201 
-    + Attributes (ResponseFormat)
-    
-+ Response 400 
-Bad Request - Invalid URI parameters or querystring
-    + Attributes (ErrResponseFormatError)
-
-+ Response 401 
-    { "message" : "Unauthorized Access - Invalid token or Authentication Header parameter"}
-
-+ Response 429 
-    { "message" : "Too many requests in given amount of time"}
-
-+ Response 503 
-    { "message" : "Service Unavailable"}
-
 # Group Fulfillment
 The Fulfillment API provides you an interface for the order management operations.
 
@@ -550,34 +381,66 @@ ___
 **Available API calls:**
 INTRODUCTIONTEXT2
 
-### Create item [GET]
+### Create item [POST]
 The API operation for Create Item.
 
-+ Headers 
-    Authorization: Bearer [place OAuth access token here, without brackets]
-    Content-Type: application/json
-
 + Request (application/json)
-    + Attributes ()
+    + Headers 
+        Accept: application/json
+        Authorization: Bearer [token]
+        Content-Type: application/json
+    
+    + Attributes (CreateItemReq)
 
-+ Response 201 (application/json)
-    + Attributes (ResponseFormat)
++ Response 200
+    + Headers 
+        Content-Type: application/json
 
-+ Response 400 (application/json)
-    + Attributes (ResponseFormat)
+    + Body
+        
+        {
+            "message": "Item created"
+        }
+
++ Response 400
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Bad Request - Invalid URI parameters or querystring"
+        }
 
 + Response 401 (application/json)
-    + Attributes (ResponseFormat)
-    
-+ Response 421 (application/json)
-    + Attributes (ResponseFormat)    
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+        }
 
 + Response 429 (application/json)
-    + Attributes (ResponseFormat) 
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Too many requests in given amount of time"
+        }
     
-+ Response 503 
-    + Attributes (ResponseFormat)
-    
++ Response 503 (application/json)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Service Unavailable"
+        }
 
 ### Get Item list [GET /v1/fulfillment/item/list/{accountNumber}{?itemId,status,page}]
 
@@ -590,8 +453,9 @@ The API operation for Get Item List. The optional parameters of the API operatio
 |accountNumber && status && page|Returns page with filtered items by status and account number. **Page is optional.**|
 
 + Headers 
-    Authorization: Bearer [place OAuth access token here, without brackets]
-    Content-Type: application/json
+        Accept: application/json
+        Authorization: Bearer [token]
+        Content-Type: application/json
     
 + Parameters 
     + accountNumber :  (string, required)
@@ -617,45 +481,112 @@ The API operation for Get Item List. The optional parameters of the API operatio
     + page : (string, optional)
         Page
 
-+ Response 200 (application/json)
-    + Attributes (ResponseFormat)
++ Response 200
+    + Headers 
+        Content-Type: application/json
 
-+ Response 400 (application/json)
-    + Attributes (ResponseFormat)
+    + Attributes (ItemListRes)
+
++ Response 400
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Bad Request - Invalid URI parameters or querystring"
+        }
 
 + Response 401 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+        }
 
 + Response 429 (application/json)
-    + Attributes (ResponseFormat) 
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Too many requests in given amount of time"
+        }
     
 + Response 503 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Service Unavailable"
+        }
 
 ### Update Item [POST /v1/fulfillment/item/update]
 The API operation for Update Item
 
-+ Headers 
-    Authorization: Bearer [place OAuth access token here, without brackets]
-    Content-Type: application/json
-
 + Request (application/json)
-    + Attributes ()
-    
-+ Response 200 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+            Accept: application/json
+            Authorization: Bearer [token]
+            Content-Type: application/json
 
-+ Response 400 (application/json)
-    + Attributes (ResponseFormat)
+    + Attributes (UpdateItemReq)
+    
++ Response 200
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Item updated"
+        }
+
++ Response 400
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Bad Request - Invalid URI parameters or querystring"
+        }
 
 + Response 401 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+        }
 
 + Response 429 (application/json)
-    + Attributes (ResponseFormat) 
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Too many requests in given amount of time"
+        }
     
 + Response 503 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Service Unavailable"
+        }
 
 
 ## Sales Orders [/v1/fulfillment/order/]
@@ -680,25 +611,62 @@ INTRODUCTIONTEXT2
 The API operation for Create Sales Order.
 
 + Request (application/json)
-    + Attributes ()
-+ Headers 
-    Authorization: Bearer [place OAuth access token here, without brackets]
-    Content-Type: application/json
+    + Headers 
+        Accept: application/json
+        Authorization: Bearer [token]
+        Content-Type: application/json
     
-+ Response 202 (application/json)
-    + Attributes (ResponseFormat)
+    + Attributes (CreateSalesOrderReq)
+    
++ Response 202
+    + Headers 
+        Content-Type: application/json
 
-+ Response 400 (application/json)
-    + Attributes (ResponseFormat)
+    + Body
+        
+        {
+            "message": "Sales Order Accepted"
+        }
+
++ Response 400
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Bad Request - Invalid URI parameters or querystring"
+        }
 
 + Response 401 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+        }
 
 + Response 429 (application/json)
-    + Attributes (ResponseFormat) 
-    
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Too many requests in given amount of time"
+        }
+
 + Response 503 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Service Unavailable"
+        }
 
 ### Get Back Sales Order List [GET /v1/fulfillment/order/backorderlist/{accountNumber}{?accountNumber,dateFrom,dateTo,page}]
 
@@ -711,8 +679,9 @@ Following combinations of are allowed, when calling the API operation.
 |accountNumber && dateFrom && dateTo && page  |Returns page of backordered orders for given date range. **Page, dateFrom and dateTo are optional.**|
 
 + Headers 
-    Authorization: Bearer [place OAuth access token here, without brackets]
-    Content-Type: application/json
+        Accept: application/json
+        Authorization: Bearer [token]
+        Content-Type: application/json
     
 + Parameters 
     + accountNumber :  (string, required)
@@ -722,29 +691,62 @@ Following combinations of are allowed, when calling the API operation.
     + dateTo : (string, optional)
         Date To
     + page : (string, optional)
-        Page    
+        Page
 
-+ Response 200 (application/json)
-    + Attributes (ResponseFormat)
++ Response 200
+    + Headers 
+        Content-Type: application/json
 
-+ Response 400 (application/json)
-    + Attributes (ResponseFormat)
+    + Attributes (BackOrderListRes)
+
++ Response 400
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Bad Request - Invalid URI parameters or querystring"
+        }
 
 + Response 401 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+        }
 
 + Response 429 (application/json)
-    + Attributes (ResponseFormat) 
-    
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Too many requests in given amount of time"
+        }
+
 + Response 503 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Service Unavailable"
+        }
 
 ### Sales Order Acknowledgement [GET /v1/fulfillment/order/acknowledgement/{accountNumber}/{orderNumber}/{orderSubmissionId}]
 
 The API operation for Get Sales Order Acknowledgement
+
 + Headers 
-    Authorization: Bearer [place OAuth access token here, without brackets]
-    Content-Type: application/json
+        Accept: application/json
+        Authorization: Bearer [token]
+        Content-Type: application/json
     
 + Parameters 
     + accountNumber :  (string, required)
@@ -754,20 +756,52 @@ The API operation for Get Sales Order Acknowledgement
     + orderSubmissionId :  (string, required)
         Sales Order Submission Id   
 
-+ Response 200 (application/json)
-    + Attributes (ResponseFormat)
++ Response 200
+    + Headers 
+        Content-Type: application/json
 
-+ Response 400 (application/json)
-    + Attributes (ResponseFormat)
+    + Attributes (SalesOrderAcknowledgementRes)
+
++ Response 400
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Bad Request - Invalid URI parameters or querystring"
+        }
 
 + Response 401 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+        }
 
 + Response 429 (application/json)
-    + Attributes (ResponseFormat) 
-    
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Too many requests in given amount of time"
+        }
+
 + Response 503 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Service Unavailable"
+        }
+
 
 ### Sales Order Status [GET /v1/fulfillment/order/status/{accountNumber}{?accountNumber}]
 
@@ -811,20 +845,51 @@ Following combinations of are allowed, when calling the API operation.
     + page : (string, optional)
         Page   
 
-+ Response 200 (application/json)
-    + Attributes (ResponseFormat)
++ Response 200
+    + Headers 
+        Content-Type: application/json
 
-+ Response 400 (application/json)
-    + Attributes (ResponseFormat)
+    + Attributes (SalesOrderStatusRes)
+
++ Response 400
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Bad Request - Invalid URI parameters or querystring"
+        }
 
 + Response 401 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+        }
 
 + Response 429 (application/json)
-    + Attributes (ResponseFormat) 
-    
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Too many requests in given amount of time"
+        }
+
 + Response 503 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Service Unavailable"
+        }
 
 ### Sales Order Details [GET /v1/fulfillment/order/details/{accountNumber}/{orderNumber}]
 The API operation for Get Sales Order Details
@@ -838,53 +903,120 @@ The API operation for Get Sales Order Details
     + orderNumber :  (string, required)
         Sales Order Number
 
-+ Response 200 (application/json)
-    + Attributes (ResponseFormat)
++ Response 200
+    + Headers 
+        Content-Type: application/json
 
-+ Response 400 (application/json)
-    + Attributes (ResponseFormat)
+    + Attributes (SalesOrderDetailsRes)
+
++ Response 400
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Bad Request - Invalid URI parameters or querystring"
+        }
 
 + Response 401 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+        }
 
 + Response 429 (application/json)
-    + Attributes (ResponseFormat) 
-    
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Too many requests in given amount of time"
+        }
+
 + Response 503 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Service Unavailable"
+        }
 
 ## Purchase Order [/v1/fulfillment/purchaseorder]
 
 ### Create Purchase Order [POST]
 The API operation for Create Purchase Order.
 
-+ Headers 
-    Authorization: Bearer [place OAuth access token here, without brackets]
-    Content-Type: application/json
-    
 + Request (application/json)
-    + Attributes (RequestFormat)
+    + Headers 
+        Accept: application/json
+        Authorization: Bearer [token]
+        Content-Type: application/json
+    
+    + Attributes (CreatePurchaseOrderReq)
+    
++ Response 200
+    + Headers 
+        Content-Type: application/json
 
-+ Response 200 (application/json)
-    + Attributes (ResponseFormat)
+    + Body
+        
+        {
+            "message": "Purchase Order Accepted"
+        }
 
-+ Response 400 (application/json)
-    + Attributes (ResponseFormat)
++ Response 400
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Bad Request - Invalid URI parameters or querystring"
+        }
 
 + Response 401 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+        }
 
 + Response 429 (application/json)
-    + Attributes (ResponseFormat) 
-    
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Too many requests in given amount of time"
+        }
+
 + Response 503 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Service Unavailable"
+        }
 
 ###  Purchase Order Acknowledgement [GET /v1/fulfillment/purchaseorder/acknowledgement/{accountNumber}/{orderNumber}/{orderSubmissionId}]
-
 The API operation for Get Purchase Order Acknowledgement
 + Headers 
-    Authorization: Bearer [place OAuth access token here, without brackets]
+    Accept: application/json
+    Authorization: Bearer [token]
     Content-Type: application/json
     
 + Parameters 
@@ -895,51 +1027,119 @@ The API operation for Get Purchase Order Acknowledgement
     + orderSubmissionId :  (string, required)
         Purchase Order Submission Id 
 
-+ Response 200 (application/json)
-    + Attributes (ResponseFormat)
++ Response 200
+    + Headers 
+        Content-Type: application/json
 
-+ Response 400 (application/json)
-    + Attributes (ResponseFormat)
+    + Attributes (PurchaseOrderAcknowledgementRes)
+
++ Response 400
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Bad Request - Invalid URI parameters or querystring"
+        }
 
 + Response 401 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+        }
 
 + Response 429 (application/json)
-    + Attributes (ResponseFormat) 
-    
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Too many requests in given amount of time"
+        }
+
 + Response 503 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Service Unavailable"
+        }
+
 
 ###  Cancel Purchase Order [POST /v1/fulfillment/purchaseorder/cancel]
-
 The API operation for Cancel Purchase Order
-+ Headers 
-    Authorization: Bearer [place OAuth access token here, without brackets]
-    Content-Type: application/json
-    
+
 + Request (application/json)
-    + Attributes (RequestFormat)
+    + Headers 
+        Accept: application/json
+        Authorization: Bearer [token]
+        Content-Type: application/json
+    
+    + Attributes (CancelPurchaseOrderReq)
+    
++ Response 200
+    + Headers 
+        Content-Type: application/json
 
-+ Response 200 (application/json)
-    + Attributes (ResponseFormat)
+    + Body
+    
+        {
+            "message": "Purchase Order Canceled"
+        }
++ Response 400
+    + Headers 
+        Content-Type: application/json
 
-+ Response 400 (application/json)
-    + Attributes (ResponseFormat)
+    + Body
+        
+        {
+            "message": "Bad Request - Invalid URI parameters or querystring"
+        }
 
 + Response 401 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+        }
 
 + Response 429 (application/json)
-    + Attributes (ResponseFormat) 
-    
-+ Response 503 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
 
-### Purchase Order Details [POST /v1/fulfillment/purchaseorder/details/{accountNumber}/{orderNumber}]
+    + Body
+        
+        {
+            "message": "Too many requests in given amount of time"
+        }
+
++ Response 503 (application/json)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Service Unavailable"
+        }
+
+### Purchase Order Details [GET /v1/fulfillment/purchaseorder/details/{accountNumber}/{orderNumber}]
 The API operation for Get Purchase Order Details.
 
 + Headers 
-    Authorization: Bearer [place OAuth access token here, without brackets]
+    Accept: application/json
+    Authorization: Bearer [token]
     Content-Type: application/json
     
 + Parameters 
@@ -950,23 +1150,51 @@ The API operation for Get Purchase Order Details.
     + orderSubmissionId :  (string, required)
         Purchase Order Submission Id 
 
-+ Request (application/json)
-    + Attributes (RequestFormat)        
++ Response 200
+    + Headers 
+        Content-Type: application/json
 
-+ Response 200 (application/json)
-    + Attributes (ResponseFormat)
+    + Attributes (PurchaseOrderDetailsRes)
+    
++ Response 400
+    + Headers 
+        Content-Type: application/json
 
-+ Response 400 (application/json)
-    + Attributes (ResponseFormat)
+    + Body
+        
+        {
+            "message": "Bad Request - Invalid URI parameters or querystring"
+        }
 
 + Response 401 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+        }
 
 + Response 429 (application/json)
-    + Attributes (ResponseFormat) 
-    
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Too many requests in given amount of time"
+        }
+
 + Response 503 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Service Unavailable"
+        }
 
 ### Purchase Order Status [GET /v1/fulfillment/purchaseorder/status/{accountNumber}{?accountNumber,orderNumber,dateFrom,dateTo,status,page}]
 The API operation for Get Purchase Order Status.
@@ -981,7 +1209,8 @@ Following combinations of are allowed, when calling the API operation.
 |dateFrom && dateTo && status && page\t|Returns page with filtered orders by status for defined date range. **Status and page are optional.**|"
 
 + Headers 
-    Authorization: Bearer [place OAuth access token here, without brackets]
+    Accept: application/json
+    Authorization: Bearer [token]
     Content-Type: application/json
     
 + Parameters 
@@ -1012,44 +1241,112 @@ Following combinations of are allowed, when calling the API operation.
     + page : (string, optional)
         Page   
 
-+ Response 200 (application/json)
-    + Attributes (ResponseFormat)
++ Response 200
+    + Headers 
+        Content-Type: application/json
 
-+ Response 400 (application/json)
-    + Attributes (ResponseFormat)
+    + Attributes (PurchaseOrderStatusRes)
+    
++ Response 400
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Bad Request - Invalid URI parameters or querystring"
+        }
 
 + Response 401 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+        }
 
 + Response 429 (application/json)
-    + Attributes (ResponseFormat) 
-    
-+ Response 503 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
 
-### Purchase Order Status [GET /v1/fulfillment/purchaseorder/update]
+    + Body
+        
+        {
+            "message": "Too many requests in given amount of time"
+        }
+
++ Response 503 (application/json)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Service Unavailable"
+        }
+
+### Update Purchase Order [GET /v1/fulfillment/purchaseorder/update]
 The API operation for Update Purchase Order
-+ Headers 
-    Authorization: Bearer [place OAuth access token here, without brackets]
-    Content-Type: application/json
-    
+
 + Request (application/json)
-    + Attributes (RequestFormat)
+    + Headers 
+        Accept: application/json
+        Authorization: Bearer [token]
+        Content-Type: application/json
+    
+    + Attributes (UpdatePurchaseOrderReq)
 
-+ Response 200 (application/json)
-    + Attributes (ResponseFormat)
++ Response 200
+    + Headers 
+        Content-Type: application/json
 
-+ Response 400 (application/json)
-    + Attributes (ResponseFormat)
+    + Body
+        
+        {
+            "message": "Purchase Order Updated"
+        }
+    
++ Response 400
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Bad Request - Invalid URI parameters or querystring"
+        }
 
 + Response 401 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+        }
 
 + Response 429 (application/json)
-    + Attributes (ResponseFormat) 
-    
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Too many requests in given amount of time"
+        }
+
 + Response 503 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Service Unavailable"
+        }
 
 
 ## Return Order [/v1/fulfillment/returnorder/details/{accountNumber}/{orderNumber}
@@ -1057,7 +1354,8 @@ The API operation for Update Purchase Order
 The API operation for Get Return Order Details
 
 + Headers 
-    Authorization: Bearer [place OAuth access token here, without brackets]
+    Accept: application/json
+    Authorization: Bearer [token]
     Content-Type: application/json
     
 + Parameters 
@@ -1066,20 +1364,52 @@ The API operation for Get Return Order Details
     + orderNumber :  (string, required)
         Return Order Number
 
-+ Response 200 (application/json)
-    + Attributes (ResponseFormat)
++ Response 200
+    + Headers 
+        Content-Type: application/json
 
-+ Response 400 (application/json)
-    + Attributes (ResponseFormat)
+    + Attributes(ReturnOrderDetailsRes)
+    
++ Response 400
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Bad Request - Invalid URI parameters or querystring"
+        }
 
 + Response 401 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+        }
 
 + Response 429 (application/json)
-    + Attributes (ResponseFormat) 
-    
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Too many requests in given amount of time"
+        }
+
 + Response 503 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Service Unavailable"
+        }
+
 
 ### Return Order List [GET /v1/fulfillment/returnorder/list/{accountNumber}{?accountNumber,orderNumber,dateFrom,dateTo,status,page}]
 The API operation for Get Return Order List\n\nThe optional parameters of the API operation are conditional. Following combinations of are allowed, when calling the API operation.
@@ -1093,7 +1423,8 @@ The API operation for Get Return Order List\n\nThe optional parameters of the AP
 |accountNumber && dateFrom && dateTo && status && page\t|Returns page of filtered orders by status and account number for defined date range. **Status and page are optional.**|
 
 + Headers 
-    Authorization: Bearer [place OAuth access token here, without brackets]
+    Accept: application/json
+    Authorization: Bearer [token]
     Content-Type: application/json
     
 + Parameters 
@@ -1124,20 +1455,51 @@ The API operation for Get Return Order List\n\nThe optional parameters of the AP
     + page : (string, optional)
         Page      
 
-+ Response 200 (application/json)
-    + Attributes (ResponseFormat)
++ Response 200
+    + Headers 
+        Content-Type: application/json
 
-+ Response 400 (application/json)
-    + Attributes (ResponseFormat)
+    + Attributes(ReturnOrderListRes)
+    
++ Response 400
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Bad Request - Invalid URI parameters or querystring"
+        }
 
 + Response 401 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+        }
 
 + Response 429 (application/json)
-    + Attributes (ResponseFormat) 
-    
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Too many requests in given amount of time"
+        }
+
 + Response 503 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Service Unavailable"
+        }
 
 ## Shipment [/v1/fulfillment/shipment/details/{accountNumber}{?accountNumber,orderNumber,dateFrom,dateTo,date,page}]
 
@@ -1152,7 +1514,8 @@ The optional parameters of the API operation are conditional. Following combinat
 |accountNumber && date && page\t\t\t\t\t      |Returns shipments for given date. **Page is optional.**|
 
 + Headers 
-    Authorization: Bearer [place OAuth access token here, without brackets]
+    Accept: application/json
+    Authorization: Bearer [token]
     Content-Type: application/json
     
 + Parameters 
@@ -1169,21 +1532,97 @@ The optional parameters of the API operation are conditional. Following combinat
     + page : (string, optional)
         Page 
 
-+ Response 200 (application/json)
-    + Attributes (ResponseFormat)
++ Response 200
+    + Headers 
+        Content-Type: application/json
 
-+ Response 400 (application/json)
-    + Attributes (ResponseFormat)
+    + Attributes(ShipmentDetailsRes)
+    
++ Response 400
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Bad Request - Invalid URI parameters or querystring"
+        }
 
 + Response 401 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+        }
 
 + Response 429 (application/json)
-    + Attributes (ResponseFormat) 
-    
-+ Response 503 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
 
+    + Body
+        
+        {
+            "message": "Too many requests in given amount of time"
+        }
+
++ Response 503 (application/json)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Service Unavailable"
+        }
+
++ Response 200
+    + Headers 
+        Content-Type: application/json
+
+    + Attributes(ReturnOrderListRes)
+    
++ Response 400
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Bad Request - Invalid URI parameters or querystring"
+        }
+
++ Response 401 (application/json)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+        }
+
++ Response 429 (application/json)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Too many requests in given amount of time"
+        }
+
++ Response 503 (application/json)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Service Unavailable"
+        }
 
 ## Stock [/v1/fulfillment/stock/{inventoryAccountNumber}/{itemId}/{?node}]
 
@@ -1191,7 +1630,8 @@ The optional parameters of the API operation are conditional. Following combinat
 The API operation for Get Available Stock.
 
 + Headers 
-    Authorization: Bearer [place OAuth access token here, without brackets]
+    Accept: application/json
+    Authorization: Bearer [token]
     Content-Type: application/json
     
 + Parameters 
@@ -1207,27 +1647,58 @@ The API operation for Get Available Stock.
             + JP1
             + MX1
 
-+ Response 200 (application/json)
-    + Attributes (ResponseFormat)
++ Response 200
+    + Headers 
+        Content-Type: application/json
 
-+ Response 400 (application/json)
-    + Attributes (ResponseFormat)
+    + Attributes(AvailableStockRes)
+    
++ Response 400
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Bad Request - Invalid URI parameters or querystring"
+        }
 
 + Response 401 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+        }
 
 + Response 429 (application/json)
-    + Attributes (ResponseFormat) 
-    
-+ Response 503 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
 
+    + Body
+        
+        {
+            "message": "Too many requests in given amount of time"
+        }
+
++ Response 503 (application/json)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Service Unavailable"
+        }
 
 ### Inventory Snapshot [GET /stock/snapshot/{inventoryAccountNumber}{?itemId,node}]
-
 The API operation for Get Inventory Snapshot
+
 + Headers 
-    Authorization: Bearer [place OAuth access token here, without brackets]
+    Accept: application/json
+    Authorization: Bearer [token]
     Content-Type: application/json
     
 + Parameters 
@@ -1243,188 +1714,1185 @@ The API operation for Get Inventory Snapshot
             + JP1
             + MX1   
 
-+ Response 200 (application/json)
-    + Attributes (ResponseFormat)
++ Response 200
+    + Headers 
+        Content-Type: application/json
 
-+ Response 400 (application/json)
-    + Attributes (ResponseFormat)
+    + Attributes(InventorySnapshotRes)
+    
++ Response 400
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Bad Request - Invalid URI parameters or querystring"
+        }
 
 + Response 401 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+        }
 
 + Response 429 (application/json)
-    + Attributes (ResponseFormat) 
-    
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Too many requests in given amount of time"
+        }
+
 + Response 503 (application/json)
-    + Attributes (ResponseFormat)
+    + Headers 
+        Content-Type: application/json
+
+    + Body
+        
+        {
+            "message": "Service Unavailable"
+        }
 
 # Data Structures
 
-## RequestFormat (object)
+## CancelPurchaseOrderReq (object)
 
 
-### Properties
-+ `shipments` (array[Shipment], required) - Container array for one or more shipments
+
++ `CancelPurchaseOrder` (CancelPurchaseOrder, required) 
+
+
+## CancelPurchaseOrder (object)
+
+
+
++ `AccountNumber` (string, required) 
++ `OrderNumber` (string, required) 
+
+
+## CreateItemReq (object)
+
+
+
++ `CreateItem` (CreateItem, required) 
+
+
+## CreateItem (object)
+
+
+
++ `AccountNumber` (string, required) 
++ `ItemID` (string, required) 
++ `ItemDetails` (ItemDetails, required) 
++ `Classification` (Classification, optional) 
++ `InventoryParameters` (InventoryParameters, optional) 
++ `AdditionalProductReferenceIdentifiers` (array[AdditionalProductReferenceIdentifier], optional) 
+
+
+## ItemDetails (object)
+
+
+
++ `ShortDescription` (string, required) 
++ `UnitOfMeasure` (string, required) 
++ `IsReturnable` (boolean, required) 
++ `IsSubstitutionAllowed` (boolean, required) 
++ `IsSubstitutionAutomatic` (boolean, required) 
++ `ItemStatus` (string, required) 
++ `IsInsert` (boolean, required) 
++ `LongDescription` (string, optional) 
++ `ProductCategory` (string, optional) 
++ `CountryOfOrigin` (string, optional) 
++ `Color` (Color, optional) 
++ `Image` (Image, optional) 
++ `IsFragile` (boolean, optional) 
++ `IsModelItem` (boolean, optional) 
++ `ReturnWindow` (number, optional) 
++ `SizeCode` (string, optional) 
++ `PhysicalInformation` (PhysicalInformation, optional) 
++ `UnitCost` (UnitCost, optional) 
++ `IsTempSensitive` (boolean, optional) 
++ `AdditionalQC` (boolean, optional) 
++ `AdditionalPackslipVerbiage` (boolean, optional) 
++ `GenderGroup` (string, optional) 
++ `GenderAge` (string, optional) 
+
+
+## Color (object)
+
+
+
++ `Code` (string, required) 
++ `Name` (string, required) 
+
+
+## Image (object)
+
+
+
++ `Location` (string, required) 
++ `Identifier` (string, required) 
++ `Label` (string, optional) 
+
+
+## PhysicalInformation (object)
+
+
+
++ `Height` (number, optional) 
++ `Length` (number, optional) 
++ `Width` (number, optional) 
++ `Weight` (number, optional) 
++ `WeightUnitOfMeasure` (string, optional) 
++ `DimensionUnitOfMeasure` (string, optional) 
+
+
+## UnitCost (object)
+
+
+
++ `Amount` (number, required) 
++ `Currency` (string, optional) 
+
+
+## Classification (object)
+
+
+
++ `HarmonizedCode` (string, optional) 
++ `HazmatClass` (string, optional) 
++ `Model` (string, optional) 
+
+
+## InventoryParameters (object)
+
+
+
++ `IsSerialTracked` (boolean, optional) 
++ `OnhandSafetyFactorQuantity` (number, optional) 
++ `TagControlFlag` (boolean, optional) 
++ `UseUPCForInventory` (boolean, optional) 
+
+
+## AdditionalProductReferenceIdentifier (object)
+
+
+
++ `ProductReference` (string, required) 
++ `Identifier` (string, required) 
+
+
+## CreateSalesOrderReq (object)
+
+
+
++ `CreateSalesOrder` (CreateSalesOrder, required) 
+
+
+## CreateSalesOrder (object)
+
+
+
++ `MessageDateTime` (string, required) 
++ `OrderSubmissionID` (string, required) 
++ `AccountNumber` (string, required) 
++ `Order` (Order, required) 
++ `OrgID` (string, optional) 
+
+
+## Order (object)
+
+
+
++ `OrderHeader` (OrderHeader, required) 
++ `OrderDetails` (OrderDetails, required) 
++ `AdditionalReferences` (AdditionalReferences, optional) 
+
+
+## OrderHeader (object)
+
+
+
++ `OrderDateTime` (string, required) 
++ `OrderNumber` (string, required) 
++ `ShippingServiceID` (string, required) 
++ `Charges` (Charges, required) 
++ `BillTo` (BillTo, required) 
++ `Shipto` (Shipto, required) 
++ `OrderReferenceNumber` (string, optional) 
++ `SalesChannel` (string, optional) 
++ `IsB2BOrder` (string, optional) 
++ `ShippingServiceOption` (string, optional) 
++ `ShipFromNode` (string, optional) 
++ `B2BOrderReference` (string, optional) 
++ `PaymentMethods` (PaymentMethods, optional) 
+
+
+## Charges (object)
+
+
+
++ `OrderCurrency` (string, required) 
++ `OrderTotal` (string, required) 
++ `OrderSubTotal` (string, required) 
++ `TotalShippingCharge` (string, required) 
++ `TaxTotal` (string, required) 
++ `CODAmount` (string, optional) 
++ `TotalOrderDiscount` (string, optional) 
++ `TaxDetail` (array[TaxDetail], optional) 
++ `ChargeDetail` (array[ChargeDetail], optional) 
+
+
+## TaxDetail (object)
+
+
+
++ `TaxAmount` (string, required) 
++ `TaxName` (string, required) 
++ `TaxPercentage` (string, required) 
+
+
+## ChargeDetail (object)
+
+
+
++ `ChargeAmount` (string, required) 
++ `ChargeName` (string, required) 
++ `ChargeType` (string, required) 
+
+
+## PaymentMethods (object)
+
+
+
++ `PaymentMethod` (array[PaymentMethod], optional) 
+
+
+## PaymentMethod (object)
+
+
+
++ `PaymentType` (string, required) 
++ `AccountHolderName` (string, optional) 
++ `TruncatedAccountIdentifier` (string, optional) 
+
+
+## BillTo (object)
+
+
+
++ `FirstName` (string, required) 
++ `LastName` (string, required) 
++ `AddressLine1` (string, required) 
++ `City` (string, required) 
++ `ZipCode` (string, required) 
++ `Country` (string, required) 
++ `AddressLine2` (string, optional) 
++ `AddressLine3` (string, optional) 
++ `State` (string, optional) 
++ `PhoneNumber` (string, optional) 
++ `EmailID` (string, optional) 
+
+
+## Shipto (object)
+
+
+
++ `FirstName` (string, required) 
++ `LastName` (string, required) 
++ `AddressLine1` (string, required) 
++ `City` (string, required) 
++ `ZipCode` (string, required) 
++ `Country` (string, required) 
++ `AddressLine2` (string, optional) 
++ `AddressLine3` (string, optional) 
++ `State` (string, optional) 
++ `PhoneNumber` (string, optional) 
++ `EmailID` (string, optional) 
++ `IDType` (string, optional) 
++ `IDValue` (string, optional) 
+
+
+## OrderDetails (object)
+
+
+
++ `OrderLine` (array[OrderLine], required) 
+
+
+## OrderLine (object)
+
+
+
++ `OrderLineNumber` (string, required) 
++ `OrderedQuantity` (string, required) 
++ `ItemID` (string, required) 
++ `ItemDescription` (string, required) 
++ `Price` (string, required) 
++ `ProductIDReference` (string, optional) 
++ `LineTotal` (string, optional) 
++ `LotNumber` (string, optional) 
++ `EstDeliveryDate` (string, optional) 
++ `Instruction` (array[Instruction], optional) 
++ `TaxDetail` (array[TaxDetail], optional) 
++ `ChargeDetail` (array[ChargeDetail27], optional) 
+
+
+## Instruction (object)
+
+
+
++ `Type` (string, required) 
++ `Details` (string, required) 
+
+
+## ChargeDetail27 (object)
+
+
+
++ `ChargeName` (string, required) 
++ `ChargeCategory` (string, required) 
++ `AmountPerLine` (string, optional) 
++ `AmountPerUnit` (string, optional) 
+
+
+## AdditionalReferences (object)
+
+
+
++ `Orderref1` (string, optional) 
++ `Orderref2` (string, optional) 
++ `Orderref3` (string, optional) 
++ `Orderref4` (string, optional) 
++ `Orderref5` (string, optional) 
++ `Orderref6` (string, optional) 
++ `Orderref7` (string, optional) 
++ `Orderref8` (string, optional) 
++ `Orderref9` (string, optional) 
++ `Orderref10` (string, optional) 
+
+
+## CreatePurchaseOrderReq (object)
+
+
+
++ `CreatePurchaseOrder` (CreatePurchaseOrder, required) 
+
+
+## CreatePurchaseOrder (object)
+
+
+
++ `MessageDateTime` (string, required) 
++ `OrderSubmissionID` (string, required) 
++ `AccountNumber` (string, required) 
++ `OrderHeader` (OrderHeader31, required) 
++ `OrderDetails` (array[OrderDetails35], required) 
++ `BillingAccountNumber` (string, optional) 
+
+
+## OrderHeader31 (object)
+
+
+
++ `OrderNumber` (string, required) 
++ `OrderDateTime` (string, required) 
++ `ReceivingNode` (string, required) 
++ `RequestedDeliveryDate` (string, required) 
++ `ExpectedDeliveryDate` (string, required) 
++ `ShipFrom` (ShipFrom, required) 
++ `BillTo` (BillTo34, required) 
++ `OrderReferenceNumber` (string, optional) 
++ `InvoiceNumber` (string, optional) 
++ `ShipmentTrackingNumber` (string, optional) 
++ `CarrierName` (string, optional) 
++ `NotificationEmailID` (string, optional) 
++ `ShipTo` (ShipTo33, optional) 
+
+
+## ShipFrom (object)
+
+
+
++ `VendorName` (string, required) 
++ `AddressLine1` (string, required) 
++ `City` (string, required) 
++ `ZipCode` (string, required) 
++ `Country` (string, required) 
++ `AddressLine2` (string, optional) 
++ `AddressLine3` (string, optional) 
++ `State` (string, optional) 
++ `PhoneNumber` (string, optional) 
++ `EmailID` (string, optional) 
+
+
+## ShipTo33 (object)
+
+
+
++ `AddressLine1` (string, required) 
++ `City` (string, required) 
++ `ZipCode` (string, required) 
++ `Country` (string, required) 
++ `AddressLine2` (string, optional) 
++ `AddressLine3` (string, optional) 
++ `State` (string, optional) 
++ `PhoneNumber` (string, optional) 
++ `EmailID` (string, optional) 
+
+
+## BillTo34 (object)
+
+
+
++ `AddressLine1` (string, required) 
++ `City` (string, required) 
++ `ZipCode` (string, required) 
++ `Country` (string, required) 
++ `AddressLine2` (string, optional) 
++ `AddressLine3` (string, optional) 
++ `State` (string, optional) 
++ `PhoneNumber` (string, optional) 
++ `EmailID` (string, optional) 
+
+
+## OrderDetails35 (object)
+
+
+
++ `OrderLineNumber` (string, required) 
++ `OrderedQuantity` (number, required) 
++ `RequestedDeliveryDate` (string, required) 
++ `ItemID` (string, required) 
++ `ProductClass` (string, required) 
++ `UnitOfMeasure` (string, required) 
++ `CountryOfOrigin` (string, optional) 
++ `CostDetails` (CostDetails, optional) 
+
+
+## CostDetails (object)
+
+
+
++ `RetailPrice` (number, optional) 
++ `WholesalePrice` (number, optional) 
++ `UnitCost` (number, optional) 
++ `Currency` (string, optional) 
+
+
+## UpdateItemReq (object)
+
+
+
++ `UpdateItem` (UpdateItem, required) 
+
+
+## UpdateItem (object)
+
+
+
++ `AccountNumber` (string, required) 
++ `ItemID` (string, required) 
++ `ItemDetails` (ItemDetails39, optional) 
++ `Classification` (Classification, optional) 
++ `InventoryParameters` (InventoryParameters45, optional) 
++ `AdditionalProductReferenceIdentifiers` (array[AdditionalProductReferenceIdentifier], optional) 
+
+
+## ItemDetails39 (object)
+
+
+
++ `ShortDescription` (string, optional) 
++ `LongDescription` (string, optional) 
++ `ProductCategory` (string, optional) 
++ `UnitOfMeasure` (string, optional) 
++ `CountryOfOrigin` (string, optional) 
++ `Color` (Color, optional) 
++ `Image` (Image, optional) 
++ `IsReturnable` (boolean, optional) 
++ `IsSubstitutionAllowed` (boolean, optional) 
++ `IsSubstitutionAutomatic` (boolean, optional) 
++ `IsFragile` (boolean, optional) 
++ `ReturnWindow` (number, optional) 
++ `SizeCode` (string, optional) 
++ `ItemStatus` (string, optional) 
++ `PhysicalInformation` (PhysicalInformation, optional) 
++ `UnitCost` (UnitCost, optional) 
++ `IsInsert` (boolean, optional) 
++ `IsTempSensitive` (boolean, optional) 
++ `AdditionalQC` (boolean, optional) 
++ `AdditionalPackslipVerbiage` (boolean, optional) 
++ `GenderGroup` (string, optional) 
++ `GenderAge` (string, optional) 
+
+
+## InventoryParameters45 (object)
+
+
+
++ `OnhandSafetyFactorQuantity` (number, optional) 
++ `UseUPCForInventory` (boolean, optional) 
+
+
+## UpdatePurchaseOrderReq (object)
+
+
+
++ `UpdatePurchaseOrder` (UpdatePurchaseOrder, required) 
+
+
+## UpdatePurchaseOrder (object)
+
+
+
++ `AccountNumber` (string, required) 
++ `OrderHeader` (OrderHeader49, required) 
++ `BillingAccountNumber` (string, optional) 
++ `OrderDetails` (array[OrderDetails53], optional) 
+
+
+## OrderHeader49 (object)
+
+
+
++ `OrderNumber` (string, required) 
++ `OrderReferenceNumber` (string, optional) 
++ `InvoiceNumber` (string, optional) 
++ `ShipmentTrackingNumber` (string, optional) 
++ `CarrierName` (string, optional) 
++ `NotificationEmailID` (string, optional) 
++ `ExpectedDeliveryDate` (string, optional) 
++ `ShipFrom` (ShipFrom, optional) 
++ `ShipTo` (ShipTo33, optional) 
++ `BillTo` (BillTo34, optional) 
+
+
+## OrderDetails53 (object)
+
+
+
++ `Action` (enum[string], required) 
+    + `CREATE`
+    + `MODIFY`
++ `OrderLineKey` (string, optional) 
++ `OrderLineNumber` (string, optional) 
++ `OrderedQuantity` (number, optional) 
++ `RequestedDeliveryDate` (string, optional) 
++ `ItemID` (string, optional) 
++ `CountryOfOrigin` (string, optional) 
++ `ProductClass` (string, optional) 
++ `UnitOfMeasure` (string, optional) 
++ `CostDetails` (CostDetails, optional) 
+
+
+## AvailableStockRes (object)
+
+
+
++ `AvailableStock` (AvailableStock, required) 
+
+
+## AvailableStock (object)
+
+
+
++ `InventoryAccountNumber` (string, required) 
++ `Product` (array[Product], required) 
+
+
+## Product (object)
+
+
+
++ `ItemID` (string, required) 
++ `ItemDescription` (string, required) 
++ `AvailableQuantity` (string, required) 
+
+
+## BackOrderListRes (object)
+
+
+
++ `Page` (Page, required) 
+
+
+## Page (object)
+
+
+
++ `PageNumber` (string, required) 
++ `IsValidPage` (string, required) 
++ `IsLastPage` (string, required) 
++ `TotalNumberOfOrders` (string, required) 
++ `OrderList` (OrderList, optional) 
+
+
+## OrderList (object)
+
+
+
++ `Order` (array[Order62], required) 
+
+
+## Order62 (object)
+
+
+
++ `AccountNumber` (string, required) 
++ `OrgID` (string, required) 
++ `MessageDateTime` (string, required) 
++ `OrderNumber` (string, required) 
++ `OrderReferenceNumber` (string, required) 
++ `OrderDateTime` (string, required) 
++ `OrderStatus` (string, required) 
++ `IsOnHold` (string, required) 
++ `HoldReasonCode` (string, required) 
+
+
+## InventorySnapshotRes (object)
+
+
+
++ `InventorySnapshot` (InventorySnapshot, required) 
+
+
+## InventorySnapshot (object)
+
+
+
++ `InventoryAccountNumber` (string, required) 
++ `Catalog` (array[Catalog], required) 
+
+
+## Catalog (object)
+
+
+
++ `Product` (array[Product66], required) 
+
+
+## Product66 (object)
+
+
+
++ `ItemID` (string, required) 
++ `ItemDescription` (string, required) 
++ `TotalInventory` (array[TotalInventory], required) 
++ `SupplyDetail` (array[SupplyDetail], required) 
++ `DemandDetail` (array[DemandDetail], optional) 
+
+
+## TotalInventory (object)
+
+
+
++ `Type` (string, required) 
++ `Quantity` (string, required) 
+
+
+## SupplyDetail (object)
+
+
+
++ `Node` (string, required) 
++ `Inventory` (array[Inventory], required) 
+
+
+## Inventory (object)
+
+
+
++ `Type` (string, required) 
++ `Quantity` (string, required) 
++ `LotNumber` (string, optional) 
+
+
+## DemandDetail (object)
+
+
+
++ `Node` (string, required) 
++ `Inventory` (array[Inventory71], required) 
+
+
+## Inventory71 (object)
+
+
+
++ `Type` (string, required) 
++ `Quantity` (string, required) 
+
+
+## ItemListRes (object)
+
+
+
++ `Page` (Page73, required) 
++ `Items` (array[Item], optional) 
+
+
+## Page73 (object)
+
+
+
++ `PageNumber` (string, required) 
++ `IsValidPage` (string, required) 
++ `IsLastPage` (string, required) 
++ `TotalNumberOfItems` (string, required) 
+
+
+## Item (object)
+
+
+
++ `AccountNumber` (string, required) 
++ `ItemID` (string, required) 
++ `ItemDetails` (ItemDetails75, optional) 
++ `Classification` (Classification, optional) 
++ `InventoryParameters` (InventoryParameters81, optional) 
++ `AdditionalProductReferenceIdentifiers` (array[AdditionalProductReferenceIdentifier], optional) 
+
+
+## ItemDetails75 (object)
+
+
+
++ `ShortDescription` (string, optional) 
++ `LongDescription` (string, optional) 
++ `ProductCategory` (string, optional) 
++ `UnitOfMeasure` (string, optional) 
++ `CountryOfOrigin` (string, optional) 
++ `Color` (Color, optional) 
++ `Image` (Image, optional) 
++ `IsReturnable` (boolean, optional) 
++ `IsSubstitutionAllowed` (boolean, optional) 
++ `IsSubstitutionAutomatic` (boolean, optional) 
++ `IsFragile` (boolean, optional) 
++ `ReturnWindow` (number, optional) 
++ `SizeCode` (string, optional) 
++ `StyleCode` (string, optional) 
++ `ItemStatus` (string, optional) 
++ `PhysicalInformation` (PhysicalInformation, optional) 
++ `UnitCost` (UnitCost, optional) 
++ `IsInsert` (boolean, optional) 
++ `IsTempSensitive` (boolean, optional) 
++ `AdditionalQC` (boolean, optional) 
++ `AdditionalPackslipVerbiage` (boolean, optional) 
++ `GenderGroup` (string, optional) 
++ `GenderAge` (string, optional) 
+
+
+## InventoryParameters81 (object)
+
+
+
++ `IsSerialTracked` (boolean, optional) 
++ `OnhandSafetyFactorQuantity` (number, optional) 
++ `TagControlFloag` (boolean, optional) 
++ `UseUPCForInventory` (boolean, optional) 
+
+
+## PurchaseOrderAcknowledgementRes (object)
+
+
+
++ `CreationAcknowledge` (CreationAcknowledge, required) 
+
+
+## CreationAcknowledge (object)
+
+
+
++ `Order` (Order85, required) 
+
+
+## Order85 (object)
+
+
+
++ `AccountNumber` (string, required) 
++ `OrgID` (string, required) 
++ `OrderDateTime` (string, required) 
++ `OrderNumber` (string, required) 
++ `OrderReferenceNumber` (string, required) 
++ `OrderSubmission` (OrderSubmission, required) 
+
+
+## OrderSubmission (object)
+
+
+
++ `OrderSubmissionID` (string, required) 
++ `MessageID` (string, required) 
++ `OrderCreationStatus` (string, required) 
++ `Error` (array[Error], optional) 
+
+
+## Error (object)
+
+
+
++ `ErrorCode` (string, required) 
++ `ErrorDescription` (string, required) 
+
+
+## PurchaseOrderDetailsRes (object)
+
+
+
++ `PurchaseOrderDetails` (PurchaseOrderDetails, required) 
+
+
+## PurchaseOrderDetails (object)
+
+
+
++ `MessageDateTime` (string, required) 
++ `AccountNumber` (string, required) 
++ `BillingAccountNumber` (string, required) 
++ `OrderHeader` (OrderHeader90, required) 
++ `ShipFrom` (ShipFrom91, required) 
++ `BillTo` (BillTo34, required) 
++ `ShipTo` (ShipTo33, required) 
++ `OrderDetails` (array[OrderDetails94], required) 
+
+
+## OrderHeader90 (object)
+
+
+
++ `OrderNumber` (string, required) 
++ `OrderReferenceNumber` (string, required) 
++ `InvoiceNumber` (string, required) 
++ `ShipmentTrackingNumber` (string, required) 
++ `CarrierName` (string, required) 
++ `OrderDateTime` (string, required) 
++ `ReceivingNode` (string, required) 
++ `LastChangeTimestamp` (string, required) 
++ `RequestedDeliveryDate` (string, required) 
++ `ExpectedDeliveryDate` (string, required) 
++ `OrderStatus` (string, required) 
+
+
+## ShipFrom91 (object)
+
+
+
++ `AddressLine1` (string, required) 
++ `AddressLine2` (string, required) 
++ `AddressLine3` (string, required) 
++ `City` (string, required) 
++ `State` (string, required) 
++ `ZipCode` (string, required) 
++ `Country` (string, required) 
++ `PhoneNumber` (string, required) 
++ `EmailID` (string, required) 
+
+
+## OrderDetails94 (object)
+
+
+
++ `OrderLineNumber` (string, required) 
++ `OrderLineKey` (string, required) 
++ `OrderedQuantity` (number, required) 
++ `RequestedDeliveryDate` (string, required) 
++ `ItemID` (string, required) 
++ `CountryOfOrigin` (string, required) 
++ `ProductClass` (string, required) 
++ `UnitOfMeasure` (string, required) 
++ `OrderLineStatus` (string, required) 
++ `CostDetails` (CostDetails, required) 
++ `LotNumber` (string, optional) 
++ `Status` (string, optional) 
++ `OpenQty` (string, optional) 
+
+
+## PurchaseOrderStatusRes (object)
+
+
+
++ `Page` (Page97, required) 
++ `PurchaseOrderList` (array[PurchaseOrderList], optional) 
+
+
+## Page97 (object)
+
+
+
++ `PageNumber` (string, required) 
++ `IsValidPage` (string, required) 
++ `IsLastPage` (string, required) 
++ `TotalNumberOfOrders` (string, required) 
+
+
+## PurchaseOrderList (object)
+
+
+
++ `AccountNumber` (string, required) 
++ `MessageDateTime` (string, required) 
++ `OrderNumber` (string, required) 
++ `OrderDateTime` (string, required) 
++ `OrderStatus` (string, required) 
++ `ReceivingNode` (string, required) 
+
+
+## ReturnOrderDetailsRes (object)
+
+
+
++ `ReturnOrderDetails` (ReturnOrderDetails, required) 
+
+
+## ReturnOrderDetails (object)
+
+
+
++ `AccountNumber` (string, required) 
++ `OrderHeader` (OrderHeader101, required) 
++ `OrderDetails` (array[OrderDetails103], required) 
+
+
+## OrderHeader101 (object)
+
+
+
++ `OrderNumber` (string, required) 
++ `OrderDateTime` (string, required) 
++ `LastChangeTimestamp` (string, required) 
++ `OrderStatus` (string, required) 
++ `ReturnFrom` (ReturnFrom, required) 
+
+
+## ReturnFrom (object)
+
+
+
++ `FirstName` (string, required) 
++ `LastName` (string, required) 
++ `AddressLine1` (string, required) 
++ `AddressLine2` (string, required) 
++ `AddressLine3` (string, required) 
++ `City` (string, required) 
++ `State` (string, required) 
++ `ZipCode` (string, required) 
++ `Country` (string, required) 
++ `PhoneNumber` (string, required) 
++ `EmailID` (string, required) 
+
+
+## OrderDetails103 (object)
+
+
+
++ `DerivedFromSalesOrderNumber` (string, required) 
++ `ReturnedQuantity` (number, required) 
++ `ItemID` (string, required) 
++ `ItemDescription` (string, required) 
++ `Price` (number, required) 
++ `LineTotal` (number, required) 
++ `OrderLineStatus` (string, required) 
++ `ShipNode` (string, required) 
++ `ReturnReason` (string, required) 
++ `ReturnMethod` (string, optional) 
+
+
+## ReturnOrderListRes (object)
+
+
+
++ `Page` (Page97, required) 
++ `ReturnOrderList` (array[ReturnOrderList], optional) 
+
+
+## ReturnOrderList (object)
+
+
+
++ `AccountNumber` (string, required) 
++ `ReturnOrderNumber` (string, required) 
++ `OrderDateTime` (string, required) 
++ `OrderStatus` (string, required) 
+
+
+## SalesOrderAcknowledgementRes (object)
+
+
+
++ `CreationAcknowledge` (CreationAcknowledge, required) 
+
+
+## SalesOrderDetailsRes (object)
+
+
+
++ `SalesOrderDetails` (SalesOrderDetails, required) 
+
+
+## SalesOrderDetails (object)
+
+
+
++ `MessageDateTime` (string, required) 
++ `AccountNumber` (string, required) 
++ `OrgID` (string, required) 
++ `Order` (array[Order114], required) 
+
+
+## Order114 (object)
+
+
+
++ `OrderHeader` (OrderHeader115, required) 
++ `OrderDetails` (OrderDetails123, required) 
++ `AdditionalReferences` (AdditionalReferences, required) 
+
+
+## OrderHeader115 (object)
+
+
+
++ `DHLSalesOrderNumber` (string, required) 
++ `OrderStatus` (string, required) 
++ `IsOnHold` (string, required) 
++ `HoldReasonCode` (string, required) 
++ `LastChangeTimestamp` (string, required) 
++ `OrderDateTime` (string, required) 
++ `OrderNumber` (string, required) 
++ `OrderReferenceNumber` (string, required) 
++ `SalesChannel` (string, required) 
++ `IsB2BOrder` (string, required) 
++ `ShippingServiceID` (string, required) 
++ `ShippingServiceOption` (string, required) 
++ `Charges` (Charges, required) 
++ `PaymentMethods` (PaymentMethods, required) 
++ `BillTo` (BillTo, required) 
++ `Shipto` (Shipto122, required) 
++ `ShipFromNode` (string, optional) 
++ `B2BOrderReference` (string, optional) 
+
+
+## Shipto122 (object)
+
+
+
++ `FirstName` (string, required) 
++ `LastName` (string, required) 
++ `AddressLine1` (string, required) 
++ `AddressLine2` (string, required) 
++ `AddressLine3` (string, required) 
++ `City` (string, required) 
++ `State` (string, required) 
++ `ZipCode` (string, required) 
++ `Country` (string, required) 
++ `PhoneNumber` (string, required) 
++ `EmailID` (string, required) 
+
+
+## OrderDetails123 (object)
+
+
+
++ `OrderLine` (array[OrderLine124], required) 
+
+
+## OrderLine124 (object)
+
+
+
++ `OrderLineNumber` (string, required) 
++ `OrderedQuantity` (string, required) 
++ `ItemID` (string, required) 
++ `ProductIDReference` (string, required) 
++ `ItemDescription` (string, required) 
++ `Price` (string, required) 
++ `LineTotal` (string, required) 
++ `OrderLineStatus` (string, required) 
++ `Instruction` (array[Instruction], required) 
++ `TaxDetail` (array[TaxDetail], required) 
++ `LotNumber` (string, optional) 
++ `EstDeliveryDate` (string, optional) 
++ `Status` (string, optional) 
++ `OpenQty` (string, optional) 
+
+
+## SalesOrderStatusRes (object)
+
+
+
++ `Page` (Page, required) 
+
+
+## ShipmentDetailsRes (object)
+
+
+
++ `Page` (Page133, required) 
+
+
+## Page133 (object)
+
+
+
++ `PageNumber` (string, required) 
++ `IsValidPage` (string, required) 
++ `IsLastPage` (string, required) 
++ `TotalNumberOfOrders` (string, required) 
++ `OrderList` (OrderList134, optional) 
+
+
+## OrderList134 (object)
+
+
+
++ `Order` (array[Order135], required) 
+
+
+## Order135 (object)
+
+
+
++ `OrderNumber` (string, required) 
++ `Shipments` (array[Shipment], required) 
 
 
 ## Shipment (object)
 
 
-### Properties
-+ `pickupAccount` (string, required) - The DHL eCommerce pickup account number. You will receive this after doing the onboarding with DHL sales.
-+ `distributionCenter` (string, required) - Primary DHL eCommerce Distribution center assigned to your products/services. This will be provided during onboarding.
-+ `packages` (array[Package], required) - One or more packages. At the moment, only one package is supported by the label service.
+
++ `Shipment` (array[Shipment137], required) 
 
 
-## Package (object)
+## Shipment137 (object)
 
 
-### Properties
-+ `consigneeAddress` (ConsigneeAddress, required) - Address of the consignee
-+ `packageDetails` (PackageDetails, required) - Details of one package.
-+ `returnAddress` (ReturnAddress, optional) - Address of the returns (if different from shipper)
-+ `customsDetails` (array[CustomsDetail], optional) - Details for one or more customs commodities. Only applicable if orderedProduct is an International Product
+
++ `TrackingNumber` (string, required) 
++ `Service` (string, required) 
++ `SCAC` (string, required) 
++ `Shipdate` (string, required) 
++ `ShipNode` (string, required) 
++ `PackageContent` (array[PackageContent], required) 
++ `ContainerNumber` (string, optional) 
++ `OrderReferenceNumber` (string, optional) 
 
 
-## ConsigneeAddress (object)
+## PackageContent (object)
 
 
-### Properties
-+ `address1` (string, required) - Line 1 of the consignee's street address or delivery location
-+ `city` (string, required) - Consignee`s city
-+ `country` (string, required) - Two-character ISO consignee address country code
-+ `address2` (string, optional) - Line 2 of the consignee's street address or delivery location
-+ `address3` (string, optional) - Line 3 of the consignee's street address or delivery location - typically used for addresses to designate province, district, or neighborhood
-+ `companyName` (string, optional) - Name of the institution receiving the shipment
-+ `email` (string, optional) - Consignee`s email address
-+ `idNumber` (string, optional) - Consignee`s identification number
-+ `idType` (string, optional) - Denotes the type of identification number provided by the consignee for customs clearance and delivery. Note: Provide if available for DHL Parcel International Direct to S. Korea and China
-+ `name` (string, optional) - Name of the person receiving the shipment
-+ `phone` (string, optional) - Consignee`s phone number
-+ `postalCode` (string, optional) - Consignee`s postal code
-+ `state` (string, optional) - Consignee's state, province or territory.
 
-
-## PackageDetails (object)
-
-
-### Properties
-+ `currency` (string, required) - Three-letter ISO Currency code
-+ `orderedProduct` (string, required) - Identifies the DHL eCommerce product that is to be applied to the shipment. Refer to the product matrix for a list of all available and valid products.
-+ `packageId` (string, required) - Unique reference ID for shipment; also referred to as Customer Confirmation Number.
-+ `weight` (number, required) - Total shipment content weight. Whole numbers only.
-+ `weightUom` (string, required) - The unit of measure for the weight.
-+ `billingRef1` (string, optional) - String of characters that can be used to aggregate billing data (may not be unique per parcel). BillingRef1 is also referred to as Reference
-+ `billingRef2` (string, optional) - Secondary string of characters that can be used to aggregate billing data (may not be unique per parcel). BillingRef2 is also referred to as Batch.
-+ `codAmount` (number, optional) - Amount to collect upon delivery of goods
-+ `declaredValue` (number, optional) - Total declared value for the package. While not mandatory, best practice is to provide if available.
-+ `deliveryConfirmationNo` (string, optional) - For future-use
-+ `dgCategory` (string, optional) - Can contain the dangerous goods category but also more generic information on the contents like for example fragile. In the US just contains the dg category.
-+ `dimensionUom` (string, optional) - Dimensional unit of measure for length, width, and height of the package
-+ `dutiesPaid` (string, optional) - Indicates whether duties and taxes for the shipment are paid by the shipper (value 'Y') or not ('N'). this is commonly known as Inco terms DDP (Delivered Duties Paid) and DDU (Delivered Duties Unpaid).
-+ `insuredValue` (number, optional) - Total insured value of the package
-+ `mailType` (number, optional) - Identifies the mail type of the shipment. Refer to the mail type matrix for a list of valid mail types.
-+ `packageDesc` (string, optional) - Description of the contents of the package (See reference for general categories)
-+ `packageRefName` (string, optional) - For future-use
-+ `service` (string, optional) - Shipments orginating and destined to the United States will default to DELCON. Signature confirmation* is also available for certain products at an additional cost (please contact your Sales representative for more details). International shipments will default to the tracking capabilties available to the product/service selected. Shipment tracking is available for all parcel products. Tracking is available through the DHL eCommerce web portal, or through the USPS tracking site.
-+ `serviceEndorsement` (number, optional) - Ancillary service endorsements are used to request an addressee’s new address and to provide the USPS with instructions on how to handle undeliverable-as-addressed pieces. The endorsements are the same for all classes of US Domestic mail, but the treatment and cost differ by class of mail. Use of an ancillary service endorsement on a mailpiece obligates the mailer to pay any applicable charges for forwarding, return, and separate address notification charges.
-+ `height` (number, optional) - Height dimension of the package (provide if available)
-+ `length` (number, optional) - Longest measurement of package (provide if available)
-+ `width` (number, optional) - Width dimension of the package (provide if available)
-
-
-## ReturnAddress (object)
-
-
-### Properties
-+ `address1` (string, required) - Line 1 of the return street address
-+ `city` (string, required) - Return city
-+ `country` (string, required) - Two-character ISO return address country code.
-+ `address2` (string, optional) - Line 2 of the return street address
-+ `address3` (string, optional) - (International Only) Line 3 of the return street address
-+ `companyName` (string, optional) - Name of the institution receiving the returned package
-+ `name` (string, optional) - Name of the person receiving the returned package
-+ `postalCode` (string, optional) - Return postal code
-+ `state` (string, optional) - Return state, province or territory
-
-
-## CustomsDetail (object)
-
-
-### Properties
-+ `itemDescription` (string, required) - Detailed description of the commodity item - Used for customs clearance. Accuracy and Detail are required.
-+ `descriptionExport` (string, optional) - Dedicated description for export customs clearance (iff required to be different from item description)
-+ `descriptionImport` (string, optional) - Dedicated description for import customs clearance (iff required to be different from item description)
-+ `countryOfOrigin` (string, optional) - 2-Character Country Code for Origin Manufacturer Country of the product
-+ `hsCode` (string, optional) - The Harmonized Tariff Schedule is a number assigned to every possible commodity that can be imported or exported from any country. Please do not include any decimals "." in this field.
-+ `packagedQuantity` (number, optional) - Quantity of the same item in the package
-+ `itemValue` (number, optional) - The commercial value of the commodity (per each)
-+ `skuNumber` (string, optional) - SKU #, or item code - Used for product verification on clients website during customs clearance process.
-
-
-## ResponseFormat (object)
-
-
-### Properties
-+ `shipments` (array[Shipment8], required) - Container array for one or more shipments
-
-
-## Shipment8 (object)
-
-
-### Properties
-+ `pickupAccount`: `5300000` (string, required) - The DHL eCommerce pickup account number. You will receive this after doing the onboarding with DHL sales.
-+ `distributionCenter`: `USORD1` (string, required) - Primary DHL eCommerce Distribution center assigned to your products/services. This will be provided during onboarding.
-+ `packages`: `USORD1` (array[Package9], required) - One or more packages. At the moment, only one package is supported by the label service.
-
-
-## Package9 (object)
-
-
-### Properties
-+ `consigneeAddress` (ConsigneeAddress, required) - Address of the consignee.
-+ `packageDetails` (PackageDetails, required) - Details of one package.
-+ `returnAddress` (ReturnAddress, optional) - Address of the returns (if different from shipper)
-+ `customsDetails` (array[CustomsDetail], optional) - Details for one or more customs commodities. Only applicable if orderedProduct is an International Product
-+ `responseDetails` (ResponseDetails, optional) 
-
-
-## ResponseDetails (object)
-
-
-### Properties
-+ `labelDetails` (array[LabelDetail], optional) 
-+ `trackingNumber` (string, optional) 
-+ `trackingNumberStatus` (string, optional) 
-
-
-## LabelDetail (object)
-
-
-### Properties
-+ `packageId` (string, optional) 
-+ `format` (string, optional) 
-+ `templateId` (string, optional) 
-+ `labelData` (string, optional) 
-
-
-## Reason (object)
-
-
-### Properties
-+ `msg` (string, required) 
-
-
-## Details (object)
-
-
-### Properties
-+ `msgId` (string, required) 
-
-
-## ErrResponseFormatError (object)
-
-
-### Properties
-+ `reasons` (array[Reason], required) 
-+ `details` (Details, required)
++ `ItemID` (string, required) 
++ `OriginalOrderLineNumber` (string, required) 
++ `OrderQuantity` (string, required) 
++ `ShipQuantity` (string, required) 
++ `LotNumber` (string, optional) 
++ `SerialNumber` (string, optional)
