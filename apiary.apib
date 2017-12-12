@@ -22,7 +22,13 @@ The API uses **HTTPS (over SSL) protocol**, the HTTP GET is used to retrieve dat
     >**Note:** *Usage of HTTP PUT and DELETE is not enabled.*
 
 The **service endpoints** available via this APIs have been build along side your eCommerce experience as underneath graphic indicates:
-![(TO BE added)The eCommerce journey](http://utzfu.synology.me/DHL/APIARY/overview.png)
+<img src="https://czchoapint222.prg-dc.dhl.com:6443/apidoc/API_CustomerJourney.png" width="185" height="126" alt="Planets" usemap="#customerjourney">
+<map name="customerjourney">
+  <area shape="rect" coords="26,64,450,128" alt="shippingapi" href="#reference/shipping">
+  <area shape="rect" coords="0,0,26,210" alt="shippingapi" href="#reference/authentication">
+</map>
+
+
 ___
 
 ## Get Started
@@ -534,7 +540,7 @@ ___
 **Available API calls:**
 INTRODUCTIONTEXT2
 
-## Items [/v1/fulfillment/item]
+## Item [/v1/fulfillment/item]
 
 **Implementation Examples:** 
 - *Add a new product to your portfolio*: XXXXX
@@ -544,7 +550,7 @@ ___
 **Available API calls:**
 INTRODUCTIONTEXT2
 
-### Create item [POST]
+### Create item [GET]
 The API operation for Create Item.
 
 + Headers 
@@ -573,9 +579,8 @@ The API operation for Create Item.
     + Attributes (ResponseFormat)
     
 
-## List [/v1/fulfillment/item/list/{accountNumber}{?itemId,status,page}]
+### Get Item list [GET /v1/fulfillment/item/list/{accountNumber}{?itemId,status,page}]
 
-### Get Item list [GET]
 The API operation for Get Item List. The optional parameters of the API operation are conditional. Following combinations of are allowed, when calling the API operation.
 
 |Input Parameters   |Returned Values|
@@ -627,8 +632,7 @@ The API operation for Get Item List. The optional parameters of the API operatio
 + Response 503 (application/json)
     + Attributes (ResponseFormat)
 
-## Update [/v1/fulfillment/item/update]
-### Get Item list [POST]
+### Update Item [POST /v1/fulfillment/item/update]
 The API operation for Update Item
 
 + Headers 
@@ -652,6 +656,7 @@ The API operation for Update Item
     
 + Response 503 (application/json)
     + Attributes (ResponseFormat)
+
 
 ## Sales Orders [/v1/fulfillment/order/]
 INTROTEXT
@@ -695,9 +700,7 @@ The API operation for Create Sales Order.
 + Response 503 (application/json)
     + Attributes (ResponseFormat)
 
-## Back Sales Order List [/v1/fulfillment/order/backorderlist/{accountNumber}{?accountNumber,dateFrom,dateTo,page}]
-
-### Get Back Sales Order List [GET]
+### Get Back Sales Order List [GET /v1/fulfillment/order/backorderlist/{accountNumber}{?accountNumber,dateFrom,dateTo,page}]
 
 The API operation for Get Back Sales Order List
 The optional parameters of the API operation are conditional. 
@@ -736,9 +739,8 @@ Following combinations of are allowed, when calling the API operation.
 + Response 503 (application/json)
     + Attributes (ResponseFormat)
 
-## Back Sales Order List [/v1/fulfillment/order/acknowledgement/{accountNumber}/{orderNumber}/{orderSubmissionId}]
+### Sales Order Acknowledgement [GET /v1/fulfillment/order/acknowledgement/{accountNumber}/{orderNumber}/{orderSubmissionId}]
 
-### Sales Order Acknowledgement [GET]
 The API operation for Get Sales Order Acknowledgement
 + Headers 
     Authorization: Bearer [place OAuth access token here, without brackets]
@@ -767,9 +769,8 @@ The API operation for Get Sales Order Acknowledgement
 + Response 503 (application/json)
     + Attributes (ResponseFormat)
 
-## Sales Order Status [/v1/fulfillment/order/status/{accountNumber}{?accountNumber}]
+### Sales Order Status [GET /v1/fulfillment/order/status/{accountNumber}{?accountNumber}]
 
-### Sales Order Status [GET]
 The API operation for Get Sales Order Status
 The optional parameters of the API operation are conditional. 
 Following combinations of are allowed, when calling the API operation. 
@@ -825,7 +826,7 @@ Following combinations of are allowed, when calling the API operation.
 + Response 503 (application/json)
     + Attributes (ResponseFormat)
 
-## Sales Order Details [/v1/fulfillment/order/details/{accountNumber}/{orderNumber}]
+### Sales Order Details [GET /v1/fulfillment/order/details/{accountNumber}/{orderNumber}]
 The API operation for Get Sales Order Details
 + Headers 
     Authorization: Bearer [place OAuth access token here, without brackets]
@@ -879,11 +880,8 @@ The API operation for Create Purchase Order.
 + Response 503 (application/json)
     + Attributes (ResponseFormat)
 
-##  Purchase Order Acknowledgement [/v1/fulfillment/purchaseorder/acknowledgement/{accountNumber}/{orderNumber}/{orderSubmissionId}]
-The API operation for Get Purchase Order Acknowledgement
+###  Purchase Order Acknowledgement [GET /v1/fulfillment/purchaseorder/acknowledgement/{accountNumber}/{orderNumber}/{orderSubmissionId}]
 
-Purchase Order Acknowledgement
-### Get Purchase Order Acknowledgement [GET]
 The API operation for Get Purchase Order Acknowledgement
 + Headers 
     Authorization: Bearer [place OAuth access token here, without brackets]
@@ -912,9 +910,8 @@ The API operation for Get Purchase Order Acknowledgement
 + Response 503 (application/json)
     + Attributes (ResponseFormat)
 
-##  Cancel Purchase Order [/v1/fulfillment/purchaseorder/cancel]
+###  Cancel Purchase Order [POST /v1/fulfillment/purchaseorder/cancel]
 
-### Cancel Purchase Order [POST]
 The API operation for Cancel Purchase Order
 + Headers 
     Authorization: Bearer [place OAuth access token here, without brackets]
@@ -938,8 +935,7 @@ The API operation for Cancel Purchase Order
 + Response 503 (application/json)
     + Attributes (ResponseFormat)
 
-## Purchase Order Details [/v1/fulfillment/purchaseorder/details/{accountNumber}/{orderNumber}]
-### Purchase Order Details [POST]    
+### Purchase Order Details [POST /v1/fulfillment/purchaseorder/details/{accountNumber}/{orderNumber}]
 The API operation for Get Purchase Order Details.
 
 + Headers 
@@ -972,7 +968,295 @@ The API operation for Get Purchase Order Details.
 + Response 503 (application/json)
     + Attributes (ResponseFormat)
 
+### Purchase Order Status [GET /v1/fulfillment/purchaseorder/status/{accountNumber}{?accountNumber,orderNumber,dateFrom,dateTo,status,page}]
+The API operation for Get Purchase Order Status.
+The optional parameters of the API operation are conditional. 
+Following combinations of are allowed, when calling the API operation.
+|Input Parameters                     |Returned Values|
+|-------------------------------------|--------------|
+|orderNumber                  |Returns order by given purchase order number|
+|status && page               |Returns page with filtered orders by status. **Page is optional.**|
+|dateFrom && status && page      |Returns page with filtered orders by staus from defined date. **Status and page are optional.**|
+|dateTo && status && page         |Returns page with filtered orders by status to defined date. **Status and page are optional.**|
+|dateFrom && dateTo && status && page\t|Returns page with filtered orders by status for defined date range. **Status and page are optional.**|"
 
++ Headers 
+    Authorization: Bearer [place OAuth access token here, without brackets]
+    Content-Type: application/json
+    
++ Parameters 
+    + accountNumber :  (string, required)
+        Account Number
+    + orderNumber :  (string, optional)
+        Sales Order Number
+    + dateFrom : (string, optional)
+        Date From
+    + dateTo : (string, optional)
+        Date To
+    + status : (enum[string], optional)
+        Status
+        + Members
+            + Reserved
+            + Cancelled
+            + Scheduled
+            + Back Ordered
+            + Released
+            + Sent to Node
+            + Shipped
+            + Held
+            + Ready for WMS
+            + Waved
+            + Picked
+            + Manifested
+            + Created
+    + page : (string, optional)
+        Page   
+
++ Response 200 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 400 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 401 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 429 (application/json)
+    + Attributes (ResponseFormat) 
+    
++ Response 503 (application/json)
+    + Attributes (ResponseFormat)
+
+### Purchase Order Status [GET /v1/fulfillment/purchaseorder/update]
+The API operation for Update Purchase Order
++ Headers 
+    Authorization: Bearer [place OAuth access token here, without brackets]
+    Content-Type: application/json
+    
++ Request (application/json)
+    + Attributes (RequestFormat)
+
++ Response 200 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 400 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 401 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 429 (application/json)
+    + Attributes (ResponseFormat) 
+    
++ Response 503 (application/json)
+    + Attributes (ResponseFormat)
+
+
+## Return Order [/v1/fulfillment/returnorder/details/{accountNumber}/{orderNumber}
+### Return Order Details [GET]
+The API operation for Get Return Order Details
+
++ Headers 
+    Authorization: Bearer [place OAuth access token here, without brackets]
+    Content-Type: application/json
+    
++ Parameters 
+    + accountNumber :  (string, required)
+        Account Number
+    + orderNumber :  (string, required)
+        Return Order Number
+
++ Response 200 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 400 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 401 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 429 (application/json)
+    + Attributes (ResponseFormat) 
+    
++ Response 503 (application/json)
+    + Attributes (ResponseFormat)
+
+### Return Order List [GET /v1/fulfillment/returnorder/list/{accountNumber}{?accountNumber,orderNumber,dateFrom,dateTo,status,page}]
+The API operation for Get Return Order List\n\nThe optional parameters of the API operation are conditional. Following combinations of are allowed, when calling the API operation.
+|Input Parameters                                      |Returned Values|
+|-------------------------------------------------------|--------------|
+|accountNumber                                          |Returns orders by account number|
+|accountNumber && orderNumber                          |Returns order by account number and order number|
+|accountNumber && status && page                     |Returns page of filtered orders by status and account number. **Page is optional.**|
+|accountNumber && dateFrom && status && page          |Returns page of filtered orders by status and account number from defined date. **Status and page are optional.**|
+|accountNumber && dateTo && status && page            |Returns page of filtered orders by status and account number to defined date. **Status and page are optional.**|
+|accountNumber && dateFrom && dateTo && status && page\t|Returns page of filtered orders by status and account number for defined date range. **Status and page are optional.**|
+
++ Headers 
+    Authorization: Bearer [place OAuth access token here, without brackets]
+    Content-Type: application/json
+    
++ Parameters 
+    + accountNumber :  (string, required)
+        Account Number
+    + orderNumber :  (string, optional)
+        Sales Order Number
+    + dateFrom : (string, optional)
+        Date From
+    + dateTo : (string, optional)
+        Date To
+    + status : (enum[string], optional)
+        Status
+        + Members
+            + Reserved
+            + Cancelled
+            + Scheduled
+            + Back Ordered
+            + Released
+            + Sent to Node
+            + Shipped
+            + Held
+            + Ready for WMS
+            + Waved
+            + Picked
+            + Manifested
+            + Created
+    + page : (string, optional)
+        Page      
+
++ Response 200 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 400 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 401 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 429 (application/json)
+    + Attributes (ResponseFormat) 
+    
++ Response 503 (application/json)
+    + Attributes (ResponseFormat)
+
+## Shipment [/v1/fulfillment/shipment/details/{accountNumber}{?accountNumber,orderNumber,dateFrom,dateTo,date,page}]
+
+### Shipment Details [GET]
+The API operation for Get Shipment Details.
+The optional parameters of the API operation are conditional. Following combinations of are allowed, when calling the API operation. 
+|Input Parameters\t\t\t\t\t\t\t\t              |Returned Values|
+|---------------------------------------------|-------------------|
+|accountNumber\t\t\t\t\t\t\t\t                |Returns all shipments|
+|accountNumber && orderNumber\t\t\t\t\t        |Returns shipments for given order number|
+|accountNumber && dateFrom && dateTo && page\t|Returns page with shipments for given date range. **Page, dateFrom and dateTo are optional.**|
+|accountNumber && date && page\t\t\t\t\t      |Returns shipments for given date. **Page is optional.**|
+
++ Headers 
+    Authorization: Bearer [place OAuth access token here, without brackets]
+    Content-Type: application/json
+    
++ Parameters 
+    + accountNumber :  (string, required)
+        Account Number
+    + orderNumber :  (string, optional)
+        Sales Order Number
+    + dateFrom : (string, optional)
+        Date From
+    + dateTo : (string, optional)
+        Date To
+    + date : (string, optional)
+        Date
+    + page : (string, optional)
+        Page 
+
++ Response 200 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 400 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 401 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 429 (application/json)
+    + Attributes (ResponseFormat) 
+    
++ Response 503 (application/json)
+    + Attributes (ResponseFormat)
+
+
+## Stock [/v1/fulfillment/stock/{inventoryAccountNumber}/{itemId}/{?node}]
+
+### Available Stock [GET]
+The API operation for Get Available Stock.
+
++ Headers 
+    Authorization: Bearer [place OAuth access token here, without brackets]
+    Content-Type: application/json
+    
++ Parameters 
+    + inventoryAccountNumber :  (string, required)
+        Inventory Account Number
+    + itemId :  (string, required)
+        Item Id
+    + node : (enum[string], optional)
+        Node
+        + Members
+            + OH1
+            + CA1
+            + JP1
+            + MX1
+
++ Response 200 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 400 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 401 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 429 (application/json)
+    + Attributes (ResponseFormat) 
+    
++ Response 503 (application/json)
+    + Attributes (ResponseFormat)
+
+
+### Inventory Snapshot [GET /stock/snapshot/{inventoryAccountNumber}{?itemId,node}]
+
+The API operation for Get Inventory Snapshot
++ Headers 
+    Authorization: Bearer [place OAuth access token here, without brackets]
+    Content-Type: application/json
+    
++ Parameters 
+    + inventoryAccountNumber :  (string, required)
+        Inventory Account Number
+    + itemId :  (string, optional)
+        Item Id
+    + node : (enum[string], optional)
+        Node
+        + Members
+            + OH1
+            + CA1
+            + JP1
+            + MX1   
+
++ Response 200 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 400 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 401 (application/json)
+    + Attributes (ResponseFormat)
+
++ Response 429 (application/json)
+    + Attributes (ResponseFormat) 
+    
++ Response 503 (application/json)
+    + Attributes (ResponseFormat)
 
 # Data Structures
 
