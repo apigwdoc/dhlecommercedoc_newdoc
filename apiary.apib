@@ -22,11 +22,11 @@ The API uses **HTTPS (over SSL) protocol**, the HTTP GET is used to retrieve dat
     >**Note:** *Usage of HTTP PUT and DELETE is not enabled.*
 
 The **service endpoints** available via this APIs have been build along side your eCommerce experience as underneath graphic indicates:
-<img src="https://czchoapint222.prg-dc.dhl.com:6443/apidoc/API_CustomerJourney.png" width="185px" height="126px" alt="Planets" usemap="#customerjourney">
+<img src="https://czchoapint222.prg-dc.dhl.com:6443/apidoc/API_CustomerJourney.png" width="18px" height="12px" alt="Planets" usemap="#customerjourney">
 <map name="customerjourney">
   <area shape="rect" coords="26,64,448,128" alt="shippingapi" href="#reference/shipping">
   <area shape="rect" coords="26,128,448,200" alt="filfillmentapi" href="#reference/fulfillment">
-  <area shape="rect" coords="0,0,26,210" alt="authenticationapi" href="#reference/authentication">
+  <area shape="rect" coords="0,0,26,210" alt="authenticationapi" href="#introduction/access-&-sign-up">
 </map>
 
 
@@ -1842,6 +1842,69 @@ Recommended sequence for the Label service call is following:
         Authorization: Bearer [token]
         Content-Type: application/json
     
+    + Body
+        
+        {"shipments": [{
+        "packages": [{
+    "packageDetails": {
+    "packageRefName": "55555555555555555",
+    "insuredValue": 1,
+    "weight": 2,
+    "declaredValue": 250,
+    "mailType": 2,
+    "height": 30,
+    "packageDesc": "Desc",
+    "currency": "AUD",
+    "length": 20,
+    "weightUom": "G",
+    "billingRef2": "ref 2",
+    "packageId": "fybjywwbdt",
+    "dutiesPaid": "DDU",
+    "orderedProduct": "PKD",
+    "dimensionUom": "CM",
+    "billingRef1": "ref 1"
+    },
+    "consigneeAddress": {
+    "city": "Test City",
+    "name": "Test Name",
+    "address1": "Address line 1",
+    "address2": "apt 123",
+    "phone": "555-555-5555",
+    "state": "GA",
+    "country": "IE",
+    "postalCode": "99999",
+    "email": "test@email.com"
+    },
+    "customsDetails": [{
+    "skuNumber": "3333333333333",
+    "countryOfOrigin": "US",
+    "itemDescription": "Desc1",
+    "itemValue": 10.1,
+    "packagedQuantity": 10,
+    "hsCode": "555555"
+    }, {
+    "skuNumber": "3333333333333",
+    "countryOfOrigin": "CZ",
+    "itemDescription": "Desc2",
+    "itemValue": 20.2,
+    "packagedQuantity": 20,
+    "hsCode": "555555"
+    }],
+    "returnAddress": {
+    "city": "Test City",
+    "name": "John Returns Doe",
+    "companyName": "Test Company",
+    "country": "US",
+    "state": "GA",
+    "address1": "Address line 1",
+    "postalCode": "99999"
+    }
+    }],
+    "pickupAccount": "0005304327",
+    "distributionCenter": "AUSYD1"
+    }]
+    }
+    
     + Attributes (RequestFormat)
 
 + Parameters
@@ -1891,6 +1954,86 @@ Recommended sequence for the Label service call is following:
         X-CorrelationID : Correlation ID which is unique for you request. Could be used by DHL Support for traceability purpose in case of an API error.
 
     + Attributes (ResponseFormat)
+    
+    + Body
+    {
+    "shipments": [
+        {
+            "pickupAccount": "0005304327",
+            "distributionCenter": "AUSYD1",
+            "packages": [
+                {
+                    "consigneeAddress": {
+                        "name": "Test Name",
+                        "address1": "Address line 1",
+                        "address2": "apt 123",
+                        "city": "Test City",
+                        "state": "GA",
+                        "postalCode": "99999",
+                        "country": "IE",
+                        "email": "test@email.com",
+                        "phone": "555-555-5555"
+                    },
+                    "returnAddress": {
+                        "name": "John Returns Doe",
+                        "companyName": "Test Company",
+                        "address1": "Address line 1",
+                        "city": "Test City",
+                        "state": "GA",
+                        "postalCode": "99999",
+                        "country": "US"
+                    },
+                    "packageDetails": {
+                        "billingRef1": "ref 1",
+                        "billingRef2": "ref 2",
+                        "currency": "AUD",
+                        "declaredValue": 250,
+                        "dimensionUom": "CM",
+                        "dutiesPaid": "DDU",
+                        "height": 30,
+                        "insuredValue": 1,
+                        "length": 20,
+                        "mailType": 2,
+                        "orderedProduct": "PKD",
+                        "packageDesc": "Desc",
+                        "packageId": "fybjywwbdt",
+                        "packageRefName": "55555555555555555",
+                        "weight": 2,
+                        "weightUom": "G"
+                    },
+                    "customsDetails": [
+                        {
+                            "itemDescription": "Desc1",
+                            "countryOfOrigin": "US",
+                            "hsCode": "555555",
+                            "packagedQuantity": 10,
+                            "itemValue": 10.1,
+                            "skuNumber": "3333333333333"
+                        },
+                        {
+                            "itemDescription": "Desc2",
+                            "countryOfOrigin": "CZ",
+                            "hsCode": "555555",
+                            "packagedQuantity": 20,
+                            "itemValue": 20.2,
+                            "skuNumber": "3333333333333"
+                        }
+                    ],
+                    "responseDetails": {
+                        "labelDetails": [
+                            {
+                                "packageId": "fybjywwbdt",
+                                "format": "PNG",
+                                "templateId": "PLD",
+                                "labelData": "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"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}
 
 + Response 400
     + Headers 
