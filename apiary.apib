@@ -22,13 +22,14 @@ The API uses **HTTPS (over SSL) protocol**, the HTTP GET is used to retrieve dat
     >**Note:** *Usage of HTTP PUT and DELETE is not enabled.*
 
 The **service endpoints** available via this APIs have been build along side your eCommerce experience as underneath graphic indicates:
-<img src="https://czchoapint222.prg-dc.dhl.com:6443/apidoc/API_CustomerJourney.png" width="18px" height="12px" alt="Planets" usemap="#customerjourney">
+<img src="https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/images/API_CustomerJourney.png" usemap="#customerjourney">
 <map name="customerjourney">
-  <area shape="rect" coords="26,64,448,128" alt="shippingapi" href=[/#reference/shipping](/#reference/shipping)>
+  <area shape="rect" coords="26,64,448,128" alt="shippingapi" href="reference/shipping">
   <area shape="rect" coords="26,128,448,200" alt="filfillmentapi" href="#reference/fulfillment">
-  <area shape="rect" coords="0,0,26,210" alt="authenticationapi" href="#introduction/access-&-sign-up">
+  <area shape="rect" coords="0,0,26,210" alt="authenticationapi" name="#access-&-sign-up">
 </map>
 
+Click <a name="reference/fulfillment" />
 
 ___
 
@@ -1794,40 +1795,18 @@ The benefit of this service is that it is synchronous and returns label contents
 
 To use the Shipping and Label calls, you may use the following accounts and additional settings.
 
+
+|                        | Pickup account | Distribution center | Product  | Currency | JSON Request Sample | 
+| -----------------------|----------------|---------------------|----------|----------|---------------------|
+|International Shipping  | 5317861        | HKHKG1              |    PPS   |          |  [download](http://www.dhl.com/eCommerce)           |
+|US Domestic             | 5330434        | USATL1              |    631   |          |  [download](http://www.dhl.com/eCommerce)          |
+|Thailand Domestic       | 5999999130     | THBKK1              |    PDO   |  THB     |  [download](http://www.dhl.com/eCommerce)           |
+|Chile Domestic          | 1000000012     | CLSAN1              |    PDO   |  CLP     |  [download](http://www.dhl.com/eCommerce)           |
+|Vietnam Domestic        | 5248767454     | VNSGN1              |    PDO   |          |  [download](http://www.dhl.com/eCommerce)           |
+
+
 >**Note:** *The data provided in the table below is **only** for testing purposes. For the Production API calls there must be used your individual Pickup account number and Distribution center identifier.*
 
-| International Shipping | Codes          | Comments            |
-| -----------------------|----------------|---------------------|
-|Pickup account          | 5317861        | International labels |
-|Distribution center     | HKHKG1         | International labels|
-|Product                 | PPS            | Parcel Plus, trackable|
-
-| US Domestic            | Codes          | Comments            |
-| -----------------------|----------------|---------------------|
-|Pickup account          | 5330434        |  |
-|Distribution center     | USATL1         | |
-|Product                 | 631            | |
-
-| Thailand Domestic      | Codes          | Comments            |
-| -----------------------|----------------|---------------------|
-|Pickup account          | 5999999130     |  |
-|Distribution center     | THBKK1         | |
-|Product                 | PDO            | |
-|Currency                | THB            | |
-
-| Chile Domestic         | Codes          | Comments            |
-| -----------------------|----------------|---------------------|
-|Pickup account          | 1000000012     |  |
-|Distribution center     | CLSAN1         | |
-|Product                 | PDO            | |
-|Currency                | CLP            | |
-
-
-| Vietnam Domestic       | Codes          | Comments            |
-| -----------------------|----------------|---------------------|
-|Pickup account          | 5248767454     |  |
-|Distribution center     | VNSGN1         | |
-|Product                 | PDO            | |
 ___
 
 Recommended sequence for the Label service call is following:
@@ -2097,10 +2076,10 @@ Recommended sequence for the Label service call is following:
               "packages": [
                 {
                   "packageDetails": {
-                    "packageRefName": "55555555555555555",
+                    "packageRefName": "CCCCCCCCC",
                     "insuredValue": 1,
-                    "weight": 2,
-                    "declaredValue": 250,
+                    "weight": 4,
+                    "declaredValue": 50,
                     "mailType": 2,
                     "height": 30,
                     "packageDesc": "Desc111",
