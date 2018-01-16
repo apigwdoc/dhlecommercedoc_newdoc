@@ -1,8 +1,8 @@
 FORMAT: 1A
-HOST: https://czchoapint222.prg-dc.dhl.com:6443
+HOST: https://api-qa.dhlecommerce.com
 AUTHOR: DHL eCommerce
 
-# NEW Global DHL eCommerce API
+# (NEW) Global DHL eCommerce API
 Welcome at the global DHL eCommerce API. <br/><br/>
 To find out more about the logistic services we offer, please check out [DHL eCommerce Products](http://www.dhl.com/eCommerce). <br/><br/>
 To [Sign up](#introduction/access-&-sign-up) for becoming a DHL eCommerce API consumer and receive your credentials, please contact us via: [integration@dhl.com](mailto:Integration@dhl.com). 
@@ -23,13 +23,9 @@ The API uses **HTTPS (over SSL) protocol**, the HTTP GET is used to retrieve dat
 
 The **service endpoints** available via this APIs have been build along side your eCommerce experience as underneath graphic indicates:
 
-|                                           | 
-| ------------------------------------------|
-|   <img src="https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/images/API_CustomerJourney_ValueAdd.png"  />   |
-|  <a href="#reference/fulfillment"><img src="https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/images/API_CustomerJourney_Fulfillment.png" alt="Fulfillment" /> </a>      |
-|   <a href="#reference/shipping"><img src="https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/images/API_CustomerJourney_Shipping.png" alt="Shipping" /> </a>          |
-
-
+|   |                                           | 
+|---| ------------------------------------------|
+| <a href="#reference/authentication"><img src="https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/images/API_CustomerJourney_Authentication.png" /> </a>  |<img src="https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/images/API_CustomerJourney_ValueAdd.png"  />  </br> <a href="#reference/fulfillment"><img src="https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/images/API_CustomerJourney_Fulfillment.png" /> </a> </br> <a href="#reference/shipping"><img src="https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/images/API_CustomerJourney_Shipping.png" /> </a>|
 
 ___
 
@@ -162,7 +158,7 @@ ___
 
 The API provides OAuth 2.0 Access Token with various authorization scopes. The Access Token can be used to authorize access for the DHL eCommerce Global APIs.
 
-## Access Token [/account/v1/auth/accesstoken]
+## Access Token [/v1/auth/accesstoken]
 
 ### Get Access Token [GET]
 
@@ -372,7 +368,7 @@ ___
 **Available API calls:**
 INTRODUCTIONTEXT2
 
-## Item [/v1/fulfillment/item]
+## Item [/efulfillment/v1/item]
 
 **Implementation Examples:** 
 - *Add a new product to your portfolio*: XXXXX
@@ -386,62 +382,68 @@ INTRODUCTIONTEXT2
 The API operation for Create Item.
 
 + Request (application/json)
+    
     + Headers 
-        Accept: application/json
-        Authorization: Bearer [token]
-        Content-Type: application/json
+            
+            Accept: application/json
+            Authorization: Bearer [token]
     
     + Attributes (CreateItemReq)
 
-+ Response 200
++ Response 200 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+            
 
     + Body
-        
-        {
-            "message": "Item created"
-        }
+            
+            {
+                "message": "Item created"
+            }
 
-+ Response 400
++ Response 400 (application/json)
+    
     + Headers 
-        Content-Type: application/json
-
+            
+    
     + Body
-        
-        {
-            "message": "Bad Request - Invalid URI parameters or querystring"
-        }
+            
+            {
+                "message": "Bad Request - Invalid URI parameters or querystring"
+            }
 
 + Response 401 (application/json)
+    
     + Headers 
-        Content-Type: application/json
 
+    
     + Body
-        
-        {
-            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
-        }
+            
+            {
+                "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+            }
 
 + Response 429 (application/json)
+    
     + Headers 
-        Content-Type: application/json
-
+    
+    
     + Body
-        
-        {
-            "message": "Too many requests in given amount of time"
-        }
+            
+            {
+                "message": "Too many requests in given amount of time"
+            }
     
 + Response 503 (application/json)
+    
     + Headers 
-        Content-Type: application/json
-
+    
+    
     + Body
-        
-        {
-            "message": "Service Unavailable"
-        }
+            
+            {
+                "message": "Service Unavailable"
+            }
 
 ### Get Item list [GET /v1/fulfillment/item/list/{accountNumber}{?itemId,status,page}]
 
@@ -453,144 +455,156 @@ The API operation for Get Item List. The optional parameters of the API operatio
 |accountNumber && itemId|Returns item by account number and item id|
 |accountNumber && status && page|Returns page with filtered items by status and account number. **Page is optional.**|
 
-+ Headers 
-        Accept: application/json
-        Authorization: Bearer [token]
-        Content-Type: application/json
-    
 + Parameters 
-    + accountNumber :  (string, required)
-        Account Number
-    + itemId : (string, optional)
-        Item Id
-    + status : (enum[string], optional)
-        Item Status
-        + Members
-            + Reserved
-            + Cancelled
-            + Scheduled
-            + Back Ordered
-            + Released
-            + Sent to Node
-            + Shipped
-            + Held
-            + Ready for WMS
-            + Waved
-            + Picked
-            + Manifested
-            + Created
-    + page : (string, optional)
-        Page
-
-+ Response 200
+        
+        + accountNumber :  (string, required)
+            Account Number
+        + itemId : (string, optional)
+            Item Id
+        + status : (enum[string], optional)
+            Item Status
+            + Members
+                + Reserved
+                + Cancelled
+                + Scheduled
+                + Back Ordered
+                + Released
+                + Sent to Node
+                + Shipped
+                + Held
+                + Ready for WMS
+                + Waved
+                + Picked
+                + Manifested
+                + Created
+        + page : (string, optional)
+            Page
++ Request
     + Headers 
-        Content-Type: application/json
+        
+            Accept: application/json
+            Authorization: Bearer [token]
+            Content-Type: application/json
+            
++ Response 200
+    
+    + Headers 
+            
+            Content-Type: application/json
 
     + Attributes (ItemListRes)
 
 + Response 400
+    
     + Headers 
-        Content-Type: application/json
+            
+            Content-Type: application/json
 
     + Body
         
-        {
-            "message": "Bad Request - Invalid URI parameters or querystring"
-        }
+            {
+                "message": "Bad Request - Invalid URI parameters or querystring"
+            }
 
 + Response 401 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+            
 
     + Body
         
-        {
-            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
-        }
+            {
+                "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+            }
 
 + Response 429 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Too many requests in given amount of time"
-        }
+            {
+                "message": "Too many requests in given amount of time"
+            }
     
 + Response 503 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Service Unavailable"
-        }
+            {
+                "message": "Service Unavailable"
+            }
 
 ### Update Item [POST /v1/fulfillment/item/update]
 The API operation for Update Item
 
 + Request (application/json)
+    
     + Headers 
+            
             Accept: application/json
             Authorization: Bearer [token]
-            Content-Type: application/json
 
     + Attributes (UpdateItemReq)
     
-+ Response 200
++ Response 200 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+            
 
     + Body
         
-        {
-            "message": "Item updated"
-        }
+            {
+                "message": "Item updated"
+            }
 
-+ Response 400
++ Response 400 (application/json)
     + Headers 
-        Content-Type: application/json
+    
 
     + Body
         
-        {
-            "message": "Bad Request - Invalid URI parameters or querystring"
-        }
+            {
+                "message": "Bad Request - Invalid URI parameters or querystring"
+            }
 
 + Response 401 (application/json)
+
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
-        }
+            {
+                "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+            }
 
 + Response 429 (application/json)
     + Headers 
-        Content-Type: application/json
+    
 
     + Body
         
-        {
-            "message": "Too many requests in given amount of time"
-        }
+            {
+                "message": "Too many requests in given amount of time"
+            }
     
 + Response 503 (application/json)
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Service Unavailable"
-        }
+            {
+                "message": "Service Unavailable"
+            }
 
 
-## Sales Orders [/v1/fulfillment/order/]
+## Sales Orders [/efulfillment/v1/order/]
 INTROTEXT
 ___
 **Required Parameters:** 
@@ -612,62 +626,69 @@ INTRODUCTIONTEXT2
 The API operation for Create Sales Order.
 
 + Request (application/json)
+    
     + Headers 
-        Accept: application/json
-        Authorization: Bearer [token]
-        Content-Type: application/json
+            
+            Accept: application/json
+            Authorization: Bearer [token]
     
     + Attributes (CreateSalesOrderReq)
     
-+ Response 202
++ Response 202 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+            
 
     + Body
         
-        {
-            "message": "Sales Order Accepted"
-        }
+            {
+                "message": "Sales Order Accepted"
+            }
 
-+ Response 400
++ Response 400 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Bad Request - Invalid URI parameters or querystring"
-        }
+            {
+                "message": "Bad Request - Invalid URI parameters or querystring"
+            }
 
 + Response 401 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
-        }
+            {
+                "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+            }
 
 + Response 429 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+            
+            Content-Type: application/json
 
     + Body
         
-        {
-            "message": "Too many requests in given amount of time"
-        }
+            {
+                "message": "Too many requests in given amount of time"
+            }
 
 + Response 503 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Service Unavailable"
-        }
+            {
+                "message": "Service Unavailable"
+            }
 
 ### Get Back Sales Order List [GET /v1/fulfillment/order/backorderlist/{accountNumber}{?accountNumber,dateFrom,dateTo,page}]
 
@@ -679,93 +700,106 @@ Following combinations of are allowed, when calling the API operation.
 |accountNumber                                |Returns all backordered orders|
 |accountNumber && dateFrom && dateTo && page  |Returns page of backordered orders for given date range. **Page, dateFrom and dateTo are optional.**|
 
-+ Headers 
-        Accept: application/json
-        Authorization: Bearer [token]
-        Content-Type: application/json
     
 + Parameters 
-    + accountNumber :  (string, required)
-        Account Number
-    + dateFrom : (string, optional)
-        Date From
-    + dateTo : (string, optional)
-        Date To
-    + page : (string, optional)
-        Page
+        
+        + accountNumber :  (string, required)
+            Account Number
+        + dateFrom : (string, optional)
+            Date From
+        + dateTo : (string, optional)
+            Date To
+        + page : (string, optional)
+            Page
 
-+ Response 200
++ Request (application/json)
+
     + Headers 
-        Content-Type: application/json
+            Accept: application/json
+            Authorization: Bearer [token]
+        
++ Response 200 (application/json)
+    + Headers 
+
 
     + Attributes (BackOrderListRes)
 
-+ Response 400
++ Response 400 (application/json)
     + Headers 
-        Content-Type: application/json
+    
 
     + Body
         
-        {
-            "message": "Bad Request - Invalid URI parameters or querystring"
-        }
+            {
+                "message": "Bad Request - Invalid URI parameters or querystring"
+            }
 
 + Response 401 (application/json)
+
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
-        }
+            {
+                "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+            }
 
 + Response 429 (application/json)
+
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Too many requests in given amount of time"
-        }
+            {
+                "message": "Too many requests in given amount of time"
+            }
 
 + Response 503 (application/json)
+    
     + Headers 
-        Content-Type: application/json
 
+    
     + Body
         
-        {
-            "message": "Service Unavailable"
-        }
+            {
+                "message": "Service Unavailable"
+            }
 
 ### Sales Order Acknowledgement [GET /v1/fulfillment/order/acknowledgement/{accountNumber}/{orderNumber}/{orderSubmissionId}]
 
 The API operation for Get Sales Order Acknowledgement
 
-+ Headers 
-        Accept: application/json
-        Authorization: Bearer [token]
-        Content-Type: application/json
     
 + Parameters 
-    + accountNumber :  (string, required)
-        Account Number
-    + orderNumber :  (string, required)
-        Sales Order Number
-    + orderSubmissionId :  (string, required)
-        Sales Order Submission Id   
+    
+        + accountNumber :  (string, required)
+            Account Number
+        + orderNumber :  (string, required)
+            Sales Order Number
+        + orderSubmissionId :  (string, required)
+            Sales Order Submission Id   
 
-+ Response 200
++ Request (application/json)
+
     + Headers 
-        Content-Type: application/json
+            
+            Accept: application/json
+            Authorization: Bearer [token]
+            Content-Type: application/json
+
++ Response 200 (application/json)
+    
+    + Headers 
+
 
     + Attributes (SalesOrderAcknowledgementRes)
 
-+ Response 400
++ Response 400 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
@@ -774,34 +808,37 @@ The API operation for Get Sales Order Acknowledgement
         }
 
 + Response 401 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+    
 
     + Body
         
-        {
-            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
-        }
+            {
+                "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+            }
 
 + Response 429 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+    
 
     + Body
         
-        {
-            "message": "Too many requests in given amount of time"
-        }
+            {
+                "message": "Too many requests in given amount of time"
+            }
 
 + Response 503 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Service Unavailable"
-        }
+            {
+                "message": "Service Unavailable"
+            }
 
 
 ### Sales Order Status [GET /v1/fulfillment/order/status/{accountNumber}{?accountNumber}]
@@ -814,141 +851,160 @@ Following combinations of are allowed, when calling the API operation.
 |orderNumber                          |Returns status of given order|
 |status && page                      |Returns page with filtered orders by status. **Page is optional.**|\n|dateFrom && status && page          |Returns page with filtered orders from defined date. **Status and page are optional.**|\n|dateTo && status && page            |Returns page with filtered orders by status and to defined date. **Status and page are optional.**|\n|dateFrom && dateTo && status && page|Returns page with filtered orders by status for defined date range. **Status and page are optional.**|\n"
 
-+ Headers 
-    Authorization: Bearer [place OAuth access token here, without brackets]
-    Content-Type: application/json
     
 + Parameters 
-    + accountNumber :  (string, required)
-        Account Number
-    + orderNumber :  (string, optional)
-        Sales Order Number
-    + dateFrom : (string, optional)
-        Date From
-    + dateTo : (string, optional)
-        Date To
-    + status : (enum[string], optional)
-        Status
-        + Members
-            + Reserved
-            + Cancelled
-            + Scheduled
-            + Back Ordered
-            + Released
-            + Sent to Node
-            + Shipped
-            + Held
-            + Ready for WMS
-            + Waved
-            + Picked
-            + Manifested
-            + Created
-    + page : (string, optional)
-        Page   
+        
+        + accountNumber :  (string, required)
+            Account Number
+        + orderNumber :  (string, optional)
+            Sales Order Number
+        + dateFrom : (string, optional)
+            Date From
+        + dateTo : (string, optional)
+            Date To
+        + status : (enum[string], optional)
+            Status
+            + Members
+                + Reserved
+                + Cancelled
+                + Scheduled
+                + Back Ordered
+                + Released
+                + Sent to Node
+                + Shipped
+                + Held
+                + Ready for WMS
+                + Waved
+                + Picked
+                + Manifested
+                + Created
+        + page : (string, optional)
+            Page   
 
-+ Response 200
++ Request (application/json)
+
     + Headers 
+        Authorization: Bearer [place OAuth access token here, without brackets]
         Content-Type: application/json
+
++ Response 200 (application/json)
+    
+    + Headers 
+
 
     + Attributes (SalesOrderStatusRes)
 
-+ Response 400
++ Response 400 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Bad Request - Invalid URI parameters or querystring"
-        }
+            {
+                "message": "Bad Request - Invalid URI parameters or querystring"
+            }
 
 + Response 401 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
-        }
+            {
+                "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+            }
 
 + Response 429 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Too many requests in given amount of time"
-        }
+            {
+                "message": "Too many requests in given amount of time"
+            }
 
 + Response 503 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Service Unavailable"
-        }
+            {
+                "message": "Service Unavailable"
+            }
 
 ### Sales Order Details [GET /v1/fulfillment/order/details/{accountNumber}/{orderNumber}]
 The API operation for Get Sales Order Details
-+ Headers 
-    Authorization: Bearer [place OAuth access token here, without brackets]
-    Content-Type: application/json
+
     
 + Parameters 
-    + accountNumber :  (string, required)
-        Account Number
-    + orderNumber :  (string, required)
-        Sales Order Number
+        
+        + accountNumber :  (string, required)
+            Account Number
+        + orderNumber :  (string, required)
+            Sales Order Number
 
-+ Response 200
++ Request (application/json)
+
     + Headers 
-        Content-Type: application/json
+            
+            Authorization: Bearer [place OAuth access token here, without brackets]
+    
++ Response 200 (application/json)
+    
+    + Headers 
+
 
     + Attributes (SalesOrderDetailsRes)
 
-+ Response 400
++ Response 400 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Bad Request - Invalid URI parameters or querystring"
-        }
+            {
+                "message": "Bad Request - Invalid URI parameters or querystring"
+            }
 
 + Response 401 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
-        }
+            {
+                "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+            }
 
 + Response 429 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Too many requests in given amount of time"
-        }
+            {
+                "message": "Too many requests in given amount of time"
+            }
 
 + Response 503 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Service Unavailable"
-        }
+            {
+                "message": "Service Unavailable"
+            }
 
 ## Purchase Order [/v1/fulfillment/purchaseorder]
 
@@ -956,69 +1012,72 @@ The API operation for Get Sales Order Details
 The API operation for Create Purchase Order.
 
 + Request (application/json)
+    
     + Headers 
-        Accept: application/json
-        Authorization: Bearer [token]
-        Content-Type: application/json
+            
+            Accept: application/json
+            Authorization: Bearer [token]
     
     + Attributes (CreatePurchaseOrderReq)
     
-+ Response 200
++ Response 200 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+            
 
     + Body
         
-        {
-            "message": "Purchase Order Accepted"
-        }
+            {
+                "message": "Purchase Order Accepted"
+            }
 
-+ Response 400
++ Response 400 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Bad Request - Invalid URI parameters or querystring"
-        }
+            {
+                "message": "Bad Request - Invalid URI parameters or querystring"
+            }
 
 + Response 401 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
-        }
+            {
+                "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+            }
 
 + Response 429 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Too many requests in given amount of time"
-        }
+            {
+                "message": "Too many requests in given amount of time"
+            }
 
 + Response 503 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Service Unavailable"
-        }
+            {
+                "message": "Service Unavailable"
+            }
 
 ###  Purchase Order Acknowledgement [GET /v1/fulfillment/purchaseorder/acknowledgement/{accountNumber}/{orderNumber}/{orderSubmissionId}]
 The API operation for Get Purchase Order Acknowledgement
-+ Headers 
-    Accept: application/json
-    Authorization: Bearer [token]
-    Content-Type: application/json
+
     
 + Parameters 
     + accountNumber :  (string, required)
@@ -1028,13 +1087,19 @@ The API operation for Get Purchase Order Acknowledgement
     + orderSubmissionId :  (string, required)
         Purchase Order Submission Id 
 
-+ Response 200
++ Request (application/json)
+
+    + Headers 
+            Accept: application/json
+            Authorization: Bearer [token]
+
++ Response 200 (application/json)
     + Headers 
         Content-Type: application/json
 
     + Attributes (PurchaseOrderAcknowledgementRes)
 
-+ Response 400
++ Response 400 (application/json)
     + Headers 
         Content-Type: application/json
 
@@ -1772,40 +1837,32 @@ You can use Shipping API for the Order Manifest and Label generation (PDF, PNG a
 
 The Access Token is valid for 5h so it is not necessary to request the token for each request. Developers should implement the client application in a way that the token will be requested again only after it expires.
 
+To use the Shipping calls, you may use the following accounts and additional settings.
 
 
-## Create Label [/shipping/v1/label{?format,labelSize,pageSize,layout}]
+|                        | Pickup account | Distribution center | Product  | Currency | JSON Request Sample | JSON Response Sample | 
+| -----------------------|----------------|---------------------|----------|----------|---------------------|-------------------------|
+|International Shipping  | 5317861        | HKHKG1              |    PPS   |          |    |       |
+|US Domestic             | 5330434        | USATL1              |    631   |          |  [download](https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/label_json_samples/US_dom_request.json)   |    [download](https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/label_json_samples/US_dom_response.json)     |
+|Thailand Domestic       | 5999999130     | THBKK1              |    PDO   |  THB     |      |       |
+|Chile Domestic          | 1000000012     | CLSAN1              |    PDO   |  CLP     |  [download](https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/label_json_samples/Chile_dom_request.json)    |   [download](https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/label_json_samples/Chile_dom_request.json)    |
+|Vietnam Domestic        | 5248767454     | VNSGN1              |    PDO   |          |      |       |
+
+
+>**Note:** *The data provided in the table below is **only** for testing purposes. For the Production API calls there must be used your individual Pickup account number and Distribution center identifier.*
+
+
+## Label [/shipping/v1/label{?format,labelSize,pageSize,layout}]
 
 Now that you know the shipping product you want to use, you can use the API calls described here to create the labels you need for this.<br/><br/>
 No matter if they are domestic labels, labels for your international shipments or if it is a postal or a commercial shipment - here you will receive them all.<br/><br/>
 Furthermore, by creation of the shipping label you will receive a unique tracking code for your customer that is bound to the label you created.<br/><br/>
 
-**Implementation Examples:** 
-- *Create a Label*: XXXXX
-- *XXX*: XXXXX
-___
-
-**Available API calls:**
-INTRODUCTIONTEXT2
 
 ### Create Label [POST]
 
 Purpose of this service is to generate labels for single mail item only (single package object).<br/><br/>
 The benefit of this service is that it is synchronous and returns label contents directly in the response, so it is no necessity to download the labels afterwards.<br/><br/>
-
-To use the Shipping and Label calls, you may use the following accounts and additional settings.
-
-
-|                        | Pickup account | Distribution center | Product  | Currency | JSON Request Sample | 
-| -----------------------|----------------|---------------------|----------|----------|---------------------|
-|International Shipping  | 5317861        | HKHKG1              |    PPS   |          |  [download](http://www.dhl.com/eCommerce)           |
-|US Domestic             | 5330434        | USATL1              |    631   |          |  [download](http://www.dhl.com/eCommerce)          |
-|Thailand Domestic       | 5999999130     | THBKK1              |    PDO   |  THB     |  [download](http://www.dhl.com/eCommerce)           |
-|Chile Domestic          | 1000000012     | CLSAN1              |    PDO   |  CLP     |  [download](http://www.dhl.com/eCommerce)           |
-|Vietnam Domestic        | 5248767454     | VNSGN1              |    PDO   |          |  [download](http://www.dhl.com/eCommerce)           |
-
-
->**Note:** *The data provided in the table below is **only** for testing purposes. For the Production API calls there must be used your individual Pickup account number and Distribution center identifier.*
 
 ___
 
@@ -1814,6 +1871,7 @@ Recommended sequence for the Label service call is following:
 1. Use clientId to obtain token using the authentication API - see `API Authentication` description above.
 2. Prepare valid JSON request document per schema. Use data above depending on your use-case.
 3. Call Sandbox API. The response message will contain information form the request; additionally it may contain a tracking number (depending on product) and base64-encoded label.
+
 
 + Parameters
 
@@ -1938,7 +1996,7 @@ Recommended sequence for the Label service call is following:
 + Response 201
     + Headers 
         Content-Type: application/json
-        X-CorrelationID : Correlation ID which is unique for you request. Could be used by DHL Support for traceability purpose in case of an API error.
+        : Correlation ID which is unique for you request. Could be used by DHL Support for traceability purpose in case of an API error.
 
     + Attributes (ResponseFormat)
     
@@ -2025,8 +2083,8 @@ Recommended sequence for the Label service call is following:
 
 + Response 400
     + Headers 
-        Content-Type: application/json
-        X-CorrelationID : Correlation ID which is unique for you request. Could be used by DHL Support for traceability purpose in case of an API error.
+            Content-Type: application/json
+            
     
     + Attributes (ErrResponseFormatError)
     
@@ -2038,8 +2096,8 @@ Recommended sequence for the Label service call is following:
 
 + Response 401 (application/json)
     + Headers 
-        Content-Type: application/json
-        X-CorrelationID : Correlation ID which is unique for you request. Could be used by DHL Support for traceability purpose in case of an API error.
+            Content-Type: application/json
+        
     
     + Attributes (ErrResponseFormatError)
     
@@ -2052,7 +2110,7 @@ Recommended sequence for the Label service call is following:
 + Response 429 (application/json)
     + Headers 
         Content-Type: application/json
-        X-CorrelationID : Correlation ID which is unique for you request. Could be used by DHL Support for traceability purpose in case of an API error.
+        
     
     + Attributes (ErrResponseFormatError)
     
@@ -2144,7 +2202,7 @@ Recommended sequence for the Label service call is following:
 + Response 503 (application/json)
     + Headers 
         Content-Type: application/json
-        X-CorrelationID : Correlation ID which is unique for you request. Could be used by DHL Support for traceability purpose in case of an API error.
+        
     
     + Attributes (ErrResponseFormatError)
     
@@ -2158,14 +2216,6 @@ Recommended sequence for the Label service call is following:
 **Manifesting** (sometimes refered to as *Close-out*) describes the process of transmitting your final shipments to us before the physical transfer of the shipments.<br/><br/>
 Within this process, a document (**the Manifest**) is beeing created sumarizing all the to be shipped items, their total weight as well as associated information on your account.<br/><br/>
 The created document also includes your signature and a barcode. During drop-off or pick-up, this document is scanned by us.<br/><br/>
-___
-**Implementation Examples:** 
-- *Create your first manifest*: XXXXX
-- *Embed the manifest creation into your process*: XXXXX
-
-___
-**Available API calls:**
-INTRODUCTIONTEXT2
 
 ### Create Manifest [POST]
 Purpose of this service is to create shipping order manifest.<br/><br/>
@@ -2174,7 +2224,9 @@ It does allow transmission of data for up to 1000 parcels in a single call.<br/>
 The recommended sequence for the SOM call is following:
 
     1. Use client id to obtain token using the authentication API- see `API Authentication` description above.
+    
     2. Prepare valid JSON request document per schema. Use data above depending on your use-case.
+    
     3. Call Sandbox API. The response message will acknowledge success or failure of the call.
 
 + Request (application/json)
@@ -2188,7 +2240,7 @@ The recommended sequence for the SOM call is following:
 + Response 201
     + Headers 
         Content-Type: application/json
-        X-CorrelationID : Correlation ID which is unique for you request. Could be used by DHL Support for traceability purpose in case of an API error.
+        
     
     + Attributes (ErrResponseFormatError)
     
@@ -2197,7 +2249,7 @@ The recommended sequence for the SOM call is following:
 + Response 400
     + Headers 
         Content-Type: application/json
-        X-CorrelationID : Correlation ID which is unique for you request. Could be used by DHL Support for traceability purpose in case of an API error.
+        
     
     + Attributes (ErrResponseFormatError)
     
@@ -2210,7 +2262,7 @@ The recommended sequence for the SOM call is following:
 + Response 401 (application/json)
     + Headers 
         Content-Type: application/json
-        X-CorrelationID : Correlation ID which is unique for you request. Could be used by DHL Support for traceability purpose in case of an API error.
+        
     
     + Attributes (ErrResponseFormatError)
     
@@ -2223,7 +2275,7 @@ The recommended sequence for the SOM call is following:
 + Response 429 (application/json)
     + Headers 
         Content-Type: application/json
-        X-CorrelationID : Correlation ID which is unique for you request. Could be used by DHL Support for traceability purpose in case of an API error.
+        
     
     + Attributes (ErrResponseFormatError)
     
@@ -2236,7 +2288,7 @@ The recommended sequence for the SOM call is following:
 + Response 503 (application/json)
     + Headers 
         Content-Type: application/json
-        X-CorrelationID : Correlation ID which is unique for you request. Could be used by DHL Support for traceability purpose in case of an API error.
+        
     
     + Attributes (ErrResponseFormatError)
     
