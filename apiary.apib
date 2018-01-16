@@ -456,35 +456,31 @@ The API operation for Get Item List. The optional parameters of the API operatio
 |accountNumber && status && page|Returns page with filtered items by status and account number. **Page is optional.**|
 
 + Parameters 
-        
-        + accountNumber :  (string, required)
-            Account Number
-        + itemId : (string, optional)
-            Item Id
-        + status : (enum[string], optional)
-            Item Status
-            + Members
-                + Reserved
-                + Cancelled
-                + Scheduled
-                + Back Ordered
-                + Released
-                + Sent to Node
-                + Shipped
-                + Held
-                + Ready for WMS
-                + Waved
-                + Picked
-                + Manifested
-                + Created
-        + page : (string, optional)
-            Page
-+ Request
+    + accountNumber  (string, required) - Account Number
+    + itemId (string, optional) - Item Id
+    + status (enum[string], optional) - Item Status
+        + Members
+            + `Reserved`
+            + `Cancelled`
+            + `Scheduled`
+            + `Back Ordered`
+            + `Released`
+            + `Sent to Node`
+            + `Shipped`
+            + `Held`
+            + `Ready for WMS`
+            + `Waved`
+            + `Picked`
+            + `Manifested`
+            + `Created`            
+    + page (string, optional) - Page
+
++ Request (application/json)
+    
     + Headers 
         
             Accept: application/json
             Authorization: Bearer [token]
-            Content-Type: application/json
             
 + Response 200
     
@@ -701,19 +697,15 @@ Following combinations of are allowed, when calling the API operation.
 
     
 + Parameters 
-        
-        + accountNumber :  (string, required)
-            Account Number
-        + dateFrom : (string, optional)
-            Date From
-        + dateTo : (string, optional)
-            Date To
-        + page : (string, optional)
-            Page
+    + accountNumber  (string, required) - Account Number
+    + dateFrom (string, optional) - Date From
+    + dateTo (string, optional) - Date To
+    + page (string, optional) - Page
 
 + Request (application/json)
 
     + Headers 
+           
             Accept: application/json
             Authorization: Bearer [token]
         
@@ -774,13 +766,9 @@ The API operation for Get Sales Order Acknowledgement
 
     
 + Parameters 
-    
-        + accountNumber :  (string, required)
-            Account Number
-        + orderNumber :  (string, required)
-            Sales Order Number
-        + orderSubmissionId :  (string, required)
-            Sales Order Submission Id   
+    + accountNumber (string, required) - Account Number
+    + orderNumber  (string, required) - Sales Order Number
+    + orderSubmissionId  (string, required) - Sales Order Submission Id   
 
 + Request (application/json)
 
@@ -841,7 +829,7 @@ The API operation for Get Sales Order Acknowledgement
             }
 
 
-### Sales Order Status [GET /v1/fulfillment/order/status/{accountNumber}{?accountNumber}]
+### Sales Order Status [GET /v1/fulfillment/order/status/{?accountNumber}{?accountNumber,orderNumber,dateFrom,dateTo,status,page}]
 
 The API operation for Get Sales Order Status
 The optional parameters of the API operation are conditional. 
@@ -851,35 +839,27 @@ Following combinations of are allowed, when calling the API operation.
 |orderNumber                          |Returns status of given order|
 |status && page                      |Returns page with filtered orders by status. **Page is optional.**|\n|dateFrom && status && page          |Returns page with filtered orders from defined date. **Status and page are optional.**|\n|dateTo && status && page            |Returns page with filtered orders by status and to defined date. **Status and page are optional.**|\n|dateFrom && dateTo && status && page|Returns page with filtered orders by status for defined date range. **Status and page are optional.**|\n"
 
-    
 + Parameters 
-        
-        + accountNumber :  (string, required)
-            Account Number
-        + orderNumber :  (string, optional)
-            Sales Order Number
-        + dateFrom : (string, optional)
-            Date From
-        + dateTo : (string, optional)
-            Date To
-        + status : (enum[string], optional)
-            Status
-            + Members
-                + Reserved
-                + Cancelled
-                + Scheduled
-                + Back Ordered
-                + Released
-                + Sent to Node
-                + Shipped
-                + Held
-                + Ready for WMS
-                + Waved
-                + Picked
-                + Manifested
-                + Created
-        + page : (string, optional)
-            Page   
+    + accountNumber  (string, required) - Account Number
+    + orderNumber  (string, optional) - Sales Order Number
+    + dateFrom (string, optional) - Date From
+    + dateTo (string, optional) - Date To
+    + status (enum[string], optional) - Status
+        + Members
+            + `Reserved`
+            + `Cancelled`
+            + `Scheduled`
+            + `Back Ordered`
+            + `Released`
+            + `Sent to Node`
+            + `Shipped`
+            + `Held`
+            + `Ready for WMS`
+            + `Waved`
+            + `Picked`
+            + `Manifested`
+            + `Created`            
+    + page (string, optional) - Page
 
 + Request (application/json)
 
@@ -943,11 +923,8 @@ The API operation for Get Sales Order Details
 
     
 + Parameters 
-        
-        + accountNumber :  (string, required)
-            Account Number
-        + orderNumber :  (string, required)
-            Sales Order Number
+    + accountNumber (string, required) - Account Number
+    + orderNumber (string, required) - Sales Order Number
 
 + Request (application/json)
 
@@ -1080,13 +1057,9 @@ The API operation for Get Purchase Order Acknowledgement
 
     
 + Parameters 
-    
-    + accountNumber :  (string, required)
-        Account Number
-    + orderNumber :  (string, required)
-        Sales Order Number
-    + orderSubmissionId :  (string, required)
-        Purchase Order Submission Id 
+    + accountNumber (string, required) - Account Number
+    + orderNumber (string, required) - Sales Order Number
+    + orderSubmissionId (string, required) - Purchase Order Submission Id 
 
 + Request (application/json)
 
@@ -1099,7 +1072,6 @@ The API operation for Get Purchase Order Acknowledgement
     
     + Headers 
             
-            Content-Type: application/json
 
     + Attributes (PurchaseOrderAcknowledgementRes)
 
@@ -1115,6 +1087,7 @@ The API operation for Get Purchase Order Acknowledgement
             }
 
 + Response 401 (application/json)
+    
     + Headers 
 
 
@@ -1125,6 +1098,7 @@ The API operation for Get Purchase Order Acknowledgement
             }
 
 + Response 429 (application/json)
+    
     + Headers 
 
 
@@ -1135,8 +1109,9 @@ The API operation for Get Purchase Order Acknowledgement
             }
 
 + Response 503 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
@@ -1212,17 +1187,14 @@ The API operation for Cancel Purchase Order
                 "message": "Service Unavailable"
             }
 
-### Purchase Order Details [GET /v1/fulfillment/purchaseorder/details/{accountNumber}/{orderNumber}]
+### Purchase Order Details [GET /v1/fulfillment/purchaseorder/details/{accountNumber}/{orderNumber,orderSubmissionId}]
 The API operation for Get Purchase Order Details.
 
 + Parameters 
         
-        + accountNumber :  (string, required)
-            Account Number
-        + orderNumber :  (string, required)
-            Sales Order Number
-        + orderSubmissionId :  (string, required)
-            Purchase Order Submission Id 
+    + accountNumber  (string, required) - Account Number
+    + orderNumber (string, required) - Sales Order Number
+    + orderSubmissionId (string, required) - Purchase Order Submission Id 
 
 + Request (application/json)
 
@@ -1293,38 +1265,32 @@ Following combinations of are allowed, when calling the API operation.
 |dateTo && status && page         |Returns page with filtered orders by status to defined date. **Status and page are optional.**|
 |dateFrom && dateTo && status && page|Returns page with filtered orders by status for defined date range. **Status and page are optional.**|"
 
-    
 + Parameters 
-        
-        + accountNumber :  (string, required)
-            Account Number
-        + orderNumber :  (string, optional)
-            Sales Order Number
-        + dateFrom : (string, optional)
-            Date From
-        + dateTo : (string, optional)
-            Date To
-        + status : (enum[string], optional)
-            Status
-            + Members
-                + Reserved
-                + Cancelled
-                + Scheduled
-                + Back Ordered
-                + Released
-                + Sent to Node
-                + Shipped
-                + Held
-                + Ready for WMS
-                + Waved
-                + Picked
-                + Manifested
-                + Created
-        + page : (string, optional)
-            Page   
+    + accountNumber  (string, required) - Account Number
+    + orderNumber  (string, optional) - Sales Order Number
+    + dateFrom (string, optional) - Date From
+    + dateTo (string, optional) - Date To
+    + status (enum[string], optional) - Status
+        + Members
+            + `Reserved`
+            + `Cancelled`
+            + `Scheduled`
+            + `Back Ordered`
+            + `Released`
+            + `Sent to Node`
+            + `Shipped`
+            + `Held`
+            + `Ready for WMS`
+            + `Waved`
+            + `Picked`
+            + `Manifested`
+            + `Created`            
+    + page (string, optional) - Page
+
 + Request (application/json)
 
     + Headers 
+            
             Accept: application/json
             Authorization: Bearer [token]
 
@@ -1386,7 +1352,6 @@ The API operation for Update Purchase Order
             
             Accept: application/json
             Authorization: Bearer [token]
-            Content-Type: application/json
     
     + Attributes (UpdatePurchaseOrderReq)
 
@@ -1451,11 +1416,8 @@ The API operation for Update Purchase Order
 The API operation for Get Return Order Details
     
 + Parameters 
-    
-        + accountNumber :  (string, required)
-            Account Number
-        + orderNumber :  (string, required)
-            Return Order Number
+    + accountNumber (string, required) - Account Number
+    + orderNumber (string, required) - Return Order Number
 
 + Request (application/json)
 
@@ -1528,39 +1490,32 @@ The API operation for Get Return Order List\n\nThe optional parameters of the AP
 |accountNumber && dateTo && status && page            |Returns page of filtered orders by status and account number to defined date. **Status and page are optional.**|
 |accountNumber && dateFrom && dateTo && status && page|Returns page of filtered orders by status and account number for defined date range. **Status and page are optional.**|
 
-
 + Parameters 
-    
-        + accountNumber :  (string, required)
-            Account Number
-        + orderNumber :  (string, optional)
-            Sales Order Number
-        + dateFrom : (string, optional)
-            Date From
-        + dateTo : (string, optional)
-            Date To
-        + status : (enum[string], optional)
-            Status
-            + Members
-                + Reserved
-                + Cancelled
-                + Scheduled
-                + Back Ordered
-                + Released
-                + Sent to Node
-                + Shipped
-                + Held
-                + Ready for WMS
-                + Waved
-                + Picked
-                + Manifested
-                + Created
-        + page : (string, optional)
-            Page      
+    + accountNumber  (string, required) - Account Number
+    + orderNumber  (string, optional) - Sales Order Number
+    + dateFrom (string, optional) - Date From
+    + dateTo (string, optional) - Date To
+    + status (enum[string], optional) - Status
+        + Members
+            + `Reserved`
+            + `Cancelled`
+            + `Scheduled`
+            + `Back Ordered`
+            + `Released`
+            + `Sent to Node`
+            + `Shipped`
+            + `Held`
+            + `Ready for WMS`
+            + `Waved`
+            + `Picked`
+            + `Manifested`
+            + `Created`            
+    + page (string, optional) - Page 
 
 + Request (application/json)
 
     + Headers 
+            
             Accept: application/json
             Authorization: Bearer [token]
 
@@ -1657,9 +1612,10 @@ The optional parameters of the API operation are conditional. Following combinat
 
     + Attributes(ShipmentDetailsRes)
     
-+ Response 400
++ Response 400 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+    
 
     + Body
         
@@ -1773,6 +1729,7 @@ The API operation for Get Available Stock.
 + Request
     
     + Headers 
+            
             Accept: application/json
             Authorization: Bearer [token]
 
@@ -1830,69 +1787,79 @@ The API operation for Get Available Stock.
 ### Inventory Snapshot [GET /stock/snapshot/{inventoryAccountNumber}{?itemId,node}]
 The API operation for Get Inventory Snapshot
 
-+ Headers 
-    Accept: application/json
-    Authorization: Bearer [token]
-    Content-Type: application/json
-    
-+ Parameters 
-    + inventoryAccountNumber :  (string, required)
-        Inventory Account Number
-    + itemId :  (string, optional)
-        Item Id
-    + node : (enum[string], optional)
-        Node
-        + Members
-            + OH1
-            + CA1
-            + JP1
-            + MX1   
 
-+ Response 200
++ Parameters 
+        
+        + inventoryAccountNumber :  (string, required)
+            Inventory Account Number
+        + itemId :  (string, optional)
+            Item Id
+        + node : (enum[string], optional)
+            Node
+            + Members
+                + OH1
+                + CA1
+                + JP1
+                + MX1   
+
++ Request (application/json)
+
     + Headers 
-        Content-Type: application/json
+            
+            Accept: application/json
+            Authorization: Bearer [token]
+
+
++ Response 200 (application/json)
+    
+    + Headers 
+
 
     + Attributes(InventorySnapshotRes)
     
-+ Response 400
++ Response 400 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+    
 
     + Body
         
-        {
-            "message": "Bad Request - Invalid URI parameters or querystring"
-        }
+            {
+                "message": "Bad Request - Invalid URI parameters or querystring"
+            }
 
 + Response 401 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
-        }
+            {
+                "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+            }
 
 + Response 429 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Too many requests in given amount of time"
-        }
+            {
+                "message": "Too many requests in given amount of time"
+            }
 
 + Response 503 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Service Unavailable"
-        }
+            {
+                "message": "Service Unavailable"
+            }
 
 # Group Shipping
 Our global shipping API provides you with everything you need to bring your orders to your customers - for your domestic- as well as for your international ones.<br/><br/>
@@ -1982,304 +1949,314 @@ Recommended sequence for the Label service call is following:
             + `4x1` 
             + `1x1` 
 
-+ Request Sample1 (application/json)
++ Request (application/json)
+    
     + Headers 
-        Accept: application/json
-        Authorization: Bearer [token]
-        Content-Type: application/json
+            
+            Accept: application/json
+            Authorization: Bearer [token]
     
     + Body
         
-        {
-          "shipments": [
             {
-              "packages": [
+              "shipments": [
                 {
-                  "packageDetails": {
-                    "packageRefName": "55555555555555555",
-                    "insuredValue": 1,
-                    "weight": 2,
-                    "declaredValue": 250,
-                    "mailType": 2,
-                    "height": 30,
-                    "packageDesc": "Desc111",
-                    "currency": "AUD",
-                    "length": 20,
-                    "weightUom": "G",
-                    "billingRef2": "ref 2",
-                    "packageId": "fybjywwbdt",
-                    "dutiesPaid": "DDU",
-                    "orderedProduct": "PPS",
-                    "dimensionUom": "CM",
-                    "billingRef1": "ref 1"
-                  },
-                  "consigneeAddress": {
-                    "city": "Test City",
-                    "name": "Test Name",
-                    "address1": "Address line 1",
-                    "address2": "apt 123",
-                    "phone": "555-555-5555",
-                    "state": "GA",
-                    "country": "IE",
-                    "postalCode": "99999",
-                    "email": "test@email.com"
-                  },
-                  "customsDetails": [
+                  "packages": [
                     {
-                      "skuNumber": "3333333333333",
-                      "countryOfOrigin": "US",
-                      "itemDescription": "Desc1",
-                      "itemValue": 10.1,
-                      "packagedQuantity": 10,
-                      "hsCode": "555555"
-                    },
-                    {
-                      "skuNumber": "3333333333333",
-                      "countryOfOrigin": "CZ",
-                      "itemDescription": "Desc2",
-                      "itemValue": 20.2,
-                      "packagedQuantity": 20,
-                      "hsCode": "555555"
+                      "packageDetails": {
+                        "packageRefName": "55555555555555555",
+                        "insuredValue": 1,
+                        "weight": 2,
+                        "declaredValue": 250,
+                        "mailType": 2,
+                        "height": 30,
+                        "packageDesc": "Desc111",
+                        "currency": "AUD",
+                        "length": 20,
+                        "weightUom": "G",
+                        "billingRef2": "ref 2",
+                        "packageId": "fybjywwbdt",
+                        "dutiesPaid": "DDU",
+                        "orderedProduct": "PPS",
+                        "dimensionUom": "CM",
+                        "billingRef1": "ref 1"
+                      },
+                      "consigneeAddress": {
+                        "city": "Test City",
+                        "name": "Test Name",
+                        "address1": "Address line 1",
+                        "address2": "apt 123",
+                        "phone": "555-555-5555",
+                        "state": "GA",
+                        "country": "IE",
+                        "postalCode": "99999",
+                        "email": "test@email.com"
+                      },
+                      "customsDetails": [
+                        {
+                          "skuNumber": "3333333333333",
+                          "countryOfOrigin": "US",
+                          "itemDescription": "Desc1",
+                          "itemValue": 10.1,
+                          "packagedQuantity": 10,
+                          "hsCode": "555555"
+                        },
+                        {
+                          "skuNumber": "3333333333333",
+                          "countryOfOrigin": "CZ",
+                          "itemDescription": "Desc2",
+                          "itemValue": 20.2,
+                          "packagedQuantity": 20,
+                          "hsCode": "555555"
+                        }
+                      ],
+                      "returnAddress": {
+                        "city": "Test City",
+                        "name": "John Returns Doe",
+                        "companyName": "Test Company",
+                        "country": "US",
+                        "state": "GA",
+                        "address1": "Address line 1",
+                        "postalCode": "99999"
+                      }
                     }
                   ],
-                  "returnAddress": {
-                    "city": "Test City",
-                    "name": "John Returns Doe",
-                    "companyName": "Test Company",
-                    "country": "US",
-                    "state": "GA",
-                    "address1": "Address line 1",
-                    "postalCode": "99999"
-                  }
+                  "pickupAccount": "5317861",
+                  "distributionCenter": "HKHKG1"
                 }
-              ],
-              "pickupAccount": "5317861",
-              "distributionCenter": "HKHKG1"
+              ]
             }
-          ]
-        }
     
     + Attributes (RequestFormat)
 
-+ Response 201
++ Response 201 (application/json)
+    
     + Headers 
-        Content-Type: application/json
-        : Correlation ID which is unique for you request. Could be used by DHL Support for traceability purpose in case of an API error.
+
 
     + Attributes (ResponseFormat)
     
     + Body
-    {
-        "shipments": [
+    
             {
-                "pickupAccount": "5317861",
-                "distributionCenter": "HKHKG1",
-                "packages": [
+                "shipments": [
                     {
-                        "consigneeAddress": {
-                            "name": "Test Name",
-                            "address1": "Address line 1",
-                            "address2": "apt 123",
-                            "city": "Test City",
-                            "state": "GA",
-                            "postalCode": "99999",
-                            "country": "IE",
-                            "email": "test@email.com",
-                            "phone": "555-555-5555"
-                        },
-                        "returnAddress": {
-                            "name": "John Returns Doe",
-                            "companyName": "Test Company",
-                            "address1": "Address line 1",
-                            "city": "Test City",
-                            "state": "GA",
-                            "postalCode": "99999",
-                            "country": "US"
-                        },
-                        "packageDetails": {
-                            "billingRef1": "ref 1",
-                            "billingRef2": "ref 2",
-                            "currency": "AUD",
-                            "declaredValue": 250,
-                            "dimensionUom": "CM",
-                            "dutiesPaid": "DDU",
-                            "height": 30,
-                            "insuredValue": 1,
-                            "length": 20,
-                            "mailType": 2,
-                            "orderedProduct": "PPS",
-                            "packageDesc": "Desc111",
-                            "packageId": "fybjywwbdt",
-                            "packageRefName": "55555555555555555",
-                            "weight": 2,
-                            "weightUom": "G"
-                        },
-                        "customsDetails": [
+                        "pickupAccount": "5317861",
+                        "distributionCenter": "HKHKG1",
+                        "packages": [
                             {
-                                "itemDescription": "Desc1",
-                                "countryOfOrigin": "US",
-                                "hsCode": "555555",
-                                "packagedQuantity": 10,
-                                "itemValue": 10.1,
-                                "skuNumber": "3333333333333"
-                            },
-                            {
-                                "itemDescription": "Desc2",
-                                "countryOfOrigin": "CZ",
-                                "hsCode": "555555",
-                                "packagedQuantity": 20,
-                                "itemValue": 20.2,
-                                "skuNumber": "3333333333333"
-                            }
-                        ],
-                        "responseDetails": {
-                            "labelDetails": [
-                                {
+                                "consigneeAddress": {
+                                    "name": "Test Name",
+                                    "address1": "Address line 1",
+                                    "address2": "apt 123",
+                                    "city": "Test City",
+                                    "state": "GA",
+                                    "postalCode": "99999",
+                                    "country": "IE",
+                                    "email": "test@email.com",
+                                    "phone": "555-555-5555"
+                                },
+                                "returnAddress": {
+                                    "name": "John Returns Doe",
+                                    "companyName": "Test Company",
+                                    "address1": "Address line 1",
+                                    "city": "Test City",
+                                    "state": "GA",
+                                    "postalCode": "99999",
+                                    "country": "US"
+                                },
+                                "packageDetails": {
+                                    "billingRef1": "ref 1",
+                                    "billingRef2": "ref 2",
+                                    "currency": "AUD",
+                                    "declaredValue": 250,
+                                    "dimensionUom": "CM",
+                                    "dutiesPaid": "DDU",
+                                    "height": 30,
+                                    "insuredValue": 1,
+                                    "length": 20,
+                                    "mailType": 2,
+                                    "orderedProduct": "PPS",
+                                    "packageDesc": "Desc111",
                                     "packageId": "fybjywwbdt",
-                                    "format": "PNG",
-                                    "templateId": "FML_MANIFEST_PPS_4X6_HKG_ROW",
-                                    "labelData": "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"
+                                    "packageRefName": "55555555555555555",
+                                    "weight": 2,
+                                    "weightUom": "G"
+                                },
+                                "customsDetails": [
+                                    {
+                                        "itemDescription": "Desc1",
+                                        "countryOfOrigin": "US",
+                                        "hsCode": "555555",
+                                        "packagedQuantity": 10,
+                                        "itemValue": 10.1,
+                                        "skuNumber": "3333333333333"
+                                    },
+                                    {
+                                        "itemDescription": "Desc2",
+                                        "countryOfOrigin": "CZ",
+                                        "hsCode": "555555",
+                                        "packagedQuantity": 20,
+                                        "itemValue": 20.2,
+                                        "skuNumber": "3333333333333"
+                                    }
+                                ],
+                                "responseDetails": {
+                                    "labelDetails": [
+                                        {
+                                            "packageId": "fybjywwbdt",
+                                            "format": "PNG",
+                                            "templateId": "FML_MANIFEST_PPS_4X6_HKG_ROW",
+                                            "labelData": "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"
+                                        }
+                                    ],
+                                    "trackingNumber": "RX526203432DE"
                                 }
-                            ],
-                            "trackingNumber": "RX526203432DE"
-                        }
+                            }
+                        ]
                     }
                 ]
             }
-        ]
-    }
 
-+ Response 400
++ Response 400 (application/json)
+    
     + Headers 
-            Content-Type: application/json
-            
-    
-    + Attributes (ErrResponseFormatError)
-    
+
+
     + Body
         
-        {
-            "message": "Bad Request - Invalid URI parameters or querystring"
-        }
-
-+ Response 401 (application/json)
-    + Headers 
-            Content-Type: application/json
-        
+            {
+                "message": "Bad Request - Invalid URI parameters or querystring"
+            }           
     
     + Attributes (ErrResponseFormatError)
     
+
++ Response 401 (application/json)
+    
+    + Headers 
+            
+
+
     + Body
         
         {
             "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
-        }
-
-+ Response 429 (application/json)
-    + Headers 
-        Content-Type: application/json
-        
+        }        
     
     + Attributes (ErrResponseFormatError)
     
-    + Body
-        
-        {
-            "message": "Too many requests in given amount of time"
-        }
-        
-+ Request Sample2 (application/json)
+
+
++ Response 429 (application/json)
+    
     + Headers 
-        Accept: application/json
-        Authorization: Bearer [token]
-        Content-Type: application/json
+     
+       
+    + Body
+   
+            {
+                "message": "Too many requests in given amount of time"
+            }
+    
+    + Attributes (ErrResponseFormatError)
+    
+        
++ Request (application/json)
+    
+    + Headers 
+        
+            Accept: application/json
+            Authorization: Bearer [token]
     
     + Body
         
-        {
-          "shipments": [
             {
-              "packages": [
+              "shipments": [
                 {
-                  "packageDetails": {
-                    "packageRefName": "CCCCCCCCC",
-                    "insuredValue": 1,
-                    "weight": 4,
-                    "declaredValue": 50,
-                    "mailType": 2,
-                    "height": 30,
-                    "packageDesc": "Desc111",
-                    "currency": "AUD",
-                    "length": 20,
-                    "weightUom": "G",
-                    "billingRef2": "ref 2",
-                    "packageId": "fybjywwbdt",
-                    "dutiesPaid": "DDU",
-                    "orderedProduct": "PPS",
-                    "dimensionUom": "CM",
-                    "billingRef1": "ref 1"
-                  },
-                  "consigneeAddress": {
-                    "city": "Test City",
-                    "name": "Test Name",
-                    "address1": "Address line 1",
-                    "address2": "apt 123",
-                    "phone": "555-555-5555",
-                    "state": "GA",
-                    "country": "IE",
-                    "postalCode": "99999",
-                    "email": "test@email.com"
-                  },
-                  "customsDetails": [
+                  "packages": [
                     {
-                      "skuNumber": "3333333333333",
-                      "countryOfOrigin": "US",
-                      "itemDescription": "Desc1",
-                      "itemValue": 10.1,
-                      "packagedQuantity": 10,
-                      "hsCode": "555555"
-                    },
-                    {
-                      "skuNumber": "3333333333333",
-                      "countryOfOrigin": "CZ",
-                      "itemDescription": "Desc2",
-                      "itemValue": 20.2,
-                      "packagedQuantity": 20,
-                      "hsCode": "555555"
+                      "packageDetails": {
+                        "packageRefName": "CCCCCCCCC",
+                        "insuredValue": 1,
+                        "weight": 4,
+                        "declaredValue": 50,
+                        "mailType": 2,
+                        "height": 30,
+                        "packageDesc": "Desc111",
+                        "currency": "AUD",
+                        "length": 20,
+                        "weightUom": "G",
+                        "billingRef2": "ref 2",
+                        "packageId": "fybjywwbdt",
+                        "dutiesPaid": "DDU",
+                        "orderedProduct": "PPS",
+                        "dimensionUom": "CM",
+                        "billingRef1": "ref 1"
+                      },
+                      "consigneeAddress": {
+                        "city": "Test City",
+                        "name": "Test Name",
+                        "address1": "Address line 1",
+                        "address2": "apt 123",
+                        "phone": "555-555-5555",
+                        "state": "GA",
+                        "country": "IE",
+                        "postalCode": "99999",
+                        "email": "test@email.com"
+                      },
+                      "customsDetails": [
+                        {
+                          "skuNumber": "3333333333333",
+                          "countryOfOrigin": "US",
+                          "itemDescription": "Desc1",
+                          "itemValue": 10.1,
+                          "packagedQuantity": 10,
+                          "hsCode": "555555"
+                        },
+                        {
+                          "skuNumber": "3333333333333",
+                          "countryOfOrigin": "CZ",
+                          "itemDescription": "Desc2",
+                          "itemValue": 20.2,
+                          "packagedQuantity": 20,
+                          "hsCode": "555555"
+                        }
+                      ],
+                      "returnAddress": {
+                        "city": "Test City",
+                        "name": "John Returns Doe",
+                        "companyName": "Test Company",
+                        "country": "US",
+                        "state": "GA",
+                        "address1": "Address line 1",
+                        "postalCode": "99999"
+                      }
                     }
                   ],
-                  "returnAddress": {
-                    "city": "Test City",
-                    "name": "John Returns Doe",
-                    "companyName": "Test Company",
-                    "country": "US",
-                    "state": "GA",
-                    "address1": "Address line 1",
-                    "postalCode": "99999"
-                  }
+                  "pickupAccount": "5317861",
+                  "distributionCenter": "HKHKG1"
                 }
-              ],
-              "pickupAccount": "5317861",
-              "distributionCenter": "HKHKG1"
+              ]
             }
-          ]
-        }
     
     + Attributes (RequestFormat)
 
 + Response 503 (application/json)
-    + Headers 
-        Content-Type: application/json
-        
     
-    + Attributes (ErrResponseFormatError)
+    + Headers 
+        
     
     + Body
         
-        {
-            "message": "Service Unavailable"
-        }
-        
+            {
+                "message": "Service Unavailable"
+            }
+
+    + Attributes (ErrResponseFormatError)
+    
+
+
 ## Order Manifest [/v1/Shipping/manifest]
 **Manifesting** (sometimes refered to as *Close-out*) describes the process of transmitting your final shipments to us before the physical transfer of the shipments.<br/><br/>
 Within this process, a document (**the Manifest**) is beeing created sumarizing all the to be shipped items, their total weight as well as associated information on your account.<br/><br/>
@@ -2298,73 +2275,74 @@ The recommended sequence for the SOM call is following:
     3. Call Sandbox API. The response message will acknowledge success or failure of the call.
 
 + Request (application/json)
+    
     + Headers 
-        Accept: application/json
-        Authorization: Bearer [token]
-        Content-Type: application/json
+            
+            Accept: application/json
+            Authorization: Bearer [token]
     
     + Attributes (RequestFormat)
     
-+ Response 201
-    + Headers 
-        Content-Type: application/json
-        
++ Response 201 (application/json)
     
-    + Attributes (ErrResponseFormatError)
+    + Headers 
+    
     
     + Attributes (ResponseFormat)
 
-+ Response 400
-    + Headers 
-        Content-Type: application/json
-        
++ Response 400 (application/json)
     
-    + Attributes (ErrResponseFormatError)
+    + Headers 
+    
     
     + Body
         
-        {
-            "message": "Bad Request - Invalid URI parameters or querystring"
-        }
+            {
+                "message": "Bad Request - Invalid URI parameters or querystring"
+            }
+    
+    + Attributes (ErrResponseFormatError)
 
 + Response 401 (application/json)
-    + Headers 
-        Content-Type: application/json
-        
     
-    + Attributes (ErrResponseFormatError)
+    + Headers 
+
     
     + Body
         
-        {
-            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
-        }
+            {
+                "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+            }
+    
+    + Attributes (ErrResponseFormatError)
 
 + Response 429 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+        
+    
+    + Body
+        
+            {
+                "message": "Too many requests in given amount of time"
+            }
         
     
     + Attributes (ErrResponseFormatError)
     
-    + Body
-        
-        {
-            "message": "Too many requests in given amount of time"
-        }
 
 + Response 503 (application/json)
-    + Headers 
-        Content-Type: application/json
-        
     
-    + Attributes (ErrResponseFormatError)
+    + Headers 
+        
     
     + Body
         
-        {
-            "message": "Service Unavailable"
-        }
+            {
+                "message": "Service Unavailable"
+            }
+    
+    + Attributes (ErrResponseFormatError)
 
 
 # Data Structures
@@ -2434,15 +2412,11 @@ The recommended sequence for the SOM call is following:
 
 ## Color (object)
 
-
-
 + `Code` (string, required) 
 + `Name` (string, required) 
 
 
 ## Image (object)
-
-
 
 + `Location` (string, required) 
 + `Identifier` (string, required) 
@@ -2450,8 +2424,6 @@ The recommended sequence for the SOM call is following:
 
 
 ## PhysicalInformation (object)
-
-
 
 + `Height` (number, optional) 
 + `Length` (number, optional) 
@@ -2463,15 +2435,11 @@ The recommended sequence for the SOM call is following:
 
 ## UnitCost (object)
 
-
-
 + `Amount` (number, required) 
 + `Currency` (string, optional) 
 
 
 ## Classification (object)
-
-
 
 + `HarmonizedCode` (string, optional) 
 + `HazmatClass` (string, optional) 
@@ -2479,7 +2447,6 @@ The recommended sequence for the SOM call is following:
 
 
 ## InventoryParameters (object)
-
 
 
 + `IsSerialTracked` (boolean, optional) 
