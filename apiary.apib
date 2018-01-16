@@ -671,7 +671,6 @@ The API operation for Create Sales Order.
     
     + Headers 
             
-            Content-Type: application/json
 
     + Body
         
@@ -719,12 +718,14 @@ Following combinations of are allowed, when calling the API operation.
             Authorization: Bearer [token]
         
 + Response 200 (application/json)
+    
     + Headers 
 
 
     + Attributes (BackOrderListRes)
 
 + Response 400 (application/json)
+    
     + Headers 
     
 
@@ -787,7 +788,6 @@ The API operation for Get Sales Order Acknowledgement
             
             Accept: application/json
             Authorization: Bearer [token]
-            Content-Type: application/json
 
 + Response 200 (application/json)
     
@@ -803,9 +803,9 @@ The API operation for Get Sales Order Acknowledgement
 
     + Body
         
-        {
-            "message": "Bad Request - Invalid URI parameters or querystring"
-        }
+            {
+                "message": "Bad Request - Invalid URI parameters or querystring"
+            }
 
 + Response 401 (application/json)
     
@@ -884,8 +884,8 @@ Following combinations of are allowed, when calling the API operation.
 + Request (application/json)
 
     + Headers 
-        Authorization: Bearer [place OAuth access token here, without brackets]
-        Content-Type: application/json
+            
+            Authorization: Bearer [place OAuth access token here, without brackets]
 
 + Response 200 (application/json)
     
@@ -1080,6 +1080,7 @@ The API operation for Get Purchase Order Acknowledgement
 
     
 + Parameters 
+    
     + accountNumber :  (string, required)
         Account Number
     + orderNumber :  (string, required)
@@ -1090,44 +1091,48 @@ The API operation for Get Purchase Order Acknowledgement
 + Request (application/json)
 
     + Headers 
+            
             Accept: application/json
             Authorization: Bearer [token]
 
 + Response 200 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+            
+            Content-Type: application/json
 
     + Attributes (PurchaseOrderAcknowledgementRes)
 
 + Response 400 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Bad Request - Invalid URI parameters or querystring"
-        }
+            {
+                "message": "Bad Request - Invalid URI parameters or querystring"
+            }
 
 + Response 401 (application/json)
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
-        }
+            {
+                "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+            }
 
 + Response 429 (application/json)
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Too many requests in given amount of time"
-        }
+            {
+                "message": "Too many requests in given amount of time"
+            }
 
 + Response 503 (application/json)
     + Headers 
@@ -1135,132 +1140,146 @@ The API operation for Get Purchase Order Acknowledgement
 
     + Body
         
-        {
-            "message": "Service Unavailable"
-        }
+            {
+                "message": "Service Unavailable"
+            }
 
 
 ###  Cancel Purchase Order [POST /v1/fulfillment/purchaseorder/cancel]
 The API operation for Cancel Purchase Order
 
 + Request (application/json)
+    
     + Headers 
-        Accept: application/json
-        Authorization: Bearer [token]
-        Content-Type: application/json
+            
+            Accept: application/json
+            Authorization: Bearer [token]
     
     + Attributes (CancelPurchaseOrderReq)
     
-+ Response 200
++ Response 200 (application/json)
+    
     + Headers 
-        Content-Type: application/json
 
+    
     + Body
     
-        {
-            "message": "Purchase Order Canceled"
-        }
-+ Response 400
+            {
+                "message": "Purchase Order Canceled"
+            }
+
++ Response 400 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+    
 
     + Body
         
-        {
-            "message": "Bad Request - Invalid URI parameters or querystring"
-        }
+            {
+                "message": "Bad Request - Invalid URI parameters or querystring"
+            }
 
 + Response 401 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
-        }
+            {
+                "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+            }
 
 + Response 429 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Too many requests in given amount of time"
-        }
+            {
+                "message": "Too many requests in given amount of time"
+            }
 
 + Response 503 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Service Unavailable"
-        }
+            {
+                "message": "Service Unavailable"
+            }
 
 ### Purchase Order Details [GET /v1/fulfillment/purchaseorder/details/{accountNumber}/{orderNumber}]
 The API operation for Get Purchase Order Details.
 
-+ Headers 
-    Accept: application/json
-    Authorization: Bearer [token]
-    Content-Type: application/json
-    
 + Parameters 
-    + accountNumber :  (string, required)
-        Account Number
-    + orderNumber :  (string, required)
-        Sales Order Number
-    + orderSubmissionId :  (string, required)
-        Purchase Order Submission Id 
+        
+        + accountNumber :  (string, required)
+            Account Number
+        + orderNumber :  (string, required)
+            Sales Order Number
+        + orderSubmissionId :  (string, required)
+            Purchase Order Submission Id 
 
-+ Response 200
++ Request (application/json)
+
     + Headers 
-        Content-Type: application/json
+            
+            Accept: application/json
+            Authorization: Bearer [token]
+
++ Response 200 (application/json)
+    
+    + Headers 
+    
 
     + Attributes (PurchaseOrderDetailsRes)
     
-+ Response 400
++ Response 400 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Bad Request - Invalid URI parameters or querystring"
-        }
+            {
+                "message": "Bad Request - Invalid URI parameters or querystring"
+            }
 
 + Response 401 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
-        }
+            {
+                "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+            }
 
 + Response 429 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Too many requests in given amount of time"
-        }
+            {
+                "message": "Too many requests in given amount of time"
+            }
 
 + Response 503 (application/json)
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Service Unavailable"
-        }
+            {
+                "message": "Service Unavailable"
+            }
 
 ### Purchase Order Status [GET /v1/fulfillment/purchaseorder/status/{accountNumber}{?accountNumber,orderNumber,dateFrom,dateTo,status,page}]
 The API operation for Get Purchase Order Status.
@@ -1274,207 +1293,228 @@ Following combinations of are allowed, when calling the API operation.
 |dateTo && status && page         |Returns page with filtered orders by status to defined date. **Status and page are optional.**|
 |dateFrom && dateTo && status && page|Returns page with filtered orders by status for defined date range. **Status and page are optional.**|"
 
-+ Headers 
-    Accept: application/json
-    Authorization: Bearer [token]
-    Content-Type: application/json
     
 + Parameters 
-    + accountNumber :  (string, required)
-        Account Number
-    + orderNumber :  (string, optional)
-        Sales Order Number
-    + dateFrom : (string, optional)
-        Date From
-    + dateTo : (string, optional)
-        Date To
-    + status : (enum[string], optional)
-        Status
-        + Members
-            + Reserved
-            + Cancelled
-            + Scheduled
-            + Back Ordered
-            + Released
-            + Sent to Node
-            + Shipped
-            + Held
-            + Ready for WMS
-            + Waved
-            + Picked
-            + Manifested
-            + Created
-    + page : (string, optional)
-        Page   
+        
+        + accountNumber :  (string, required)
+            Account Number
+        + orderNumber :  (string, optional)
+            Sales Order Number
+        + dateFrom : (string, optional)
+            Date From
+        + dateTo : (string, optional)
+            Date To
+        + status : (enum[string], optional)
+            Status
+            + Members
+                + Reserved
+                + Cancelled
+                + Scheduled
+                + Back Ordered
+                + Released
+                + Sent to Node
+                + Shipped
+                + Held
+                + Ready for WMS
+                + Waved
+                + Picked
+                + Manifested
+                + Created
+        + page : (string, optional)
+            Page   
++ Request (application/json)
 
-+ Response 200
     + Headers 
-        Content-Type: application/json
+            Accept: application/json
+            Authorization: Bearer [token]
+
++ Response 200 (application/json)
+
+    + Headers 
+    
 
     + Attributes (PurchaseOrderStatusRes)
     
-+ Response 400
++ Response 400 (application/json)
     + Headers 
-        Content-Type: application/json
-
+    
+    
     + Body
         
-        {
-            "message": "Bad Request - Invalid URI parameters or querystring"
-        }
+            {
+                "message": "Bad Request - Invalid URI parameters or querystring"
+            }
 
 + Response 401 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
-        }
+            {
+                "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+            }
 
 + Response 429 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Too many requests in given amount of time"
-        }
+            {
+                "message": "Too many requests in given amount of time"
+            }
 
 + Response 503 (application/json)
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Service Unavailable"
-        }
+            {
+                "message": "Service Unavailable"
+            }
 
 ### Update Purchase Order [GET /v1/fulfillment/purchaseorder/update]
 The API operation for Update Purchase Order
 
 + Request (application/json)
+    
     + Headers 
-        Accept: application/json
-        Authorization: Bearer [token]
-        Content-Type: application/json
+            
+            Accept: application/json
+            Authorization: Bearer [token]
+            Content-Type: application/json
     
     + Attributes (UpdatePurchaseOrderReq)
 
-+ Response 200
-    + Headers 
-        Content-Type: application/json
-
-    + Body
-        
-        {
-            "message": "Purchase Order Updated"
-        }
++ Response 200 (application/json)
     
-+ Response 400
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Bad Request - Invalid URI parameters or querystring"
-        }
+            {
+                "message": "Purchase Order Updated"
+            }
+    
++ Response 400 (application/json)
+    
+    + Headers 
+
+
+    + Body
+        
+            {
+                "message": "Bad Request - Invalid URI parameters or querystring"
+            }
 
 + Response 401 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
-        }
+            {
+                "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+            }
 
 + Response 429 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Too many requests in given amount of time"
-        }
+            {
+                "message": "Too many requests in given amount of time"
+            }
 
 + Response 503 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Service Unavailable"
-        }
+            {
+                "message": "Service Unavailable"
+            }
 
 
 ## Return Order [/v1/fulfillment/returnorder/details/{accountNumber}/{orderNumber}
 ### Return Order Details [GET]
 The API operation for Get Return Order Details
-
-+ Headers 
-    Accept: application/json
-    Authorization: Bearer [token]
-    Content-Type: application/json
     
 + Parameters 
-    + accountNumber :  (string, required)
-        Account Number
-    + orderNumber :  (string, required)
-        Return Order Number
+    
+        + accountNumber :  (string, required)
+            Account Number
+        + orderNumber :  (string, required)
+            Return Order Number
 
-+ Response 200
++ Request (application/json)
+
     + Headers 
-        Content-Type: application/json
+            
+            Accept: application/json
+            Authorization: Bearer [token]
+
+
++ Response 200 (application/json)
+    
+    + Headers 
+    
 
     + Attributes(ReturnOrderDetailsRes)
     
-+ Response 400
++ Response 400 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Bad Request - Invalid URI parameters or querystring"
-        }
+            {
+                "message": "Bad Request - Invalid URI parameters or querystring"
+            }
 
 + Response 401 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+    
 
     + Body
         
-        {
-            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
-        }
+            {
+                "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+            }
 
 + Response 429 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Too many requests in given amount of time"
-        }
+            {
+                "message": "Too many requests in given amount of time"
+            }
 
 + Response 503 (application/json)
+    
     + Headers 
-        Content-Type: application/json
 
+    
     + Body
         
-        {
-            "message": "Service Unavailable"
-        }
+            {
+                "message": "Service Unavailable"
+            }
 
 
 ### Return Order List [GET /v1/fulfillment/returnorder/list/{accountNumber}{?accountNumber,orderNumber,dateFrom,dateTo,status,page}]
@@ -1488,84 +1528,92 @@ The API operation for Get Return Order List\n\nThe optional parameters of the AP
 |accountNumber && dateTo && status && page            |Returns page of filtered orders by status and account number to defined date. **Status and page are optional.**|
 |accountNumber && dateFrom && dateTo && status && page|Returns page of filtered orders by status and account number for defined date range. **Status and page are optional.**|
 
-+ Headers 
-    Accept: application/json
-    Authorization: Bearer [token]
-    Content-Type: application/json
-    
-+ Parameters 
-    + accountNumber :  (string, required)
-        Account Number
-    + orderNumber :  (string, optional)
-        Sales Order Number
-    + dateFrom : (string, optional)
-        Date From
-    + dateTo : (string, optional)
-        Date To
-    + status : (enum[string], optional)
-        Status
-        + Members
-            + Reserved
-            + Cancelled
-            + Scheduled
-            + Back Ordered
-            + Released
-            + Sent to Node
-            + Shipped
-            + Held
-            + Ready for WMS
-            + Waved
-            + Picked
-            + Manifested
-            + Created
-    + page : (string, optional)
-        Page      
 
-+ Response 200
++ Parameters 
+    
+        + accountNumber :  (string, required)
+            Account Number
+        + orderNumber :  (string, optional)
+            Sales Order Number
+        + dateFrom : (string, optional)
+            Date From
+        + dateTo : (string, optional)
+            Date To
+        + status : (enum[string], optional)
+            Status
+            + Members
+                + Reserved
+                + Cancelled
+                + Scheduled
+                + Back Ordered
+                + Released
+                + Sent to Node
+                + Shipped
+                + Held
+                + Ready for WMS
+                + Waved
+                + Picked
+                + Manifested
+                + Created
+        + page : (string, optional)
+            Page      
+
++ Request (application/json)
+
     + Headers 
-        Content-Type: application/json
+            Accept: application/json
+            Authorization: Bearer [token]
+
++ Response 200 (application/json)
+    
+    + Headers 
+
 
     + Attributes(ReturnOrderListRes)
     
-+ Response 400
++ Response 400 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Bad Request - Invalid URI parameters or querystring"
-        }
+            {
+                "message": "Bad Request - Invalid URI parameters or querystring"
+            }
 
 + Response 401 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
-        }
+            {
+                "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+            }
 
 + Response 429 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Too many requests in given amount of time"
-        }
+            {
+                "message": "Too many requests in given amount of time"
+            }
 
 + Response 503 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Service Unavailable"
-        }
+            {
+                "message": "Service Unavailable"
+            }
 
 ## Shipment [/v1/fulfillment/shipment/details/{accountNumber}{?accountNumber,orderNumber,dateFrom,dateTo,date,page}]
 
@@ -1579,28 +1627,33 @@ The optional parameters of the API operation are conditional. Following combinat
 |accountNumber && dateFrom && dateTo && page|Returns page with shipments for given date range. **Page, dateFrom and dateTo are optional.**|
 |accountNumber && date && page      |Returns shipments for given date. **Page is optional.**|
 
-+ Headers 
-    Accept: application/json
-    Authorization: Bearer [token]
-    Content-Type: application/json
     
 + Parameters 
-    + accountNumber :  (string, required)
-        Account Number
-    + orderNumber :  (string, optional)
-        Sales Order Number
-    + dateFrom : (string, optional)
-        Date From
-    + dateTo : (string, optional)
-        Date To
-    + date : (string, optional)
-        Date
-    + page : (string, optional)
-        Page 
+        
+        + accountNumber :  (string, required)
+            Account Number
+        + orderNumber :  (string, optional)
+            Sales Order Number
+        + dateFrom : (string, optional)
+            Date From
+        + dateTo : (string, optional)
+            Date To
+        + date : (string, optional)
+            Date
+        + page : (string, optional)
+            Page 
 
-+ Response 200
++ Request (application/json)
+
     + Headers 
-        Content-Type: application/json
+            
+            Accept: application/json
+            Authorization: Bearer [token]
+
++ Response 200 (application/json)
+    
+    + Headers 
+
 
     + Attributes(ShipmentDetailsRes)
     
@@ -1610,154 +1663,169 @@ The optional parameters of the API operation are conditional. Following combinat
 
     + Body
         
-        {
-            "message": "Bad Request - Invalid URI parameters or querystring"
-        }
+            {
+                "message": "Bad Request - Invalid URI parameters or querystring"
+            }
 
 + Response 401 (application/json)
+
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
-        }
+            {
+                "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+            }
 
 + Response 429 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Too many requests in given amount of time"
-        }
+            {
+                "message": "Too many requests in given amount of time"
+            }
 
 + Response 503 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Service Unavailable"
-        }
+            {
+                "message": "Service Unavailable"
+            }
 
-+ Response 200
++ Response 200 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Attributes(ReturnOrderListRes)
     
-+ Response 400
++ Response 400 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Bad Request - Invalid URI parameters or querystring"
-        }
+            {
+                "message": "Bad Request - Invalid URI parameters or querystring"
+            }
 
 + Response 401 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
-        }
+            {
+                "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+            }
 
 + Response 429 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Too many requests in given amount of time"
-        }
+            {
+                "message": "Too many requests in given amount of time"
+            }
 
 + Response 503 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Service Unavailable"
-        }
+            {
+                "message": "Service Unavailable"
+            }
 
 ## Stock [/v1/fulfillment/stock/{inventoryAccountNumber}/{itemId}/{?node}]
 
 ### Available Stock [GET]
 The API operation for Get Available Stock.
-
-+ Headers 
-    Accept: application/json
-    Authorization: Bearer [token]
-    Content-Type: application/json
     
 + Parameters 
-    + inventoryAccountNumber :  (string, required)
-        Inventory Account Number
-    + itemId :  (string, required)
-        Item Id
-    + node : (enum[string], optional)
-        Node
-        + Members
-            + OH1
-            + CA1
-            + JP1
-            + MX1
+        
+        + inventoryAccountNumber :  (string, required)
+            Inventory Account Number
+        + itemId :  (string, required)
+            Item Id
+        + node : (enum[string], optional)
+            Node
+            + Members
+                + OH1
+                + CA1
+                + JP1
+                + MX1
 
-+ Response 200
++ Request
+    
     + Headers 
-        Content-Type: application/json
+            Accept: application/json
+            Authorization: Bearer [token]
+
++ Response 200 (application/json)
+    
+    + Headers 
+
 
     + Attributes(AvailableStockRes)
     
-+ Response 400
++ Response 400 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Bad Request - Invalid URI parameters or querystring"
-        }
+            {
+                "message": "Bad Request - Invalid URI parameters or querystring"
+            }
 
 + Response 401 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
-        }
+            {
+                "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+            }
 
 + Response 429 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+
 
     + Body
         
-        {
-            "message": "Too many requests in given amount of time"
-        }
+            {
+                "message": "Too many requests in given amount of time"
+            }
 
 + Response 503 (application/json)
+    
     + Headers 
-        Content-Type: application/json
+    
 
     + Body
         
-        {
-            "message": "Service Unavailable"
-        }
+            {
+                "message": "Service Unavailable"
+            }
 
 ### Inventory Snapshot [GET /stock/snapshot/{inventoryAccountNumber}{?itemId,node}]
 The API operation for Get Inventory Snapshot
