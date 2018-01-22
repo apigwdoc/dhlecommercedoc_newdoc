@@ -2,6 +2,10 @@ FORMAT: 1A
 HOST: https://api-qa.dhlecommerce.com
 AUTHOR: DHL eCommerce
 
+
+
+
+
 # (NEW) Global DHL eCommerce API
 Welcome at the global DHL eCommerce API. <br/><br/>
 To find out more about the logistic services we offer, please check out [DHL eCommerce Products](http://www.dhl.com/eCommerce). <br/><br/>
@@ -246,6 +250,7 @@ Successful response in case you provided valid Access Token
     + Headers
         
             X-CorrelationId: Unique transaction id of your request
+    
     + Body
     
             {
@@ -262,6 +267,7 @@ Bad request in case you provided token, which already expired.
     + Headers
         
             X-CorrelationId: Unique transaction id of your request
+    
     + Body
         
             {
@@ -269,12 +275,14 @@ Bad request in case you provided token, which already expired.
               "error_description" : "The presented token is invalid or expired."
             }
 
+
 + Response 400 (application/json)
 Bad request in case you did not provided the expected URI parameter.
 
     + Headers
         
             X-CorrelationId: Unique transaction id of your request
+    
     + Body       
     
             {
@@ -387,7 +395,31 @@ The API operation for Create Item.
             
             Accept: application/json
             Authorization: Bearer [token]
+            
+    + Body
     
+            {
+            "CreateItem": {
+                "ItemID": "05207996",
+                "ItemDetails": {
+                    "IsSubstitutionAllowed": false,
+                    "UnitOfMeasure": "EA",
+                    "IsInsert": false,
+                    "IsReturnable": false,
+                    "IsFragile": true,
+                    "ItemStatus": "3000",
+                    "ShortDescription": "this is short description",
+                    "UnitCost": {
+                    "Currency": "USD",
+                    "Amount": 1.1
+                },
+                "IsSubstitutionAutomatic": false
+                },
+                "AccountNumber": "5116664"
+                }
+            }
+
+
     + Attributes (CreateItemReq)
 
 + Response 200 (application/json)
@@ -445,7 +477,7 @@ The API operation for Create Item.
                 "message": "Service Unavailable"
             }
 
-### Get Item list [GET /v1/fulfillment/item/list/{accountNumber}{?itemId,status,page}]
+### Get Item list [GET /v1/fulfillment/item/list/{accountNumber}{?itemId}]
 
 The API operation for Get Item List. The optional parameters of the API operation are conditional. Following combinations of are allowed, when calling the API operation.
 
@@ -456,26 +488,11 @@ The API operation for Get Item List. The optional parameters of the API operatio
 |accountNumber && status && page|Returns page with filtered items by status and account number. **Page is optional.**|
 
 + Parameters 
-    + accountNumber  (string, required) - Account Number
-    + itemId (string, optional) - Item Id
-    + status (enum[string], optional) - Item Status
-        + Members
-            + `Reserved`
-            + `Cancelled`
-            + `Scheduled`
-            + `Back Ordered`
-            + `Released`
-            + `Sent to Node`
-            + `Shipped`
-            + `Held`
-            + `Ready for WMS`
-            + `Waved`
-            + `Picked`
-            + `Manifested`
-            + `Created`            
-    + page (string, optional) - Page
+    + accountNumber: `5116664` (string, required) - Account Number
+    + itemId: `NIKE007SPEC4` (string, optional) - Item Id
 
 + Request (application/json)
+There is no body for the request.    
     
     + Headers 
         
@@ -544,6 +561,61 @@ The API operation for Update Item
             
             Accept: application/json
             Authorization: Bearer [token]
+
+    + Body
+    
+            {
+            "UpdateItem": {
+            "AccountNumber": "5116664", 
+                "ItemID": "05207996", 
+                                               "ItemDetails": {
+                     "ShortDescription": "API TEST ITEM4 by AG",
+                     "LongDescription": "LONG API TEST ITEM by AG",
+                     "ProductCategory": "a",
+                     "UnitOfMeasure": "EA",
+                     "CountryOfOrigin": "CZ",
+                     "Color": {
+                        "Code": "a",
+                        "Name": "a"
+                     },
+                     "Image": {
+                        "Location": "http://www.dhl.com/img/meta/dhl_logo.gif",
+                        "Label": "DHL",
+                        "Identifier": "DHL"
+                     },
+                     "IsReturnable": true,
+                     "IsSubstitutionAllowed": false,
+                     "IsSubstitutionAutomatic": false,
+                     "IsFragile": true,
+                     "ReturnWindow": 1,
+                     "SizeCode": "a",
+                     "ItemStatus": "3000",
+                     "PhysicalInformation": {
+                        "Height": 56,
+                        "Length": 200,
+                        "Width": 110.5,
+                        "Weight": 150,
+                        "WeightUnitOfMeasure": "GRAM",
+                        "DimensionUnitOfMeasure": "CM"
+                     },
+                     "UnitCost": {
+                        "Amount": 1.1,
+                        "Currency": "EUR"
+                     },
+                     "IsInsert": true,
+                     "IsTempSensitive": true,
+                     "AdditionalQC": true,
+                     "AdditionalPackslipVerbiage": true,
+                     "GenderGroup": "GENDER_GROUP",
+                     "GenderAge": "20"
+                  },
+                  "Classification": {
+                     "HarmonizedCode": "1111.11.1111",
+                     "HazmatClass": "01",
+                     "Model": "a"
+                  }
+               }
+            }
 
     + Attributes (UpdateItemReq)
     
@@ -628,6 +700,124 @@ The API operation for Create Sales Order.
             Accept: application/json
             Authorization: Bearer [token]
     
+    + Body
+            
+            {
+                "CreateSalesOrder": {
+                "MessageDateTime": "2017-07-13T13:45:50",
+                "OrderSubmissionID": "01527400",
+                "OrgID": "",
+                "Order": {
+                "OrderHeader": {
+                "BillTo": {
+                "EmailID": "billto@gmail.com",
+                "City": "Norcross",
+                "FirstName": "Jonathan",
+                "LastName": "Doe",
+                "AddressLine1": "5923 Peachtree Industrial Blvd",
+                "ZipCode": "30092",
+                "State": "GA",
+                "AddressLine2": "",
+                "AddressLine3": "",
+                "Country": "US",
+                "PhoneNumber": "1234567890"
+                },
+                "Shipto": {
+                "EmailID": "shipto@gmail.com",
+                "City": "Norcross",
+                "FirstName": "DHL",
+                "IDType": "a",
+                "LastName": "Doe",
+                "AddressLine1": "5923 Peachtree Industrial Blvd",
+                "ZipCode": "30092",
+                "IDValue": "a",
+                "State": "GA",
+                "AddressLine2": "a",
+                "AddressLine3": "a",
+                "Country": "US",
+                "PhoneNumber": "1234567890"
+                },
+                "IsB2BOrder": "N",
+                "OrderNumber": "71327421",
+                "ShippingServiceOption": "",
+                "Charges": {
+                "OrderSubTotal": "1400",
+                "ChargeDetail": [{
+                "ChargeAmount": "123.45",
+                "ChargeType": "Discount",
+                "ChargeName": "Thanks"
+                }],
+                "OrderTotal": "1427.05",
+                "CODAmount": "0",
+                "TotalOrderDiscount": "5",
+                "TotalShippingCharge": "9.95",
+                "OrderCurrency": "USD",
+                "TaxDetail": [{
+                "TaxPercentage": "0",
+                "TaxAmount": "0",
+                "TaxName": "PST"
+                }, {
+                "TaxPercentage": "7.5",
+                "TaxAmount": "17.1",
+                "TaxName": "HST/GST"
+                }],
+                "TaxTotal": "17.1"
+                },
+                "OrderDateTime": "2016-07-26T03:27:50",
+                "OrderReferenceNumber": "",
+                "ShippingServiceID": "DECD 5",
+                "B2BOrderReference": "B2B_ORDER_REFERENCE",
+                "SalesChannel": "DeC",
+                "ShipFromNode": "CA1"
+                },
+                "AdditionalReferences": {
+                "Orderref8": "r8",
+                "Orderref9": "r9",
+                "Orderref4": "r4",
+                "Orderref5": "r5",
+                "Orderref6": "r6",
+                "Orderref7": "r7",
+                "Orderref1": "r1",
+                "Orderref2": "r2",
+                "Orderref3": "r3",
+                "Orderref10": "r10"
+                },
+                "OrderDetails": {
+                "OrderLine": [{
+                "ItemID": "KM-CAFC-030",
+                "OrderedQuantity": "1",
+                "OrderLineNumber": "1",
+                "Instruction": [{
+                "Type": "DelNotes",
+                "Details": "Delivery notes"
+                }, {
+                "Type": "VASCode",
+                "Details": "VAS_CODE"
+                }, {
+                "Type": "VASDesc",
+                "Details": "VAS_DESCRIPTION"
+                }, {
+                "Type": "VASDesc",
+                "Details": "Hi!"
+                }],
+                "ItemDescription": "Desc",
+                "Price": "100",
+                "LotNumber": "HLR",
+                "LineTotal": "100",
+                "EstDeliveryDate": "2016-07-25T22:27:50",
+                "TaxDetail": [{
+                "TaxPercentage": "10",
+                "TaxAmount": "15",
+                "TaxName": "VAT"
+                }],
+                "ProductIDReference": ""
+                }]
+                }
+                },
+                "AccountNumber": "5116664"
+                }
+                }
+    
     + Attributes (CreateSalesOrderReq)
     
 + Response 202 (application/json)
@@ -697,13 +887,14 @@ Following combinations of are allowed, when calling the API operation.
 
     
 + Parameters 
-    + accountNumber  (string, required) - Account Number
-    + dateFrom (string, optional) - Date From
+    + accountNumber: `5116664`  (string, required) - Account Number
+    + dateFrom: `20170101` (string, optional) - Date From
     + dateTo (string, optional) - Date To
-    + page (string, optional) - Page
+    + page: `1` (string, optional) - Page
 
 + Request (application/json)
-
+There is no body for the request.    
+    
     + Headers 
            
             Accept: application/json
@@ -766,12 +957,13 @@ The API operation for Get Sales Order Acknowledgement
 
     
 + Parameters 
-    + accountNumber (string, required) - Account Number
-    + orderNumber  (string, required) - Sales Order Number
-    + orderSubmissionId  (string, required) - Sales Order Submission Id   
+    + accountNumber: `5116664` (string, required) - Account Number
+    + orderNumber: `esb10012018`  (string, required) - Sales Order Number
+    + orderSubmissionId: `1`  (string, required) - Sales Order Submission Id   
 
 + Request (application/json)
-
+There is no body for the request.    
+    
     + Headers 
             
             Accept: application/json
@@ -840,11 +1032,11 @@ Following combinations of are allowed, when calling the API operation.
 |status && page                      |Returns page with filtered orders by status. **Page is optional.**|\n|dateFrom && status && page          |Returns page with filtered orders from defined date. **Status and page are optional.**|\n|dateTo && status && page            |Returns page with filtered orders by status and to defined date. **Status and page are optional.**|\n|dateFrom && dateTo && status && page|Returns page with filtered orders by status for defined date range. **Status and page are optional.**|\n"
 
 + Parameters 
-    + accountNumber  (string, required) - Account Number
-    + orderNumber  (string, optional) - Sales Order Number
-    + dateFrom (string, optional) - Date From
-    + dateTo (string, optional) - Date To
-    + status (enum[string], optional) - Status
+    + accountNumber: `5116664`  (string, required) - Account Number
+    + orderNumber: `TEST07032`  (string, optional) - Sales Order Number
+    + dateFrom: `20170101` (string, optional) - Date From
+    + dateTo: `20180101` (string, optional) - Date To
+    + status: `Created` (enum[string], optional) - Status
         + Members
             + `Reserved`
             + `Cancelled`
@@ -859,10 +1051,11 @@ Following combinations of are allowed, when calling the API operation.
             + `Picked`
             + `Manifested`
             + `Created`            
-    + page (string, optional) - Page
+    + page: `1` (string, optional) - Page
 
 + Request (application/json)
-
+There is no body for the request. 
+    
     + Headers 
             
             Authorization: Bearer [place OAuth access token here, without brackets]
@@ -923,10 +1116,11 @@ The API operation for Get Sales Order Details
 
     
 + Parameters 
-    + accountNumber (string, required) - Account Number
-    + orderNumber (string, required) - Sales Order Number
+    + accountNumber: `5116664` (string, required) - Account Number
+    + orderNumber: `esb10012018` (string, required) - Sales Order Number
 
 + Request (application/json)
+There is no body for the request. 
 
     + Headers 
             
@@ -995,6 +1189,78 @@ The API operation for Create Purchase Order.
             Accept: application/json
             Authorization: Bearer [token]
     
+    + Body
+        
+            {
+                "CreatePurchaseOrder": {
+                "MessageDateTime": "2016-10-14T01:00:00",
+                "AccountNumber": "5116664",
+                "OrderSubmissionID": "04649040",
+                "OrderHeader": {
+                "BillTo": {
+                "EmailID": "billto@dhl.com",
+                "City": "BillToCity",
+                "Country": "DE",
+                "ZipCode": "123456",
+                "State": "BillToState",
+                "AddressLine2": "BillToLine2",
+                "AddressLine3": "BillToLine3",
+                "AddressLine1": "BillToLine1",
+                "PhoneNumber": "+44999000"
+                },
+                "InvoiceNumber": "2016101401-I",
+                "ShipmentTrackingNumber": "2016101401-S",
+                "OrderNumber": "42721580",
+                "OrderDateTime": "2016-10-14T00:00:00",
+                "ExpectedDeliveryDate": "2016-10-25T10:00:00",
+                "ShipFrom": {
+                "EmailID": "shipfrom@dhl.com",
+                "City": "Prague",
+                "Country": "CZ",
+                "ZipCode": "14000",
+                "State": "State",
+                "AddressLine2": "ALine2",
+                "AddressLine3": "ALine3",
+                "AddressLine1": "ALine1",
+                "PhoneNumber": "+420-123-456",
+                "VendorName": "Test"
+                },
+                "ShipTo": {
+                "EmailID": "shipto@dhl.com",
+                "City": "shiptocity",
+                "Country": "DE",
+                "ZipCode": "15000",
+                "State": "shiptostate",
+                "AddressLine2": "ToLine2",
+                "AddressLine3": "ToLine3",
+                "AddressLine1": "ToLine1",
+                "PhoneNumber": "+44-111-222"
+                },
+                "OrderReferenceNumber": "2016101401-R",
+                "CarrierName": "Carrier",
+                "RequestedDeliveryDate": "2016-10-20T10:00:00",
+                "ReceivingNode": "OH1",
+                "NotificationEmailID": "notification@dhl.com"
+                },
+                "BillingAccountNumber": "5117061",
+                "OrderDetails": [{
+                "ItemID": "KM-CAFC-030",
+                "UnitOfMeasure": "kg",
+                "CountryOfOrigin": "CZ",
+                "OrderLineNumber": "line1",
+                "OrderedQuantity": 10,
+                "CostDetails": {
+                "WholesalePrice": 10.5,
+                "RetailPrice": 12.5,
+                "UnitCost": 5.3,
+                "Currency": "EUR"
+                },
+                "ProductClass": "pclass",
+                "RequestedDeliveryDate": "2016-10-21T10:00:00"
+                }]
+                }
+                }
+    
     + Attributes (CreatePurchaseOrderReq)
     
 + Response 200 (application/json)
@@ -1057,11 +1323,12 @@ The API operation for Get Purchase Order Acknowledgement
 
     
 + Parameters 
-    + accountNumber (string, required) - Account Number
-    + orderNumber (string, required) - Sales Order Number
-    + orderSubmissionId (string, required) - Purchase Order Submission Id 
+    + accountNumber: `5116664` (string, required) - Account Number
+    + orderNumber: `83100176` (string, required) - Sales Order Number
+    + orderSubmissionId: `25360126` (string, required) - Purchase Order Submission Id 
 
 + Request (application/json)
+There is no body for the request.
 
     + Headers 
             
@@ -1130,6 +1397,16 @@ The API operation for Cancel Purchase Order
             Accept: application/json
             Authorization: Bearer [token]
     
+    + Body
+        
+            {
+                "CancelPurchaseOrder": {
+                    "AccountNumber": "5116664",
+                    "OrderNumber": "25242701"
+                }
+            }
+    
+    
     + Attributes (CancelPurchaseOrderReq)
     
 + Response 200 (application/json)
@@ -1192,12 +1469,12 @@ The API operation for Get Purchase Order Details.
 
 + Parameters 
         
-    + accountNumber  (string, required) - Account Number
-    + orderNumber (string, required) - Sales Order Number
-    + orderSubmissionId (string, required) - Purchase Order Submission Id 
+    + accountNumber: `5116664`  (string, required) - Account Number
+    + orderNumber: `88219685` (string, required) - Sales Order Number
 
 + Request (application/json)
-
+There is no body for the request.
+    
     + Headers 
             
             Accept: application/json
@@ -1343,7 +1620,7 @@ Following combinations of are allowed, when calling the API operation.
                 "message": "Service Unavailable"
             }
 
-### Update Purchase Order [GET /v1/fulfillment/purchaseorder/update]
+### Update Purchase Order [POST /v1/fulfillment/purchaseorder/update]
 The API operation for Update Purchase Order
 
 + Request (application/json)
@@ -1353,6 +1630,52 @@ The API operation for Update Purchase Order
             Accept: application/json
             Authorization: Bearer [token]
     
+    + Body
+            
+            {
+                "UpdatePurchaseOrder": {
+                "OrderHeader": {
+                "OrderNumber": "39746527",
+                "ShipFrom": {
+                "EmailID": "shipfrom@dhl.com",
+                "City": "Prague",
+                "Country": "CZ",
+                "ZipCode": "14000",
+                "State": "State",
+                "AddressLine2": "ALine2",
+                "AddressLine3": "ALine3",
+                "AddressLine1": "ALine1",
+                "PhoneNumber": "+420-123-456",
+                "VendorName": "ShipFrom"
+                },
+                "ShipTo": {
+                "EmailID": "shipto@dhl.com",
+                "City": "shiptocity",
+                "Country": "DE",
+                "ZipCode": "15000",
+                "State": "shiptostate",
+                "AddressLine2": "ToLine2",
+                "AddressLine3": "ToLine3",
+                "AddressLine1": "ToLine1",
+                "PhoneNumber": "+44-111-222"
+                },
+                "BillTo": {
+                "EmailID": "billto@dhl.com",
+                "City": "BillToCity",
+                "Country": "DE",
+                "ZipCode": "123456",
+                "State": "BillToState",
+                "AddressLine2": "BillToLine2",
+                "AddressLine3": "BillToLine3",
+                "AddressLine1": "BillToLine1",
+                "PhoneNumber": "+44999000"
+                }
+                },
+                "AccountNumber": "5116664"
+                }
+                }
+
+
     + Attributes (UpdatePurchaseOrderReq)
 
 + Response 200 (application/json)
@@ -1411,15 +1734,17 @@ The API operation for Update Purchase Order
             }
 
 
-## Return Order [/v1/fulfillment/returnorder/details/{accountNumber}/{orderNumber}
+## Return Order [/v1/fulfillment/returnorder/details/{accountNumber}/{orderNumber}]
+
 ### Return Order Details [GET]
 The API operation for Get Return Order Details
     
 + Parameters 
-    + accountNumber (string, required) - Account Number
-    + orderNumber (string, required) - Return Order Number
+    + accountNumber: `5116664` (string, required) - Account Number
+    + orderNumber: `Y100000124` (string, required) - Return Order Number
 
 + Request (application/json)
+There is no body for this request.
 
     + Headers 
             
@@ -1491,11 +1816,11 @@ The API operation for Get Return Order List\n\nThe optional parameters of the AP
 |accountNumber && dateFrom && dateTo && status && page|Returns page of filtered orders by status and account number for defined date range. **Status and page are optional.**|
 
 + Parameters 
-    + accountNumber  (string, required) - Account Number
+    + accountNumber: `5116664`  (string, required) - Account Number
     + orderNumber  (string, optional) - Sales Order Number
     + dateFrom (string, optional) - Date From
     + dateTo (string, optional) - Date To
-    + status (enum[string], optional) - Status
+    + status: `ReceiptClosed` (enum[string], optional) - Status
         + Members
             + `Reserved`
             + `Cancelled`
@@ -1510,7 +1835,7 @@ The API operation for Get Return Order List\n\nThe optional parameters of the AP
             + `Picked`
             + `Manifested`
             + `Created`            
-    + page (string, optional) - Page 
+    + page: `1` (string, optional) - Page 
 
 + Request (application/json)
 
@@ -1584,21 +1909,15 @@ The optional parameters of the API operation are conditional. Following combinat
 
     
 + Parameters 
-        
-        + accountNumber :  (string, required)
-            Account Number
-        + orderNumber :  (string, optional)
-            Sales Order Number
-        + dateFrom : (string, optional)
-            Date From
-        + dateTo : (string, optional)
-            Date To
-        + date : (string, optional)
-            Date
-        + page : (string, optional)
-            Page 
+    + accountNumber: `5116664` (string, required) - Account Number
+    + orderNumber (string, optional) - Sales Order Number
+    + dateFrom: `20170101` (string, optional) - Date From
+    + dateTo: `20180101` (string, optional) - Date To
+    + date (string, optional) - Date
+    + page: `1` (string, optional) - Page 
 
 + Request (application/json)
+There is no body for the request.
 
     + Headers 
             
@@ -1713,21 +2032,18 @@ The optional parameters of the API operation are conditional. Following combinat
 The API operation for Get Available Stock.
     
 + Parameters 
-        
-        + inventoryAccountNumber :  (string, required)
-            Inventory Account Number
-        + itemId :  (string, required)
-            Item Id
-        + node : (enum[string], optional)
-            Node
-            + Members
-                + OH1
-                + CA1
-                + JP1
-                + MX1
+    + inventoryAccountNumber: `5116664` (string, required) - Inventory Account Number
+    + itemId: `KMA002MD` (string, required) - Item Id
+    + node: `CA1` (enum[string], optional) - Node
+        + Members
+            + `OH1`
+            + `CA1`
+            + `JP1`
+            + `MX1`
 
 + Request
-    
+There is no body for the request.
+
     + Headers 
             
             Accept: application/json
@@ -1786,23 +2102,19 @@ The API operation for Get Available Stock.
 
 ### Inventory Snapshot [GET /stock/snapshot/{inventoryAccountNumber}{?itemId,node}]
 The API operation for Get Inventory Snapshot
-
-
-+ Parameters 
-        
-        + inventoryAccountNumber :  (string, required)
-            Inventory Account Number
-        + itemId :  (string, optional)
-            Item Id
-        + node : (enum[string], optional)
-            Node
-            + Members
-                + OH1
-                + CA1
-                + JP1
-                + MX1   
+  
++ Parameters
+    + inventoryAccountNumber: `5116664` (string, required) - Inventory Account Number
+    + itemId: `KMA002MD` (string, required) - Item Id
+    + node: `CA1` (enum[string], optional) - Node
+        + Members
+            + `OH1`
+            + `CA1`
+            + `JP1`
+            + `MX1`
 
 + Request (application/json)
+There is no body for the request.
 
     + Headers 
             
@@ -1909,42 +2221,23 @@ Recommended sequence for the Label service call is following:
 
 
 + Parameters
-
-    + format: `PDF` (enum[string], required)
-
-        Mandatory parameter to define file format. One of PNG|ZPL|PDF
-
-        + Default: PNG
-
+    + format: `PNG` (enum[string], required) - Mandatory parameter to define file format. One of PNG|ZPL|PDF
         + Members
             + `PDF` 
             + `PNG` 
             + `ZPL` 
-
-    + labelSize: `4x4` (enum[string], required)
-
-        Mandatory parameter to difine size of the label. One of 4x6|4x4.
-
-        + Default: 4x6
+    + labelSize: `4x6` (enum[string], required) - Mandatory parameter to difine size of the label. One of 4x6|4x4.
         + Members
             + `4x6` 
             + `4x4` 
-
-    + pageSize: `A4` (enum[string], optional)
-
-        Conditionaly mandatory, only for PDF format. Size of the page in PDF file. One of A4|400x600|400x600.
-
-        + Default: A4
+    + pageSize: `A4` (enum[string], optional) - Conditionaly mandatory, only for PDF format. Size of the page in PDF file. One of A4|400x600|400x600.
+        + Default: `A4`
         + Members
             + `A4` 
             + `400x600` 
             + `400x400` 
-
-    + layout: `1x1` (string, optional)
-
-        Conditionaly mandatory, only for PDF format. Defines way how single labels are layouted on the PDF page. In case of pageSize=A4 it might be 4x1 or 1x1. Otherwise 1x1 is the only option.
-
-        + Default: 1x1
+    + layout: `1x1` (string, optional) - Conditionaly mandatory, only for PDF format. Defines way how single labels are layouted on the PDF page. In case of pageSize=A4 it might be 4x1 or 1x1. Otherwise 1x1 is the only option.
+        + Default: `1x1`
         + Members
             + `4x1` 
             + `1x1` 
@@ -2137,16 +2430,14 @@ Recommended sequence for the Label service call is following:
     + Headers 
             
 
-
     + Body
         
-        {
-            "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
-        }        
+            {
+                "message": "Unauthorized Access - Invalid token or Authentication Header parameter"
+            }        
     
     + Attributes (ErrResponseFormatError)
     
-
 
 + Response 429 (application/json)
     
@@ -2348,31 +2639,19 @@ The recommended sequence for the SOM call is following:
 # Data Structures
 
 ## CancelPurchaseOrderReq (object)
-
-
-
 + `CancelPurchaseOrder` (CancelPurchaseOrder, required) 
 
 
 ## CancelPurchaseOrder (object)
-
-
-
 + `AccountNumber` (string, required) 
 + `OrderNumber` (string, required) 
 
 
 ## CreateItemReq (object)
-
-
-
 + `CreateItem` (CreateItem, required) 
 
 
 ## CreateItem (object)
-
-
-
 + `AccountNumber` (string, required) 
 + `ItemID` (string, required) 
 + `ItemDetails` (ItemDetails, required) 
@@ -2382,9 +2661,6 @@ The recommended sequence for the SOM call is following:
 
 
 ## ItemDetails (object)
-
-
-
 + `ShortDescription` (string, required) 
 + `UnitOfMeasure` (string, required) 
 + `IsReturnable` (boolean, required) 
@@ -2411,20 +2687,17 @@ The recommended sequence for the SOM call is following:
 
 
 ## Color (object)
-
 + `Code` (string, required) 
 + `Name` (string, required) 
 
 
 ## Image (object)
-
 + `Location` (string, required) 
 + `Identifier` (string, required) 
 + `Label` (string, optional) 
 
 
 ## PhysicalInformation (object)
-
 + `Height` (number, optional) 
 + `Length` (number, optional) 
 + `Width` (number, optional) 
@@ -2434,21 +2707,17 @@ The recommended sequence for the SOM call is following:
 
 
 ## UnitCost (object)
-
 + `Amount` (number, required) 
 + `Currency` (string, optional) 
 
 
-## Classification (object)
-
+##  Classification (object)
 + `HarmonizedCode` (string, optional) 
 + `HazmatClass` (string, optional) 
 + `Model` (string, optional) 
 
 
-## InventoryParameters (object)
-
-
+##  InventoryParameters (object)
 + `IsSerialTracked` (boolean, optional) 
 + `OnhandSafetyFactorQuantity` (number, optional) 
 + `TagControlFlag` (boolean, optional) 
@@ -2456,44 +2725,27 @@ The recommended sequence for the SOM call is following:
 
 
 ## AdditionalProductReferenceIdentifier (object)
-
-
-
 + `ProductReference` (string, required) 
 + `Identifier` (string, required) 
 
 
 ## CreateSalesOrderReq (object)
-
-
-
 + `CreateSalesOrder` (CreateSalesOrder, required) 
 
 
 ## CreateSalesOrder (object)
-
-
-
 + `MessageDateTime` (string, required) 
 + `OrderSubmissionID` (string, required) 
 + `AccountNumber` (string, required) 
 + `Order` (Order, required) 
 + `OrgID` (string, optional) 
 
-
 ## Order (object)
-
-
-
 + `OrderHeader` (OrderHeader, required) 
 + `OrderDetails` (OrderDetails, required) 
 + `AdditionalReferences` (AdditionalReferences, optional) 
 
-
 ## OrderHeader (object)
-
-
-
 + `OrderDateTime` (string, required) 
 + `OrderNumber` (string, required) 
 + `ShippingServiceID` (string, required) 
@@ -2508,11 +2760,7 @@ The recommended sequence for the SOM call is following:
 + `B2BOrderReference` (string, optional) 
 + `PaymentMethods` (PaymentMethods, optional) 
 
-
 ## Charges (object)
-
-
-
 + `OrderCurrency` (string, required) 
 + `OrderTotal` (string, required) 
 + `OrderSubTotal` (string, required) 
@@ -2523,45 +2771,25 @@ The recommended sequence for the SOM call is following:
 + `TaxDetail` (array[TaxDetail], optional) 
 + `ChargeDetail` (array[ChargeDetail], optional) 
 
-
 ## TaxDetail (object)
-
-
-
 + `TaxAmount` (string, required) 
 + `TaxName` (string, required) 
 + `TaxPercentage` (string, required) 
 
-
 ## ChargeDetail (object)
-
-
-
 + `ChargeAmount` (string, required) 
 + `ChargeName` (string, required) 
 + `ChargeType` (string, required) 
 
-
 ## PaymentMethods (object)
-
-
-
 + `PaymentMethod` (array[PaymentMethod], optional) 
 
-
 ## PaymentMethod (object)
-
-
-
 + `PaymentType` (string, required) 
 + `AccountHolderName` (string, optional) 
 + `TruncatedAccountIdentifier` (string, optional) 
 
-
 ## BillTo (object)
-
-
-
 + `FirstName` (string, required) 
 + `LastName` (string, required) 
 + `AddressLine1` (string, required) 
@@ -2574,11 +2802,7 @@ The recommended sequence for the SOM call is following:
 + `PhoneNumber` (string, optional) 
 + `EmailID` (string, optional) 
 
-
 ## Shipto (object)
-
-
-
 + `FirstName` (string, required) 
 + `LastName` (string, required) 
 + `AddressLine1` (string, required) 
@@ -2593,18 +2817,10 @@ The recommended sequence for the SOM call is following:
 + `IDType` (string, optional) 
 + `IDValue` (string, optional) 
 
-
 ## OrderDetails (object)
-
-
-
 + `OrderLine` (array[OrderLine], required) 
 
-
 ## OrderLine (object)
-
-
-
 + `OrderLineNumber` (string, required) 
 + `OrderedQuantity` (string, required) 
 + `ItemID` (string, required) 
@@ -2618,29 +2834,17 @@ The recommended sequence for the SOM call is following:
 + `TaxDetail` (array[TaxDetail], optional) 
 + `ChargeDetail` (array[ChargeDetail27], optional) 
 
-
 ## Instruction (object)
-
-
-
 + `Type` (string, required) 
 + `Details` (string, required) 
 
-
 ## ChargeDetail27 (object)
-
-
-
 + `ChargeName` (string, required) 
 + `ChargeCategory` (string, required) 
 + `AmountPerLine` (string, optional) 
 + `AmountPerUnit` (string, optional) 
 
-
 ## AdditionalReferences (object)
-
-
-
 + `Orderref1` (string, optional) 
 + `Orderref2` (string, optional) 
 + `Orderref3` (string, optional) 
@@ -2652,18 +2856,10 @@ The recommended sequence for the SOM call is following:
 + `Orderref9` (string, optional) 
 + `Orderref10` (string, optional) 
 
-
 ## CreatePurchaseOrderReq (object)
-
-
-
 + `CreatePurchaseOrder` (CreatePurchaseOrder, required) 
 
-
 ## CreatePurchaseOrder (object)
-
-
-
 + `MessageDateTime` (string, required) 
 + `OrderSubmissionID` (string, required) 
 + `AccountNumber` (string, required) 
@@ -2671,11 +2867,7 @@ The recommended sequence for the SOM call is following:
 + `OrderDetails` (array[OrderDetails35], required) 
 + `BillingAccountNumber` (string, optional) 
 
-
 ## OrderHeader31 (object)
-
-
-
 + `OrderNumber` (string, required) 
 + `OrderDateTime` (string, required) 
 + `ReceivingNode` (string, required) 
@@ -2690,11 +2882,7 @@ The recommended sequence for the SOM call is following:
 + `NotificationEmailID` (string, optional) 
 + `ShipTo` (ShipTo33, optional) 
 
-
 ## ShipFrom (object)
-
-
-
 + `VendorName` (string, required) 
 + `AddressLine1` (string, required) 
 + `City` (string, required) 
@@ -2706,11 +2894,7 @@ The recommended sequence for the SOM call is following:
 + `PhoneNumber` (string, optional) 
 + `EmailID` (string, optional) 
 
-
 ## ShipTo33 (object)
-
-
-
 + `AddressLine1` (string, required) 
 + `City` (string, required) 
 + `ZipCode` (string, required) 
@@ -2720,12 +2904,8 @@ The recommended sequence for the SOM call is following:
 + `State` (string, optional) 
 + `PhoneNumber` (string, optional) 
 + `EmailID` (string, optional) 
-
 
 ## BillTo34 (object)
-
-
-
 + `AddressLine1` (string, required) 
 + `City` (string, required) 
 + `ZipCode` (string, required) 
@@ -2736,11 +2916,7 @@ The recommended sequence for the SOM call is following:
 + `PhoneNumber` (string, optional) 
 + `EmailID` (string, optional) 
 
-
 ## OrderDetails35 (object)
-
-
-
 + `OrderLineNumber` (string, required) 
 + `OrderedQuantity` (number, required) 
 + `RequestedDeliveryDate` (string, required) 
@@ -2750,28 +2926,16 @@ The recommended sequence for the SOM call is following:
 + `CountryOfOrigin` (string, optional) 
 + `CostDetails` (CostDetails, optional) 
 
-
 ## CostDetails (object)
-
-
-
 + `RetailPrice` (number, optional) 
 + `WholesalePrice` (number, optional) 
 + `UnitCost` (number, optional) 
 + `Currency` (string, optional) 
 
-
 ## UpdateItemReq (object)
-
-
-
 + `UpdateItem` (UpdateItem, required) 
 
-
 ## UpdateItem (object)
-
-
-
 + `AccountNumber` (string, required) 
 + `ItemID` (string, required) 
 + `ItemDetails` (ItemDetails39, optional) 
@@ -2779,11 +2943,7 @@ The recommended sequence for the SOM call is following:
 + `InventoryParameters` (InventoryParameters45, optional) 
 + `AdditionalProductReferenceIdentifiers` (array[AdditionalProductReferenceIdentifier], optional) 
 
-
 ## ItemDetails39 (object)
-
-
-
 + `ShortDescription` (string, optional) 
 + `LongDescription` (string, optional) 
 + `ProductCategory` (string, optional) 
@@ -2807,36 +2967,20 @@ The recommended sequence for the SOM call is following:
 + `GenderGroup` (string, optional) 
 + `GenderAge` (string, optional) 
 
-
 ## InventoryParameters45 (object)
-
-
-
 + `OnhandSafetyFactorQuantity` (number, optional) 
 + `UseUPCForInventory` (boolean, optional) 
 
-
 ## UpdatePurchaseOrderReq (object)
-
-
-
 + `UpdatePurchaseOrder` (UpdatePurchaseOrder, required) 
 
-
 ## UpdatePurchaseOrder (object)
-
-
-
 + `AccountNumber` (string, required) 
 + `OrderHeader` (OrderHeader49, required) 
 + `BillingAccountNumber` (string, optional) 
 + `OrderDetails` (array[OrderDetails53], optional) 
 
-
 ## OrderHeader49 (object)
-
-
-
 + `OrderNumber` (string, required) 
 + `OrderReferenceNumber` (string, optional) 
 + `InvoiceNumber` (string, optional) 
@@ -2848,11 +2992,7 @@ The recommended sequence for the SOM call is following:
 + `ShipTo` (ShipTo33, optional) 
 + `BillTo` (BillTo34, optional) 
 
-
 ## OrderDetails53 (object)
-
-
-
 + `Action` (enum[string], required) 
     + `CREATE`
     + `MODIFY`
@@ -2866,60 +3006,32 @@ The recommended sequence for the SOM call is following:
 + `UnitOfMeasure` (string, optional) 
 + `CostDetails` (CostDetails, optional) 
 
-
 ## AvailableStockRes (object)
-
-
-
 + `AvailableStock` (AvailableStock, required) 
 
-
 ## AvailableStock (object)
-
-
-
 + `InventoryAccountNumber` (string, required) 
 + `Product` (array[Product], required) 
 
-
 ## Product (object)
-
-
-
 + `ItemID` (string, required) 
 + `ItemDescription` (string, required) 
 + `AvailableQuantity` (string, required) 
 
-
 ## BackOrderListRes (object)
-
-
-
 + `Page` (Page, required) 
 
-
 ## Page (object)
-
-
-
 + `PageNumber` (string, required) 
 + `IsValidPage` (string, required) 
 + `IsLastPage` (string, required) 
 + `TotalNumberOfOrders` (string, required) 
 + `OrderList` (OrderList, optional) 
 
-
 ## OrderList (object)
-
-
-
 + `Order` (array[Order62], required) 
 
-
 ## Order62 (object)
-
-
-
 + `AccountNumber` (string, required) 
 + `OrgID` (string, required) 
 + `MessageDateTime` (string, required) 
@@ -2930,103 +3042,55 @@ The recommended sequence for the SOM call is following:
 + `IsOnHold` (string, required) 
 + `HoldReasonCode` (string, required) 
 
-
 ## InventorySnapshotRes (object)
-
-
-
 + `InventorySnapshot` (InventorySnapshot, required) 
 
-
 ## InventorySnapshot (object)
-
-
-
 + `InventoryAccountNumber` (string, required) 
 + `Catalog` (array[Catalog], required) 
 
-
 ## Catalog (object)
-
-
-
 + `Product` (array[Product66], required) 
 
-
 ## Product66 (object)
-
-
-
 + `ItemID` (string, required) 
 + `ItemDescription` (string, required) 
 + `TotalInventory` (array[TotalInventory], required) 
 + `SupplyDetail` (array[SupplyDetail], required) 
 + `DemandDetail` (array[DemandDetail], optional) 
 
-
 ## TotalInventory (object)
-
-
-
 + `Type` (string, required) 
 + `Quantity` (string, required) 
 
-
 ## SupplyDetail (object)
-
-
-
 + `Node` (string, required) 
 + `Inventory` (array[Inventory], required) 
 
-
 ## Inventory (object)
-
-
-
 + `Type` (string, required) 
 + `Quantity` (string, required) 
 + `LotNumber` (string, optional) 
 
-
 ## DemandDetail (object)
-
-
-
 + `Node` (string, required) 
 + `Inventory` (array[Inventory71], required) 
 
-
 ## Inventory71 (object)
-
-
-
 + `Type` (string, required) 
 + `Quantity` (string, required) 
 
-
 ## ItemListRes (object)
-
-
-
 + `Page` (Page73, required) 
 + `Items` (array[Item], optional) 
 
-
 ## Page73 (object)
-
-
-
 + `PageNumber` (string, required) 
 + `IsValidPage` (string, required) 
 + `IsLastPage` (string, required) 
 + `TotalNumberOfItems` (string, required) 
 
-
 ## Item (object)
-
-
-
 + `AccountNumber` (string, required) 
 + `ItemID` (string, required) 
 + `ItemDetails` (ItemDetails75, optional) 
@@ -3034,11 +3098,7 @@ The recommended sequence for the SOM call is following:
 + `InventoryParameters` (InventoryParameters81, optional) 
 + `AdditionalProductReferenceIdentifiers` (array[AdditionalProductReferenceIdentifier], optional) 
 
-
 ## ItemDetails75 (object)
-
-
-
 + `ShortDescription` (string, optional) 
 + `LongDescription` (string, optional) 
 + `ProductCategory` (string, optional) 
@@ -3063,35 +3123,19 @@ The recommended sequence for the SOM call is following:
 + `GenderGroup` (string, optional) 
 + `GenderAge` (string, optional) 
 
-
 ## InventoryParameters81 (object)
-
-
-
 + `IsSerialTracked` (boolean, optional) 
 + `OnhandSafetyFactorQuantity` (number, optional) 
 + `TagControlFloag` (boolean, optional) 
 + `UseUPCForInventory` (boolean, optional) 
 
-
 ## PurchaseOrderAcknowledgementRes (object)
-
-
-
 + `CreationAcknowledge` (CreationAcknowledge, required) 
 
-
 ## CreationAcknowledge (object)
-
-
-
 + `Order` (Order85, required) 
 
-
 ## Order85 (object)
-
-
-
 + `AccountNumber` (string, required) 
 + `OrgID` (string, required) 
 + `OrderDateTime` (string, required) 
@@ -3099,36 +3143,20 @@ The recommended sequence for the SOM call is following:
 + `OrderReferenceNumber` (string, required) 
 + `OrderSubmission` (OrderSubmission, required) 
 
-
 ## OrderSubmission (object)
-
-
-
 + `OrderSubmissionID` (string, required) 
 + `MessageID` (string, required) 
 + `OrderCreationStatus` (string, required) 
 + `Error` (array[Error], optional) 
 
-
 ## Error (object)
-
-
-
 + `ErrorCode` (string, required) 
 + `ErrorDescription` (string, required) 
 
-
 ## PurchaseOrderDetailsRes (object)
-
-
-
 + `PurchaseOrderDetails` (PurchaseOrderDetails, required) 
 
-
 ## PurchaseOrderDetails (object)
-
-
-
 + `MessageDateTime` (string, required) 
 + `AccountNumber` (string, required) 
 + `BillingAccountNumber` (string, required) 
@@ -3138,11 +3166,7 @@ The recommended sequence for the SOM call is following:
 + `ShipTo` (ShipTo33, required) 
 + `OrderDetails` (array[OrderDetails94], required) 
 
-
 ## OrderHeader90 (object)
-
-
-
 + `OrderNumber` (string, required) 
 + `OrderReferenceNumber` (string, required) 
 + `InvoiceNumber` (string, required) 
@@ -3155,11 +3179,7 @@ The recommended sequence for the SOM call is following:
 + `ExpectedDeliveryDate` (string, required) 
 + `OrderStatus` (string, required) 
 
-
 ## ShipFrom91 (object)
-
-
-
 + `AddressLine1` (string, required) 
 + `AddressLine2` (string, required) 
 + `AddressLine3` (string, required) 
@@ -3170,11 +3190,7 @@ The recommended sequence for the SOM call is following:
 + `PhoneNumber` (string, required) 
 + `EmailID` (string, required) 
 
-
 ## OrderDetails94 (object)
-
-
-
 + `OrderLineNumber` (string, required) 
 + `OrderLineKey` (string, required) 
 + `OrderedQuantity` (number, required) 
@@ -3189,29 +3205,17 @@ The recommended sequence for the SOM call is following:
 + `Status` (string, optional) 
 + `OpenQty` (string, optional) 
 
-
 ## PurchaseOrderStatusRes (object)
-
-
-
 + `Page` (Page97, required) 
 + `PurchaseOrderList` (array[PurchaseOrderList], optional) 
 
-
 ## Page97 (object)
-
-
-
 + `PageNumber` (string, required) 
 + `IsValidPage` (string, required) 
 + `IsLastPage` (string, required) 
 + `TotalNumberOfOrders` (string, required) 
 
-
 ## PurchaseOrderList (object)
-
-
-
 + `AccountNumber` (string, required) 
 + `MessageDateTime` (string, required) 
 + `OrderNumber` (string, required) 
@@ -3219,38 +3223,22 @@ The recommended sequence for the SOM call is following:
 + `OrderStatus` (string, required) 
 + `ReceivingNode` (string, required) 
 
-
 ## ReturnOrderDetailsRes (object)
-
-
-
 + `ReturnOrderDetails` (ReturnOrderDetails, required) 
 
-
 ## ReturnOrderDetails (object)
-
-
-
 + `AccountNumber` (string, required) 
 + `OrderHeader` (OrderHeader101, required) 
 + `OrderDetails` (array[OrderDetails103], required) 
 
-
 ## OrderHeader101 (object)
-
-
-
 + `OrderNumber` (string, required) 
 + `OrderDateTime` (string, required) 
 + `LastChangeTimestamp` (string, required) 
 + `OrderStatus` (string, required) 
 + `ReturnFrom` (ReturnFrom, required) 
 
-
 ## ReturnFrom (object)
-
-
-
 + `FirstName` (string, required) 
 + `LastName` (string, required) 
 + `AddressLine1` (string, required) 
@@ -3263,11 +3251,7 @@ The recommended sequence for the SOM call is following:
 + `PhoneNumber` (string, required) 
 + `EmailID` (string, required) 
 
-
 ## OrderDetails103 (object)
-
-
-
 + `DerivedFromSalesOrderNumber` (string, required) 
 + `ReturnedQuantity` (number, required) 
 + `ItemID` (string, required) 
@@ -3279,62 +3263,34 @@ The recommended sequence for the SOM call is following:
 + `ReturnReason` (string, required) 
 + `ReturnMethod` (string, optional) 
 
-
 ## ReturnOrderListRes (object)
-
-
-
 + `Page` (Page97, required) 
 + `ReturnOrderList` (array[ReturnOrderList], optional) 
 
-
 ## ReturnOrderList (object)
-
-
-
 + `AccountNumber` (string, required) 
 + `ReturnOrderNumber` (string, required) 
 + `OrderDateTime` (string, required) 
 + `OrderStatus` (string, required) 
 
-
 ## SalesOrderAcknowledgementRes (object)
-
-
-
 + `CreationAcknowledge` (CreationAcknowledge, required) 
 
-
 ## SalesOrderDetailsRes (object)
-
-
-
 + `SalesOrderDetails` (SalesOrderDetails, required) 
 
-
 ## SalesOrderDetails (object)
-
-
-
 + `MessageDateTime` (string, required) 
 + `AccountNumber` (string, required) 
 + `OrgID` (string, required) 
 + `Order` (array[Order114], required) 
 
-
 ## Order114 (object)
-
-
-
 + `OrderHeader` (OrderHeader115, required) 
 + `OrderDetails` (OrderDetails123, required) 
 + `AdditionalReferences` (AdditionalReferences, required) 
 
-
 ## OrderHeader115 (object)
-
-
-
 + `DHLSalesOrderNumber` (string, required) 
 + `OrderStatus` (string, required) 
 + `IsOnHold` (string, required) 
@@ -3354,11 +3310,7 @@ The recommended sequence for the SOM call is following:
 + `ShipFromNode` (string, optional) 
 + `B2BOrderReference` (string, optional) 
 
-
 ## Shipto122 (object)
-
-
-
 + `FirstName` (string, required) 
 + `LastName` (string, required) 
 + `AddressLine1` (string, required) 
@@ -3371,18 +3323,10 @@ The recommended sequence for the SOM call is following:
 + `PhoneNumber` (string, required) 
 + `EmailID` (string, required) 
 
-
 ## OrderDetails123 (object)
-
-
-
 + `OrderLine` (array[OrderLine124], required) 
 
-
 ## OrderLine124 (object)
-
-
-
 + `OrderLineNumber` (string, required) 
 + `OrderedQuantity` (string, required) 
 + `ItemID` (string, required) 
@@ -3398,58 +3342,30 @@ The recommended sequence for the SOM call is following:
 + `Status` (string, optional) 
 + `OpenQty` (string, optional) 
 
-
 ## SalesOrderStatusRes (object)
-
-
-
 + `Page` (Page, required) 
 
-
 ## ShipmentDetailsRes (object)
-
-
-
 + `Page` (Page133, required) 
 
-
 ## Page133 (object)
-
-
-
 + `PageNumber` (string, required) 
 + `IsValidPage` (string, required) 
 + `IsLastPage` (string, required) 
 + `TotalNumberOfOrders` (string, required) 
 + `OrderList` (OrderList134, optional) 
 
-
 ## OrderList134 (object)
-
-
-
 + `Order` (array[Order135], required) 
 
-
 ## Order135 (object)
-
-
-
 + `OrderNumber` (string, required) 
 + `Shipments` (array[Shipment], required) 
 
-
 ## Shipment (object)
-
-
-
 + `Shipment` (array[Shipment137], required) 
 
-
 ## Shipment137 (object)
-
-
-
 + `TrackingNumber` (string, required) 
 + `Service` (string, required) 
 + `SCAC` (string, required) 
@@ -3459,11 +3375,7 @@ The recommended sequence for the SOM call is following:
 + `ContainerNumber` (string, optional) 
 + `OrderReferenceNumber` (string, optional) 
 
-
 ## PackageContent (object)
-
-
-
 + `ItemID` (string, required) 
 + `OriginalOrderLineNumber` (string, required) 
 + `OrderQuantity` (string, required) 
@@ -3471,36 +3383,22 @@ The recommended sequence for the SOM call is following:
 + `LotNumber` (string, optional) 
 + `SerialNumber` (string, optional) 
 
-
 ## RequestFormat (object)
-
 + `shipments` (array[Shipment2], required) - Container array for one or more shipments
 
-
 ## Shipment2 (object)
-
-
-
 + `pickupAccount` (string, required) - The DHL eCommerce pickup account number. You will receive this after doing the onboarding with DHL sales.
 + `distributionCenter` (string, required) - Primary DHL eCommerce Distribution center assigned to your products/services. This will be provided during onboarding.
 + `packages` (array[Package], required) - One or more packages. At the moment, only one package is supported by the label service.
 + `consignmentNumber` (string, optional) - Customer defined number for identifying the consignment (i.e. a consolidation of parcels..
 
-
 ## Package (object)
-
-
-
 + `consigneeAddress` (ConsigneeAddress, required) - Address of the consignee.
 + `packageDetails` (PackageDetails, required) - Details of one package.
 + `returnAddress` (ReturnAddress, optional) - Address of the returns (if different from shipper)
 + `customsDetails` (array[CustomsDetail], optional) - Details for one or more customs commodities. Only applicable if orderedProduct is an International Product
 
-
 ## ConsigneeAddress (object)
-
-
-
 + `address1` (string, required) - Line 1 of the consignee's street address or delivery location
 + `city` (string, required) - Consignee's city
 + `country` (string, required) - Two-character ISO consignee address country code.
@@ -3515,11 +3413,7 @@ The recommended sequence for the SOM call is following:
 + `postalCode` (string, optional) - Consignee's postal code
 + `state` (string, optional) - Consignee's state, province or territory.
 
-
 ## PackageDetails (object)
-
-
-
 + `currency` (string, required) - Three-letter ISO Currency code
 + `orderedProduct` (string, required) - Identifies the DHL eCommerce product that is to be applied to the shipment. Refer to the product matrix for a list of all available and valid products.
 + `packageId` (string, required) - Unique reference ID for shipment; also referred to as Customer Confirmation Number.
@@ -3566,11 +3460,7 @@ The recommended sequence for the SOM call is following:
 + `length` (number, optional) - Longest measurement of package (provide if available)
 + `width` (number, optional) - Width dimension of the package (provide if available)
 
-
 ## ReturnAddress (object)
-
-
-
 + `address1` (string, required) - Line 1 of the return street address
 + `city` (string, required) - Return city
 + `country` (string, required) - Two-character ISO return address country code.
@@ -3581,11 +3471,7 @@ The recommended sequence for the SOM call is following:
 + `postalCode` (string, optional) - Return postal code
 + `state` (string, optional) - Return state, province or territory
 
-
 ## CustomsDetail (object)
-
-
-
 + `itemDescription` (string, required) - Detailed description of the commodity item - Used for customs clearance. Accuracy and Detail are required.
 + `packagedQuantity` (number, required) - Quantity of the same item in the package
 + `itemValue` (number, required) - The commercial value of the commodity (per each)
@@ -3595,38 +3481,22 @@ The recommended sequence for the SOM call is following:
 + `hsCode` (string, optional) - The Harmonized Tariff Schedule is a number assigned to every possible commodity that can be imported or exported from any country. Please do not include any decimals "." in this field.
 + `skuNumber` (string, optional) - SKU #, or item code - Used for product verification on clients website during customs clearance process.
 
-
 ## ResponseFormat (object)
-
-
-
 + `shipments` (array[Shipment12], required) - Container array for one or more shipments
 
-
 ## Shipment12 (object)
-
-
-
 + `pickupAccount`: `5300000` (string, required) - The DHL eCommerce pickup account number. You will receive this after doing the onboarding with DHL sales.
 + `distributionCenter`: `USORD1` (string, required) - Primary DHL eCommerce Distribution center assigned to your products/services. This will be provided during onboarding.
 + `packages`: `USORD1` (array[Package13], required) - One or more packages. At the moment, only one package is supported by the label service.
 
-
 ## Package13 (object)
-
-
-
 + `consigneeAddress` (ConsigneeAddress, required) - Address of the consignee.
 + `packageDetails` (PackageDetails15, required) - Details of one package.
 + `returnAddress` (ReturnAddress, optional) - Address of the returns (if different from shipper)
 + `customsDetails` (array[CustomsDetail], optional) - Details for one or more customs commodities. Only applicable if orderedProduct is an International Product
 + `responseDetails` (ResponseDetails, optional) 
 
-
 ## PackageDetails15 (object)
-
-
-
 + `currency` (string, required) - Three-letter ISO Currency code
 + `orderedProduct` (string, required) - Identifies the DHL eCommerce product that is to be applied to the shipment. Refer to the product matrix for a list of all available and valid products.
 + `packageId` (string, required) - Unique reference ID for shipment; also referred to as Customer Confirmation Number.
@@ -3650,43 +3520,23 @@ The recommended sequence for the SOM call is following:
 + `length` (number, optional) - Longest measurement of package (provide if available)
 + `width` (number, optional) - Width dimension of the package (provide if available)
 
-
 ## ResponseDetails (object)
-
-
-
 + `labelDetails` (array[LabelDetail], optional) 
 + `trackingNumber` (string, optional) 
 + `trackingNumberStatus` (string, optional) 
 
-
 ## LabelDetail (object)
-
-
-
 + `packageId` (string, optional) 
 + `format` (string, optional) 
 + `templateId` (string, optional) 
 + `labelData` (string, optional) 
 
-
 ## Reason (object)
-
-
-
 + `msg` (string, required) 
 
-
 ## Details (object)
-
-
-
 + `msgId` (string, required) 
 
-
 ## ErrResponseFormatError (object)
-
-
-
 + `reasons` (array[Reason], required) 
 + `details` (Details, required)
