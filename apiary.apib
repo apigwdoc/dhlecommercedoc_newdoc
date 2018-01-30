@@ -686,7 +686,7 @@ The API operation for Update Item
             }
 
 
-## Sales Orders [/efulfillment/v1/order/]
+## Sales Orders [/efulfillment/v1/order]
 INTROTEXT
 ___
 **Required Parameters:** 
@@ -2585,6 +2585,77 @@ The recommended sequence for the SOM call is following:
             
             Accept: application/json
             Authorization: Bearer [token]
+    
+    + Body
+        
+            {
+              "shipments": [
+                {
+                  "packages": [
+                    {
+                      "packageDetails": {
+                        "packageRefName": "55555555555555555",
+                        "insuredValue": 1,
+                        "weight": 2,
+                        "declaredValue": 250,
+                        "mailType": 2,
+                        "height": 30,
+                        "packageDesc": "Desc111",
+                        "currency": "AUD",
+                        "length": 20,
+                        "weightUom": "G",
+                        "billingRef2": "ref 2",
+                        "packageId": "fybjywwbdt",
+                        "dutiesPaid": "DDU",
+                        "orderedProduct": "PPS",
+                        "dimensionUom": "CM",
+                        "billingRef1": "ref 1"
+                      },
+                      "consigneeAddress": {
+                        "city": "Test City",
+                        "name": "Test Name",
+                        "address1": "Address line 1",
+                        "address2": "apt 123",
+                        "phone": "555-555-5555",
+                        "state": "GA",
+                        "country": "IE",
+                        "postalCode": "99999",
+                        "email": "test@email.com"
+                      },
+                      "customsDetails": [
+                        {
+                          "skuNumber": "3333333333333",
+                          "countryOfOrigin": "US",
+                          "itemDescription": "Desc1",
+                          "itemValue": 10.1,
+                          "packagedQuantity": 10,
+                          "hsCode": "555555"
+                        },
+                        {
+                          "skuNumber": "3333333333333",
+                          "countryOfOrigin": "CZ",
+                          "itemDescription": "Desc2",
+                          "itemValue": 20.2,
+                          "packagedQuantity": 20,
+                          "hsCode": "555555"
+                        }
+                      ],
+                      "returnAddress": {
+                        "city": "Test City",
+                        "name": "John Returns Doe",
+                        "companyName": "Test Company",
+                        "country": "US",
+                        "state": "GA",
+                        "address1": "Address line 1",
+                        "postalCode": "99999"
+                      }
+                    }
+                  ],
+                  "pickupAccount": "5317861",
+                  "distributionCenter": "HKHKG1"
+                }
+              ]
+            }
     
     + Attributes (RequestFormat)
     
