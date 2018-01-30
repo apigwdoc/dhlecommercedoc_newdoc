@@ -889,7 +889,7 @@ The API operation for Create Sales Order.
                 "message": "Service Unavailable"
             }
 
-### Get Back Sales Order List [GET /efulfillment/v1/order/backorderlist/{accountNumber}{?accountNumber,dateFrom,dateTo,page}]
+### Get Back Sales Order List [GET /efulfillment/v1/order/backorderlist/{accountNumber}{?dateFrom,dateTo,page}]
 
 The API operation for Get Back Sales Order List
 The optional parameters of the API operation are conditional. 
@@ -1035,7 +1035,7 @@ There is no body for the request.
             }
 
 
-### Sales Order Status [GET /efulfillment/v1/order/status/{?accountNumber}{?accountNumber,orderNumber,dateFrom,dateTo,status,page}]
+### Sales Order Status [GET /efulfillment/v1/order/status/{accountNumber}{?orderNumber,dateFrom,dateTo,status,page}]
 
 The API operation for Get Sales Order Status
 The optional parameters of the API operation are conditional. 
@@ -1191,7 +1191,7 @@ There is no body for the request.
                 "message": "Service Unavailable"
             }
 
-## Purchase Order [/v1/fulfillment/purchaseorder]
+## Purchase Order [/efulfillment/v1/purchaseorder]
 
 ### Create Purchase Order [POST]
 The API operation for Create Purchase Order.
@@ -1332,7 +1332,7 @@ The API operation for Create Purchase Order.
                 "message": "Service Unavailable"
             }
 
-###  Purchase Order Acknowledgement [GET /fulfillment/v1/purchaseorder/acknowledgement/{accountNumber}/{orderNumber}/{orderSubmissionId}]
+###  Purchase Order Acknowledgement [GET /efulfillment/v1/purchaseorder/acknowledgement/{accountNumber}/{orderNumber}/{orderSubmissionId}]
 The API operation for Get Purchase Order Acknowledgement
 
     
@@ -1401,7 +1401,7 @@ There is no body for the request.
             }
 
 
-###  Cancel Purchase Order [POST /fulfillment/v1/purchaseorder/cancel]
+###  Cancel Purchase Order [POST /efulfillment/v1/purchaseorder/cancel]
 The API operation for Cancel Purchase Order
 
 + Request (application/json)
@@ -1478,7 +1478,7 @@ The API operation for Cancel Purchase Order
                 "message": "Service Unavailable"
             }
 
-### Purchase Order Details [GET /fulfillment/v1/purchaseorder/details/{accountNumber}/{orderNumber,orderSubmissionId}]
+### Purchase Order Details [GET /efulfillment/v1/purchaseorder/details/{accountNumber}/{orderNumber,orderSubmissionId}]
 The API operation for Get Purchase Order Details.
 
 + Parameters 
@@ -1544,7 +1544,7 @@ There is no body for the request.
                 "message": "Service Unavailable"
             }
 
-### Purchase Order Status [GET /fulfillment/v1/purchaseorder/status/{accountNumber}{?accountNumber,orderNumber,dateFrom,dateTo,status,page}]
+### Purchase Order Status [GET /efulfillment/v1/purchaseorder/status/{accountNumber}{?orderNumber,dateFrom,dateTo,status,page}]
 The API operation for Get Purchase Order Status.
 The optional parameters of the API operation are conditional. 
 Following combinations of are allowed, when calling the API operation.
@@ -1634,7 +1634,7 @@ Following combinations of are allowed, when calling the API operation.
                 "message": "Service Unavailable"
             }
 
-### Update Purchase Order [POST /fulfillment/v1/purchaseorder/update]
+### Update Purchase Order [POST /efulfillment/v1/purchaseorder/update]
 The API operation for Update Purchase Order
 
 + Request (application/json)
@@ -1748,7 +1748,7 @@ The API operation for Update Purchase Order
             }
 
 
-## Return Order [/fulfillment/v1/returnorder/details/{accountNumber}/{orderNumber}]
+## Return Order [/efulfillment/v1/returnorder/details/{accountNumber}/{orderNumber}]
 
 ### Return Order Details [GET]
 The API operation for Get Return Order Details
@@ -1818,7 +1818,7 @@ There is no body for this request.
             }
 
 
-### Return Order List [GET /fulfillment/v1/returnorder/list/{accountNumber}{?accountNumber,orderNumber,dateFrom,dateTo,status,page}]
+### Return Order List [GET /efulfillment/v1/returnorder/list/{accountNumber}{?orderNumber,dateFrom,dateTo,status,page}]
 The API operation for Get Return Order List\n\nThe optional parameters of the API operation are conditional. Following combinations of are allowed, when calling the API operation.
 |Input Parameters                                      |Returned Values|
 |-------------------------------------------------------|--------------|
@@ -1909,7 +1909,7 @@ The API operation for Get Return Order List\n\nThe optional parameters of the AP
                 "message": "Service Unavailable"
             }
 
-## Shipment [/fulfillment/v1/shipment/details/{accountNumber}{?accountNumber,orderNumber,dateFrom,dateTo,date,page}]
+## Shipment [/efulfillment/v1/shipment/details/{accountNumber}{?orderNumber,dateFrom,dateTo,date,page}]
 
 ### Shipment Details [GET]
 The API operation for Get Shipment Details.
@@ -2040,7 +2040,7 @@ There is no body for the request.
                 "message": "Service Unavailable"
             }
 
-## Stock [/fulfillment/v1/stock/{inventoryAccountNumber}/{itemId}/{?node}]
+## Stock [/efulfillment/v1/stock/{inventoryAccountNumber}/{itemId}/{?node}]
 
 ### Available Stock [GET]
 The API operation for Get Available Stock.
