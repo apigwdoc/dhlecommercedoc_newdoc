@@ -1557,7 +1557,7 @@ Following combinations of are allowed, when calling the API operation.
 |dateFrom && dateTo && status && page|Returns page with filtered orders by status for defined date range. **Status and page are optional.**|"
 
 + Parameters 
-    + accountNumber  (string, required) - Account Number
+    + accountNumber: `5116664`  (string, required) - Account Number
     + orderNumber  (string, optional) - Sales Order Number
     + dateFrom (string, optional) - Date From
     + dateTo (string, optional) - Date To
@@ -2040,7 +2040,7 @@ There is no body for the request.
                 "message": "Service Unavailable"
             }
 
-## Stock [/efulfillment/v1/stock/{inventoryAccountNumber}/{itemId}/{?node}]
+## Stock [/efulfillment/v1/stock/{inventoryAccountNumber}/{itemId}{?node}]
 
 ### Available Stock [GET]
 The API operation for Get Available Stock.
