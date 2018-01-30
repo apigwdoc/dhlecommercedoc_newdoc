@@ -1,7 +1,18 @@
 FORMAT: 1A
 HOST: https://api-qa.dhlecommerce.com
-AUTHOR: DHL eCommerce
 
+AUTHOR: DHL eCOMMERCE
+VERSION: 0.1
+NAME OF THE CALL: Global DHL eCommerce API
+SUB CALLS WITHIN: Shipping, Fulfillment
+TARGET RELEASE OR GOLIVE: 01.06.2017
+TYP: External Webservice
+BELONGS TO API DOMAIN: Main DHL eCommerce Domain
+MINIMUM INPUT PARAMETERS: Too many to list here... see individual calls
+MINIMUM OUTPUTS PARAMETERS: Too many to list here... see individual calls
+FINAL LINK: http://api.dhlecommerce.com
+IT_LEAD: Martin Borriss & Pavel Holy
+BUSINESS_LEAD: Frank Josefiak
 
 
 
@@ -107,6 +118,8 @@ ___
 
 ## Versioning & Release notes
 Here on this page, the latest version of our global DHL eCommerce API is beeing documented. Currently this is **V.1**. Older versions do not yet exist - as soon as a newer version is published, the release notes as well as the links to older version is shown underneath.
+
+<!---
 ___
 
 ## API Health (...tbd)
@@ -118,8 +131,9 @@ We as DHL eCommerce constantly monitor our APIs performance to keep it up all th
 **Shipping**            |  ![SHIP](http://utzfu.synology.me/DHL/APIARY/slow.png)    |    100%       |1232ms         |
 **Fullfillment**        |  ![eFF](http://utzfu.synology.me/DHL/APIARY/up.png)    |    99.32%     |133ms          |
 **VAS**                 |  ![VAS](http://utzfu.synology.me/DHL/APIARY/down.png)      |    0%         |NA             |
-
+-->
 ___
+
 
 ## Help, Links & Support
 Coding against logistic APIs is not always fun - we know! To ensure you the best possible support, we developed a variety of options for you, to resolve any issues experienced. Underneath, we give you an overview on where you might find help for any possible question comming up on your side of the screen: 
@@ -477,7 +491,7 @@ The API operation for Create Item.
                 "message": "Service Unavailable"
             }
 
-### Get Item list [GET /v1/fulfillment/item/list/{accountNumber}{?itemId}]
+### Get Item list [GET /efulfillment/v1/item/list/{accountNumber}{?itemId}]
 
 The API operation for Get Item List. The optional parameters of the API operation are conditional. Following combinations of are allowed, when calling the API operation.
 
@@ -552,7 +566,7 @@ There is no body for the request.
                 "message": "Service Unavailable"
             }
 
-### Update Item [POST /v1/fulfillment/item/update]
+### Update Item [POST /efulfillment/v1/item/update]
 The API operation for Update Item
 
 + Request (application/json)
@@ -875,7 +889,7 @@ The API operation for Create Sales Order.
                 "message": "Service Unavailable"
             }
 
-### Get Back Sales Order List [GET /v1/fulfillment/order/backorderlist/{accountNumber}{?accountNumber,dateFrom,dateTo,page}]
+### Get Back Sales Order List [GET /efulfillment/v1/order/backorderlist/{accountNumber}{?accountNumber,dateFrom,dateTo,page}]
 
 The API operation for Get Back Sales Order List
 The optional parameters of the API operation are conditional. 
@@ -951,7 +965,7 @@ There is no body for the request.
                 "message": "Service Unavailable"
             }
 
-### Sales Order Acknowledgement [GET /v1/fulfillment/order/acknowledgement/{accountNumber}/{orderNumber}/{orderSubmissionId}]
+### Sales Order Acknowledgement [GET /efulfillment/v1/order/acknowledgement/{accountNumber}/{orderNumber}/{orderSubmissionId}]
 
 The API operation for Get Sales Order Acknowledgement
 
@@ -1021,7 +1035,7 @@ There is no body for the request.
             }
 
 
-### Sales Order Status [GET /v1/fulfillment/order/status/{?accountNumber}{?accountNumber,orderNumber,dateFrom,dateTo,status,page}]
+### Sales Order Status [GET /efulfillment/v1/order/status/{?accountNumber}{?accountNumber,orderNumber,dateFrom,dateTo,status,page}]
 
 The API operation for Get Sales Order Status
 The optional parameters of the API operation are conditional. 
@@ -1111,7 +1125,7 @@ There is no body for the request.
                 "message": "Service Unavailable"
             }
 
-### Sales Order Details [GET /v1/fulfillment/order/details/{accountNumber}/{orderNumber}]
+### Sales Order Details [GET /efulfillment/v1/order/details/{accountNumber}/{orderNumber}]
 The API operation for Get Sales Order Details
 
     
@@ -1318,7 +1332,7 @@ The API operation for Create Purchase Order.
                 "message": "Service Unavailable"
             }
 
-###  Purchase Order Acknowledgement [GET /v1/fulfillment/purchaseorder/acknowledgement/{accountNumber}/{orderNumber}/{orderSubmissionId}]
+###  Purchase Order Acknowledgement [GET /fulfillment/v1/purchaseorder/acknowledgement/{accountNumber}/{orderNumber}/{orderSubmissionId}]
 The API operation for Get Purchase Order Acknowledgement
 
     
@@ -1387,7 +1401,7 @@ There is no body for the request.
             }
 
 
-###  Cancel Purchase Order [POST /v1/fulfillment/purchaseorder/cancel]
+###  Cancel Purchase Order [POST /fulfillment/v1/purchaseorder/cancel]
 The API operation for Cancel Purchase Order
 
 + Request (application/json)
@@ -1464,7 +1478,7 @@ The API operation for Cancel Purchase Order
                 "message": "Service Unavailable"
             }
 
-### Purchase Order Details [GET /v1/fulfillment/purchaseorder/details/{accountNumber}/{orderNumber,orderSubmissionId}]
+### Purchase Order Details [GET /fulfillment/v1/purchaseorder/details/{accountNumber}/{orderNumber,orderSubmissionId}]
 The API operation for Get Purchase Order Details.
 
 + Parameters 
@@ -1530,7 +1544,7 @@ There is no body for the request.
                 "message": "Service Unavailable"
             }
 
-### Purchase Order Status [GET /v1/fulfillment/purchaseorder/status/{accountNumber}{?accountNumber,orderNumber,dateFrom,dateTo,status,page}]
+### Purchase Order Status [GET /fulfillment/v1/purchaseorder/status/{accountNumber}{?accountNumber,orderNumber,dateFrom,dateTo,status,page}]
 The API operation for Get Purchase Order Status.
 The optional parameters of the API operation are conditional. 
 Following combinations of are allowed, when calling the API operation.
@@ -1620,7 +1634,7 @@ Following combinations of are allowed, when calling the API operation.
                 "message": "Service Unavailable"
             }
 
-### Update Purchase Order [POST /v1/fulfillment/purchaseorder/update]
+### Update Purchase Order [POST /fulfillment/v1/purchaseorder/update]
 The API operation for Update Purchase Order
 
 + Request (application/json)
@@ -1734,7 +1748,7 @@ The API operation for Update Purchase Order
             }
 
 
-## Return Order [/v1/fulfillment/returnorder/details/{accountNumber}/{orderNumber}]
+## Return Order [/fulfillment/v1/returnorder/details/{accountNumber}/{orderNumber}]
 
 ### Return Order Details [GET]
 The API operation for Get Return Order Details
@@ -1804,7 +1818,7 @@ There is no body for this request.
             }
 
 
-### Return Order List [GET /v1/fulfillment/returnorder/list/{accountNumber}{?accountNumber,orderNumber,dateFrom,dateTo,status,page}]
+### Return Order List [GET /fulfillment/v1/returnorder/list/{accountNumber}{?accountNumber,orderNumber,dateFrom,dateTo,status,page}]
 The API operation for Get Return Order List\n\nThe optional parameters of the API operation are conditional. Following combinations of are allowed, when calling the API operation.
 |Input Parameters                                      |Returned Values|
 |-------------------------------------------------------|--------------|
@@ -1895,7 +1909,7 @@ The API operation for Get Return Order List\n\nThe optional parameters of the AP
                 "message": "Service Unavailable"
             }
 
-## Shipment [/v1/fulfillment/shipment/details/{accountNumber}{?accountNumber,orderNumber,dateFrom,dateTo,date,page}]
+## Shipment [/fulfillment/v1/shipment/details/{accountNumber}{?accountNumber,orderNumber,dateFrom,dateTo,date,page}]
 
 ### Shipment Details [GET]
 The API operation for Get Shipment Details.
@@ -2026,7 +2040,7 @@ There is no body for the request.
                 "message": "Service Unavailable"
             }
 
-## Stock [/v1/fulfillment/stock/{inventoryAccountNumber}/{itemId}/{?node}]
+## Stock [/fulfillment/v1/stock/{inventoryAccountNumber}/{itemId}/{?node}]
 
 ### Available Stock [GET]
 The API operation for Get Available Stock.
