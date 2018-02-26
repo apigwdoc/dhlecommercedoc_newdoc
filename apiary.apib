@@ -396,43 +396,44 @@ INTRODUCTIONTEXT2
 - *Get the latest list of items managed*: XXXXX
 ___
 **Available API calls:**
+
 ## Create Item
-### Create item [POST]
-The API operation for Creating a new Item (SKU) in the Fulfillment system. Use the Modify Item API to edit an existing item.
+
 
 ### What you should know about the Create Item API
-The Create Item API is used to create new items in the Product Catalog. An item (also referred to as a Stock Keeping Unit or SKU) is unique because of one or more characteristics (such as brand, size, color, model) and must be stored and accounted for separate from other items. The Product Catalog is also referred to as the Item Master. Each item created in the DHL Fulfillment system must have an ItemID which should be unique within the Customer account. The ItemID cannot be changed once an item has been created. Please use the [_UpdateItem_](updateitem) API if the item attributes need to be modified for an existing item in the catalog.
- ### Alternate methods  
+The Create Item API is used to add new items in the DHL Fulfillment Product Catalog. An item (also referred to as a Stock Keeping Unit or SKU) is unique because of one or more characteristics (such as brand, size, color, model) and must be stored and accounted for separately from the other items. 
+#### Important
+* Each item created in the DHL Fulfillment system must have an ItemID which should be unique within the Customer account
+*  ItemID cannot be changed once an item has been created.
+### Availability
+This operation is available across all Nodes.
+### Related APIs
+[_UpdateItem_](updateitem) API to modify the item properties for an existing item in the Product Catalog.
+[_GetItemList_](getitemlist) API to get a list of items based on request parameters.
+ ### Alternate methods to create an item
  Items can be created also using the following methods -
- * File upload  
-### Method  
-* POST (Synchronous)
-
-A typical CreateItem API request contains the below properties.
-> M/O/C suggest whether a datatype is Mandatory/Optional/Conditional  
-
-|Attributes                 |Type    |Length|Description                  |M/O/C|                   
+ * CSV File upload  
+ * From the Fulfillment portal
+## Request Parameters  
+A typical CreateItem API request contains the below elements:
+|Element Name|Type    |Length|Description                  |M/O/C|                   
 |-------------------------------|--------------|----------|---------------------------------|---------|
 |**accountNumber**|string|20|DHL assigned Customer Account number|M|
 |**ItemID**       |string|40|Unique identifier for the item. Must be in UPPER CASE only|M|
-|[**ItemDetails**](createitem/ItemDetails)  |object|NA|Defines Additional Attributes for an item|M|
-|[**InventoryParameters**](createitem/InventoryParameters)|object|NA|Defines Inventory related Attributes for an item like tag/serial controlled|O| 
-|[**Classification**](createitem/Classification)|object|NA|Used to classify products as dangerous goods or to define harmonised code|O| 
-|[**AdditionalProductReferenceIdentifiers**](createitem/AdditionalProductReferenceIdentifiers)|object|NA|Defines additional Product reference numbers|C|
-____
+|**ItemDetails**|object|NA|Type: [**ItemDetails**](#createitem-itemdetails) . Defines Additional Attributes for an item|M|
+|**IventoryParameters**|object|NA|Type: [**InventoryParameters**](#createitem-inventoryparameters). Defines Inventory related Attributes for an item like tag/serial controlled|O| 
+|**Classification**|object|NA|Type: [**Classification**](#createitem-classification). Used to classify products as dangerous goods or to define harmonised code|O| 
+|**AdditionalProductReferenceIdentifiers**|object|NA|Type: [**AdditionalProductReferenceIdentifiers**](#createitem-additionalproductreferenceidentifiers). Defines additional Product reference numbers|C|
+> M/O/C indicates whether a datatype/property is Mandatory/Optional/Conditional  
 ## Required properties
 The following properties are required at a minimum to create an item-
-
-|Attributes                 |Type    |Length|Description                  |M/O/C|   
+|Element Name|Type    |Length|Description                  |M/O/C|   
 |-------------------------------|--------------|----------|---------------------------------|---------|
 |**accountNumber**|string|20|DHL assigned customer account number|M|
 |**ItemID**       |string|40|Unique SKU number or product code in catalogue|M|
-|[**ItemDetails**](CreateItem/ItemDetails)  |object|NA|Defines Additional Attributes for an item|M|
-
-### CreateItem/ItemDetails    
-The properties listed below are part of the ItemDetails object.
-
-|Attributes                 |Type    |Max Length|Description                  |M/O/C|  
+|**ItemDetails**|object|NA|Type: [**ItemDetails**](#createitem-itemdetails)  . Defines Additional Attributes for an item|M|
+### `CreateItem` `ItemDetails`    
+|Element Name|Type    |Max Length|Description                  |M/O/C|  
 |-------------------------------|--------------|----------|---------------------------------|---------|
 |**ShortDescription**|string|140|Short Description of the Item/Product |M|
 |**LongDescription**|string|500|Long Description of the Item/Product |O|
@@ -453,50 +454,38 @@ The properties listed below are part of the ItemDetails object.
 |**IsInsert**|boolean|TBC|Flag to define if item is a marketing insert (e.g.: true/false)|M|
 |**GenderGroup**|string|TBC|Defines the Gender Group Attribute for the product, if any|O|
 |**GenderAge**|string|TBC|Defines the Gender Age Attribute for the product, if any|O|
-|[**Color**](CreateItem/ItemDetails/Color)|object|NA|Defines Color Related properties for an item|O|
-|[**Image**](CreateItem/ItemDetails/Image)|object|NA|Defines Image Related properties for an item|O|
-|[**UnitCost**](CreateItem/ItemDetails/UnitCost)|object|NA|Defines UnitCost Related properties for an item|O|
-|[**PhysicalInformation**](CreateItem/ItemDetails/PhysicalInformation)|object|NA|Defines Dimensions and Wieght of the item|O|
-
-
-#### **CreateItem/ItemDetails/Color**  
-
-|Attributes                 |Type    |Length|Description                  |M/O/C|  
+|**Color**|object|NA|Type: [**Color**](#createitem-itemdetails-color).Defines Color Related properties for an item|O|
+|**Image**|object|NA|Type: [**Image**](#createitem-itemdetails-image). Defines Image Related properties for an item|O|
+|**UnitCost**|object|NA|Type: [**UnitCost**](#createitem-itemdetails-unitcost). Defines UnitCost Related properties for an item|O|
+|**PhysicalInformation**|object|NA|Type: [**PhysicalInformation**](#createitem-itemdetails-physicalinformation). Defines Dimensions and Wieght of the item|O|
+____
+#### **`CreateItem` `ItemDetails` `Color`**  
+|Element Name|Type    |Length|Description                  |M/O/C|  
 |-------------------------------|--------------|----------|---------------------------------|---------|
 |**Code**|string|40|Unique code to identify the color|M|
 |**Name**|string|200|Description of the color|M|
-
-#### **CreateItem/ItemDetails/Image**
-
-|Attributes                 |Type    |Length|Description                  |M/O/C|  
+#### **`CreateItem` `ItemDetails` `Image`**
+|Element Name|Type    |Length|Description                  |M/O/C|  
 |-------------------------------|--------------|----------|---------------------------------|---------|
 |**Location**|string|255|Base URL location of the Image|M|
 |**Identifier**|string|200|Name of the filename|M|
 |**Label**|string|24|Label to identify Item|O|
-
-#### **CreateItem/ItemDetails/PhysicalInformation**
-The below properties are stored in the OMS for reference only and will NOT be sent down to the Warehouse management system (WMS). When an item is received in the warehouse for the first time, warehouse will cube and weigh the item and store the information in the WMS. This would be the physical information used for all billing activities related to Storage, Handling and Shipping.
-
-|Attributes                 |Type    |Length|Description                  |M/O/C|  
+#### **`CreateItem` `ItemDetails` `PhysicalInformation`**
+|Element Name|Type    |Length|Description                  |M/O/C|  
 |-------------------------------|--------------|----------|---------------------------------|---------|
 |**Height**|number|14,5|Defines the height of the product|O|
 |**Length**|number|14,5|Defines the Length of the product|O|
 |**Width**|number|14,5|Defines the Width of the product|O|
 |**Weight**|number|14,5|Defines the Weight of the product|O|
 |**WeightUnitOfMeasure**|number|40|Defines the WeightUnitOfMeasure of the product (e.g.: GRAM)|O|
-|**DimensionUnitOfMeasure**|number|40|Defines the height of the product (e.g.: CM)|O|
-
-#### **CreateItem/ItemDetails/UnitCost**
-
-|Attributes                |Type    |Length|Description                 |M/O/C|                   
+|**DimensionUnitOfMeasure**|number|40|Defines the height of the product (e.g.: CM)|O|  
+>The  properties `Color`, `Image` and `PhysicalInformation` are stored in the OMS for reference only and will NOT be sent down to the Warehouse management system (WMS). When an item is received in the warehouse for the first time, warehouse will cube (measure dimensions) and weigh the item and store the information in the WMS. This would be the physical information used for all billing activities related to Storage, Handling and Shipping.
+#### **`CreateItem` `ItemDetails` `UnitCost`**
+|Element Name |Type    |Length|Description                 |M/O/C|                   
 |-------------------------------|--------------|----------|---------------------------------|---------|
 |**Amount**|number|19,6| Price of the Unit|M|
 |**Currency**|string |3| Currency of the Amount. Valid ISO 4217 3-letter Currency code |O|
-
-
-
->### Considerations for Primary Item Attributes:  
->These attributes are a part of the ItemDetails in the CreateItem API call.      
+### Additional description for properties in Item Details
 >• **`IsSubstitutionAllowed`**:  
 If an item is out of stock at the time of a Sale Order creation, it can be substituted with another item. The substituted ItemID needs to be defined separately through the Item Relationships API.
 • **`IsTempSensitive`**:   
@@ -507,79 +496,90 @@ If an item is temperature sensitive, this may imply that the item requires to be
 Additional information can be printed on the packslip if required. This is configured in the system as default verbiage. When this flag is true, additional information provided here will be printed on the packslip.  Requires additional backend configuration before this field can be used.
 • **`GenderGroup & GenderAge`**:   
 Additional properties for Apparel brands. This is a customer specific feature. Please consult your CS manager if you require to use these properties.
-
-## Optional Properties
-
+## Optional properties
 |Attributes                 |Type     |Length|Description                 |M/O/C|                   
 |-------------------------------|--------------|----------|---------------------------------|---------|
-|[**InventoryParameters**](CreateItem/InventoryParameters)|object|NA|Defines Inventory related Attributes for an item like tag/serial controlled|O| 
-|[**Classification**](CreateItem/Classification)|object|NA|Used to classify products as dangerous goods or to define harmonised code|O| 
-|[**AdditionalProductReferenceIdentifiers**](CreateItem/AdditionalProductReferenceIdentifiers)|object|NA|Defines additional Product reference numbers|O|
-
-
-### **CreateItem/InventoryParameters**
+|**InventoryParameters**|object|NA|Type: [**InventoryParameters**](#createitem-inventoryparameters). Defines Inventory related Attributes for an item like tag/serial controlled|O| 
+|**Classification**|object|NA|Type: [**Classification**](#createitem-classification). Used to classify products as dangerous goods or to define harmonised code|O| 
+|**AdditionalProductReferenceIdentifiers**|object|NA|Type: [**AdditionalProductReferenceIdentifiers**](#createitem-additionalproductreferenceidentifiers). Defines additional Product reference numbers|O|
+### **`CreateItem` `InventoryParameters`**
 |Attributes                 |Type     |Length|Description                 |M/O/C|  
 |-------------------------------|--------------|----------|---------------------------------|---------|
 |**IsSerialTracked**|boolean|TBC|Flag to define if item is serial tracked |O| 
 |**OnhandSafetyFactorQuantity**|number|TBC| Level of inventory that the warehouse can’t fall below |O| 
 |**TagControlFlag**|boolean|TBC| Flag to turn on Lot control logic |O| 
-|**UseUPCForInventory**|boolean|TBC|Flag to tell the system to use the UPC item id|O|  
-
-
-### **CreateItem/Classification**
+|**UseUPCForInventory**|boolean|TBC|Flag to tell the system to use the UPC item id|O|
+#### Notes:  
+ * **`IsSerialTracked`**: 
+ This flag defines if an item is serial tracked or not. If the serial tracked flag is true, each unit of the item ID will be inbounded in the DHL system with a unique serial number and the shipped orders will have the serial number information in the GetShipmentAPI Call.  
+ * **`OnhandSafetyFactorQuantity`**:
+  This number defines the value below which an inventory should not fall in a warehouse. This can be used as a threshold for inventory.  
+ * **`TagControlFlag`**:
+  For certain itemIDs, if the customers wishes DHL to capture the lot/batch number while inbound and outbound, the flag for this property should be true. The inventory shall be stored in the system along with the lot number.  
+ * **`UseUPCForInventory`**:
+  Inventory for one or more itemIDs can be maintained against one single UPC. With this flag as true, the orders can be created with itemIDs and all inventory will be used from the inventory against UPC. This can be used for easy scanning and faster processing of the order & also in cases when a Global single product (eg. 123456789123) is maintained against many Local ItemIDs(eg. SKU_US, SKU_AU, SKU_HK, SKU_VN etc.).  
+### **`CreateItem` `Classification`**
 |Attributes                 |Type     |Length|Description                 |M/O/C|         
 |-------------------------------|--------------|----------|---------------------------------|---------|
 |**HarmonizedCode**|string|40|Defines the International Harmonised Code for the product|O|
 |**HazmatClass**|string|40|Defines the Hazmat Class for the product|O|
 |**Model**|string|40|Stores the model of the item|O|
-
-### **CreateItem/AdditionalProductReferenceIdentifiers**
+#### Notes:
+ * **`HarmonizedCode`**:   
+    Harmonized Code is an international classification code for products and can be defiled in this field if required to be used during processing of the order – following the format XXXX.XX.XXXX. Eg. 1111.11.1111  
+  * **`HazmatClass`**:   
+    If the item belongs to a specific Hazmat class, this value can be provided here. The acceptable values for Hazmat Class are 00 to 09.  
+### **`CreateItem` `AdditionalProductReferenceIdentifiers`**
 |Attributes                 |Type     |Length|Description                 |M/O/C|                  
 |-------------------------------|--------------|----------|---------------------------------|---------|
 |**ProductReference**|string|40| Additional product reference identifiers (e.g.: UPC, SHOPIFY)|M|
 |**Identifier**|string|100|Value of Additional Product ID|O|
-
-### Considerations for Additional Item Attributes  
-  **Classification**     
-> * **`HarmonizedCode`**:   
-   > Harmonized Code is an international classification code for products and can be defiled in this field if required to be used during processing of the order – following the format XXXX.XX.XXXX. Eg. 1111.11.1111  
-   >* **`HazmatClass`**:   
-    Hazmat Class can be defined using this field if a product is a dangerous good. The acceptable values for Hazmat Class are 00 to 09.  
-
- **Additional Product References**  
-> * **`ProductReference`**:
->  This field defines the Additional Product Referencesfor items created. These could be UPCs , market place ID and other references customers wish to provide to assist with the Market place integration or identify products with a single UPC.
-   For e.g.:
->>1. _UPC_: This is a unique barcode present on the physical product and can be associated with one or more  itemIDs. All inventory can be maintained under one UPC for these itemIDs & Operations can process these items with scanning the barcode making it more efficient.
->>2. _SHOPIFY_: This is used while integrating OMS with the Shopify store. Each item ID on the Shopify store has a unique shopify product ID which is associate with item ID in the DHL catalog which is crucial for inventory updates and order creation and updating on the Shopify store.  
-> * **`Identifier`**: This field is used to provide the value of the product reference mentioned in the Product Reference. Eg. Product Reference could be “UPC”, Identifier could be “123456789234”.  
-
- **InventoryParameters**   
-> * **`IsSerialTracked`**: 
-> This flag defines if an item is serial tracked or not. If the serial tracked flag is true, each unit of the item ID will be inbounded in the DHL system with a unique serial number and the shipped orders will have the serial number information in the GetShipmentAPI Call.  
-> * **`OnhandSafetyFactorQuantity`**:
->  This number defines the value below which an inventory should not fall in a warehouse. This can be used as a threshold for inventory.  
-> * **`TagControlFlag`**:
->  For certain itemIDs, if the customers wishes DHL to capture the lot/batch number while inbound and outbound, the flag for this property should be true. The inventory shall be stored in the system along with the lot number.  
-> * **`UseUPCForInventory`**:
->  Inventory for one or more itemIDs can be maintained against one single UPC. With this flag as true, the orders can be created with itemIDs and all inventory will be used from the inventory against UPC. This can be used for easy scanning and faster processing of the order & also in cases when a Global single product (eg. 123456789123) is maintained against many Local ItemIDs(eg. SKU_US, SKU_AU, SKU_HK, SKU_VN etc.).  
-
-## Sample Create Item Request:
-
-**End point (UAT)**:  https://api-qa.dhlecommerce.com/efulfillment/v1/item  
-**Method**: POST (Synchronous)
+#### Notes:
+ * **`ProductReference`**:
+  This element defines Additional Product References for the item. These could be UPC, EAN, JAN, Market place Product ID, Amazon FBA Product ID (ASIN) and/or other references that are provided to enable other functionalities such as a Market place integration or identifying products. Following values are accepted (case-sensitive) for `ProductReference`:
+   * UPC
+   *  SHOPIFY
+   * MAGENTO
+   * AMAZON
+   * EBAY
+   *  BIGCOMMERCE
+   *  DEMANDWARE
+   * SELLERCLOUD
+   * NETSUITE
+Multiple references can also be provided.
+>1. _UPC_: This is used to provide the barcode value present on the physical product. The UPC value can be associated with one or more  ItemIDs. This can be used for two purposes -
+ > * To provide scan-able barcodes while processing the item in the warehouse during storage and handling. Provide this value when the barcode on the physical product is different from the Item ID.
+ >  * To maintain inventory under UPCs. When you have the same item procured from multiple suppliers or sell the same item in different geographies using different Item IDs, UPC can be used to obtain a unified view of the item's inventory globally. In this case, all related Item IDs would have to be created using the same UPC product reference. Also, the `UseUPCForInventory` flag under `InventoryParameters` should be set to True. This allows DHL Fulfillment system to receive sale orders under multiple Item IDs however maintain inventory and fulfill the item using the UPC. The Item ID will always have zero inventory value and all available inventory will be shown under UPC.
+>2. _Marketplace Product ID_: This is used when you need to set up a connection with  Marketplace(s) or other eCommerce channel(s) which uses a Product identifier that's different from the DHL Item ID. For example, in the case of connection to a Shopify store, the Shopify product ID must be associated with the Item ID in the DHL catalog using a new `ProductReference` type with value 'Shopify'. This is required in order to identify the items in the sale order, update sale order and inventory status automatically in the Shopify store. Please refer to the Shopify-DHL connection documentation to know more about where you can find the Shopify Product ID.
  
+* **`Identifier`**: This field is used to provide the value of the identifier described in the Product Reference. For example,
+    ``` 
+    {
+        "ProductReference": "UPC",
+        "Identifier": "7622210707345"
+      },
+      {
+        "ProductReference": "SHOPIFY",
+        "Identifier": "103363645"
+      }
+## Endpoints
+|Environment                |Protocol     |Host|Resource Path|       
+|-------------------------------|--------------|----------|---------------------------------|---------|
+|**SANDBOX**|https|api-qa.dhlecommerce.com|/efulfillment/v1/item|
+|**PRODUCTION**|https|api.dhlecommerce.com|/efulfillment/v1/item|
+ ## Sample Request
 >**Header**:   
             Accept: application/json  
             Authorization: Bearer [token]  
+           Method:  POST (Synchronous)
 **Body**:  
 ```{
   "CreateItem": {
     "AccountNumber": "521400",
     "ItemID": "TESTPR1",
     "ItemDetails": {
-      "ShortDescription": "Test Product Reference",
-      "LongDescription": "Test Product Reference",
+      "ShortDescription": "Shreya Test Product Reference ",
+      "LongDescription": "Shreya Test Product Reference",
       "ProductCategory": "Apparel",
       "UnitOfMeasure": "EA",
       "CountryOfOrigin": "AU",
@@ -624,7 +624,13 @@ Additional properties for Apparel brands. This is a customer specific feature. P
   }
 }
 ```
-
+## Sample Response
+```
+{
+    "session": "Id-4a76935ad6127433e0aebb35",
+    "message": "Item created. Check DHL eCommerce Customer Fulfillment Portal for more details."
+} 
+```
 ## Response codes
 |Response Code               |Body     |                   
 |-------------------------------|--------------|
@@ -633,7 +639,6 @@ Additional properties for Apparel brands. This is a customer specific feature. P
 |**401**                 | "message": "Unauthorized Access - Invalid token or Authentication Header parameter"|
 |**429**                 |"message": "Too many requests in given amount of time"|
 |**503**                 |"message": "Service Unavailable"|
-
 
 + Request (application/json)
     
