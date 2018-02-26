@@ -15,8 +15,6 @@ IT_LEAD: Martin Borriss & Pavel Holy
 BUSINESS_LEAD: Frank Josefiak
 
 
-
-
 # (NEW) Global DHL eCommerce API
 Welcome at the global DHL eCommerce API. <br/><br/>
 To find out more about the logistic services we offer, please check out [DHL eCommerce Products](http://www.dhl.com/eCommerce). <br/><br/>
@@ -363,7 +361,7 @@ The Get All Users API call returns all user ids, which are stored in the particu
 The Fulfillment API provides you an interface for the order management operations.
 
 **API Authentication:** All API operations require `Access Token` to be passed in the Authorization Header for each request. The token type is an OAuth 2.0 Bearer token.<br/><br/> 
->**Note:** *[here](#reference/authentication) you can find more information how to to retrive the `Access Token`.* 
+>**Note:** *[here](#reference/authentication) you can 'find' more information how to to retrive the `Access Token`.* 
 
 **Access Token Lifecycle:** When you recieve an Access Token, it is valid for defined amount of time (5h).<br/><br/> 
 During this time you don't have to request new token per each request, but you can simply reuse the same token to access API resources, until the token expires.<br/><br/> 
@@ -398,10 +396,244 @@ INTRODUCTIONTEXT2
 - *Get the latest list of items managed*: XXXXX
 ___
 **Available API calls:**
-INTRODUCTIONTEXT2
-
+## Create Item
 ### Create item [POST]
 The API operation for Creating a new Item (SKU) in the Fulfillment system. Use the Modify Item API to edit an existing item.
+
+### What you should know about the Create Item API
+The Create Item API is used to create new items in the Product Catalog. An item (also referred to as a Stock Keeping Unit or SKU) is unique because of one or more characteristics (such as brand, size, color, model) and must be stored and accounted for separate from other items. The Product Catalog is also referred to as the Item Master. Each item created in the DHL Fulfillment system must have an ItemID which should be unique within the Customer account. The ItemID cannot be changed once an item has been created. Please use the [_UpdateItem_](updateitem) API if the item attributes need to be modified for an existing item in the catalog.
+ ### Alternate methods  
+ Items can be created also using the following methods -
+ * File upload  
+### Method  
+* POST (Synchronous)
+
+A typical CreateItem API request contains the below properties.
+> M/O/C suggest whether a datatype is Mandatory/Optional/Conditional  
+
+|Attributes                 |Type    |Length|Description                  |M/O/C|                   
+|-------------------------------|--------------|----------|---------------------------------|---------|
+|**accountNumber**|string|20|DHL assigned Customer Account number|M|
+|**ItemID**       |string|40|Unique identifier for the item. Must be in UPPER CASE only|M|
+|[**ItemDetails**](createitem/ItemDetails)  |object|NA|Defines Additional Attributes for an item|M|
+|[**InventoryParameters**](createitem/InventoryParameters)|object|NA|Defines Inventory related Attributes for an item like tag/serial controlled|O| 
+|[**Classification**](createitem/Classification)|object|NA|Used to classify products as dangerous goods or to define harmonised code|O| 
+|[**AdditionalProductReferenceIdentifiers**](createitem/AdditionalProductReferenceIdentifiers)|object|NA|Defines additional Product reference numbers|C|
+____
+## Required properties
+The following properties are required at a minimum to create an item-
+
+|Attributes                 |Type    |Length|Description                  |M/O/C|   
+|-------------------------------|--------------|----------|---------------------------------|---------|
+|**accountNumber**|string|20|DHL assigned customer account number|M|
+|**ItemID**       |string|40|Unique SKU number or product code in catalogue|M|
+|[**ItemDetails**](CreateItem/ItemDetails)  |object|NA|Defines Additional Attributes for an item|M|
+
+### CreateItem/ItemDetails    
+The properties listed below are part of the ItemDetails object.
+
+|Attributes                 |Type    |Max Length|Description                  |M/O/C|  
+|-------------------------------|--------------|----------|---------------------------------|---------|
+|**ShortDescription**|string|140|Short Description of the Item/Product |M|
+|**LongDescription**|string|500|Long Description of the Item/Product |O|
+|**UnitOfMeasure**  |string|40|Unit of Measure of the Item (eg. EA) |M|
+|**ProductCategory**|string|200|Product Category the item belongs to (eg. Apparel)|O|
+|**CountryOfOrigin**|string|2|ISO Country Code (2 digit) the product is manufactured at|O|
+|**IsReturnable**|boolean|NA|Defines whether a product can be returned (eg. true/false)|M|
+|**IsSubstitutionAllowed**|boolean|NA|Defines if the product can be substituted if it is out of stock(eg. true/false)|M|
+|**IsSubstitutionAutomatic**|boolean|NA|Defines if the product can be automatically  substituted if it is out of stock(eg. true/false)|M|
+|**IsFragile**|boolean|NA|Flag to define if the product is fragile. (e.g.: true/false). May have implications with storage, handling and shipment packaging in the warehouse.|O|
+|**IsModelItem**|boolean|NA|Flag to define if the product have variations (e.g.: true/false). Model items cannot be added to Purchase Order and Sale Order.|O|
+|**ReturnWindow**|number|5|Defines the number of days a product can be returned up to. Required when IsReturnable is true.|C|
+|**SizeCode**|string|40|Code to identify the size of the item|O|
+|**ItemStatus**|number|15|Defines if the item is Published or Held (Published - 3000 Held- 1000)|M|
+|**IsTempSensitive**|boolean|NA|Defines whether a product is temperature sensitive (e.g.: true/false)|O|
+|**AdditionalQC**|boolean|NA|Defines whether additional QC is required while processing the item (e.g.: true/false)|O|
+|**AdditionalPackslipVerbiage**|boolean|TBC|Defines whether additionl vebiage is required to be printed on packlip(eg. true/false)|O|
+|**IsInsert**|boolean|TBC|Flag to define if item is a marketing insert (e.g.: true/false)|M|
+|**GenderGroup**|string|TBC|Defines the Gender Group Attribute for the product, if any|O|
+|**GenderAge**|string|TBC|Defines the Gender Age Attribute for the product, if any|O|
+|[**Color**](CreateItem/ItemDetails/Color)|object|NA|Defines Color Related properties for an item|O|
+|[**Image**](CreateItem/ItemDetails/Image)|object|NA|Defines Image Related properties for an item|O|
+|[**UnitCost**](CreateItem/ItemDetails/UnitCost)|object|NA|Defines UnitCost Related properties for an item|O|
+|[**PhysicalInformation**](CreateItem/ItemDetails/PhysicalInformation)|object|NA|Defines Dimensions and Wieght of the item|O|
+
+
+#### **CreateItem/ItemDetails/Color**  
+
+|Attributes                 |Type    |Length|Description                  |M/O/C|  
+|-------------------------------|--------------|----------|---------------------------------|---------|
+|**Code**|string|40|Unique code to identify the color|M|
+|**Name**|string|200|Description of the color|M|
+
+#### **CreateItem/ItemDetails/Image**
+
+|Attributes                 |Type    |Length|Description                  |M/O/C|  
+|-------------------------------|--------------|----------|---------------------------------|---------|
+|**Location**|string|255|Base URL location of the Image|M|
+|**Identifier**|string|200|Name of the filename|M|
+|**Label**|string|24|Label to identify Item|O|
+
+#### **CreateItem/ItemDetails/PhysicalInformation**
+The below properties are stored in the OMS for reference only and will NOT be sent down to the Warehouse management system (WMS). When an item is received in the warehouse for the first time, warehouse will cube and weigh the item and store the information in the WMS. This would be the physical information used for all billing activities related to Storage, Handling and Shipping.
+
+|Attributes                 |Type    |Length|Description                  |M/O/C|  
+|-------------------------------|--------------|----------|---------------------------------|---------|
+|**Height**|number|14,5|Defines the height of the product|O|
+|**Length**|number|14,5|Defines the Length of the product|O|
+|**Width**|number|14,5|Defines the Width of the product|O|
+|**Weight**|number|14,5|Defines the Weight of the product|O|
+|**WeightUnitOfMeasure**|number|40|Defines the WeightUnitOfMeasure of the product (e.g.: GRAM)|O|
+|**DimensionUnitOfMeasure**|number|40|Defines the height of the product (e.g.: CM)|O|
+
+#### **CreateItem/ItemDetails/UnitCost**
+
+|Attributes                |Type    |Length|Description                 |M/O/C|                   
+|-------------------------------|--------------|----------|---------------------------------|---------|
+|**Amount**|number|19,6| Price of the Unit|M|
+|**Currency**|string |3| Currency of the Amount. Valid ISO 4217 3-letter Currency code |O|
+
+
+
+>### Considerations for Primary Item Attributes:  
+>These attributes are a part of the ItemDetails in the CreateItem API call.      
+>• **`IsSubstitutionAllowed`**:  
+If an item is out of stock at the time of a Sale Order creation, it can be substituted with another item. The substituted ItemID needs to be defined separately through the Item Relationships API.
+• **`IsTempSensitive`**:   
+If an item is temperature sensitive, this may imply that the item requires to be stored in non-ambient conditions, such as a cold room.  
+• **`AdditionalQC`**:  
+ This flag suggests if additional QC is required while handling the item during inbound. If it is true, Operations would follow customer specific special instructions while inbound of this item.  
+• **`AdditionalPackslipVerbiage`**:   
+Additional information can be printed on the packslip if required. This is configured in the system as default verbiage. When this flag is true, additional information provided here will be printed on the packslip.  Requires additional backend configuration before this field can be used.
+• **`GenderGroup & GenderAge`**:   
+Additional properties for Apparel brands. This is a customer specific feature. Please consult your CS manager if you require to use these properties.
+
+## Optional Properties
+
+|Attributes                 |Type     |Length|Description                 |M/O/C|                   
+|-------------------------------|--------------|----------|---------------------------------|---------|
+|[**InventoryParameters**](CreateItem/InventoryParameters)|object|NA|Defines Inventory related Attributes for an item like tag/serial controlled|O| 
+|[**Classification**](CreateItem/Classification)|object|NA|Used to classify products as dangerous goods or to define harmonised code|O| 
+|[**AdditionalProductReferenceIdentifiers**](CreateItem/AdditionalProductReferenceIdentifiers)|object|NA|Defines additional Product reference numbers|O|
+
+
+### **CreateItem/InventoryParameters**
+|Attributes                 |Type     |Length|Description                 |M/O/C|  
+|-------------------------------|--------------|----------|---------------------------------|---------|
+|**IsSerialTracked**|boolean|TBC|Flag to define if item is serial tracked |O| 
+|**OnhandSafetyFactorQuantity**|number|TBC| Level of inventory that the warehouse can’t fall below |O| 
+|**TagControlFlag**|boolean|TBC| Flag to turn on Lot control logic |O| 
+|**UseUPCForInventory**|boolean|TBC|Flag to tell the system to use the UPC item id|O|  
+
+
+### **CreateItem/Classification**
+|Attributes                 |Type     |Length|Description                 |M/O/C|         
+|-------------------------------|--------------|----------|---------------------------------|---------|
+|**HarmonizedCode**|string|40|Defines the International Harmonised Code for the product|O|
+|**HazmatClass**|string|40|Defines the Hazmat Class for the product|O|
+|**Model**|string|40|Stores the model of the item|O|
+
+### **CreateItem/AdditionalProductReferenceIdentifiers**
+|Attributes                 |Type     |Length|Description                 |M/O/C|                  
+|-------------------------------|--------------|----------|---------------------------------|---------|
+|**ProductReference**|string|40| Additional product reference identifiers (e.g.: UPC, SHOPIFY)|M|
+|**Identifier**|string|100|Value of Additional Product ID|O|
+
+### Considerations for Additional Item Attributes  
+  **Classification**     
+> * **`HarmonizedCode`**:   
+   > Harmonized Code is an international classification code for products and can be defiled in this field if required to be used during processing of the order – following the format XXXX.XX.XXXX. Eg. 1111.11.1111  
+   >* **`HazmatClass`**:   
+    Hazmat Class can be defined using this field if a product is a dangerous good. The acceptable values for Hazmat Class are 00 to 09.  
+
+ **Additional Product References**  
+> * **`ProductReference`**:
+>  This field defines the Additional Product Referencesfor items created. These could be UPCs , market place ID and other references customers wish to provide to assist with the Market place integration or identify products with a single UPC.
+   For e.g.:
+>>1. _UPC_: This is a unique barcode present on the physical product and can be associated with one or more  itemIDs. All inventory can be maintained under one UPC for these itemIDs & Operations can process these items with scanning the barcode making it more efficient.
+>>2. _SHOPIFY_: This is used while integrating OMS with the Shopify store. Each item ID on the Shopify store has a unique shopify product ID which is associate with item ID in the DHL catalog which is crucial for inventory updates and order creation and updating on the Shopify store.  
+> * **`Identifier`**: This field is used to provide the value of the product reference mentioned in the Product Reference. Eg. Product Reference could be “UPC”, Identifier could be “123456789234”.  
+
+ **InventoryParameters**   
+> * **`IsSerialTracked`**: 
+> This flag defines if an item is serial tracked or not. If the serial tracked flag is true, each unit of the item ID will be inbounded in the DHL system with a unique serial number and the shipped orders will have the serial number information in the GetShipmentAPI Call.  
+> * **`OnhandSafetyFactorQuantity`**:
+>  This number defines the value below which an inventory should not fall in a warehouse. This can be used as a threshold for inventory.  
+> * **`TagControlFlag`**:
+>  For certain itemIDs, if the customers wishes DHL to capture the lot/batch number while inbound and outbound, the flag for this property should be true. The inventory shall be stored in the system along with the lot number.  
+> * **`UseUPCForInventory`**:
+>  Inventory for one or more itemIDs can be maintained against one single UPC. With this flag as true, the orders can be created with itemIDs and all inventory will be used from the inventory against UPC. This can be used for easy scanning and faster processing of the order & also in cases when a Global single product (eg. 123456789123) is maintained against many Local ItemIDs(eg. SKU_US, SKU_AU, SKU_HK, SKU_VN etc.).  
+
+## Sample Create Item Request:
+
+**End point (UAT)**:  https://api-qa.dhlecommerce.com/efulfillment/v1/item  
+**Method**: POST (Synchronous)
+ 
+>**Header**:   
+            Accept: application/json  
+            Authorization: Bearer [token]  
+**Body**:  
+```{
+  "CreateItem": {
+    "AccountNumber": "521400",
+    "ItemID": "TESTPR1",
+    "ItemDetails": {
+      "ShortDescription": "Test Product Reference",
+      "LongDescription": "Test Product Reference",
+      "ProductCategory": "Apparel",
+      "UnitOfMeasure": "EA",
+      "CountryOfOrigin": "AU",
+      "Color": {
+        "Code": "Yellow",
+        "Name": "Yellow 12355"
+      },
+      "IsReturnable": true,
+      "IsSubstitutionAllowed": false,
+      "IsSubstitutionAutomatic": false,
+      "IsFragile": true,
+      "IsModelItem": true,
+      "ReturnWindow": 90,
+      "SizeCode": "string",
+      "ItemStatus": "3000",
+      "UnitCost": {
+        "Amount": 85,
+        "Currency": "AUD"
+      },
+      "IsInsert": false
+    },
+    "InventoryParameters": {
+      "IsSerialTracked": false,
+      "OnhandSafetyFactorQuantity": 10,
+      "TagControlFlag": true,
+      "UseUPCForInventory": false
+    },
+    "AdditionalProductReferenceIdentifiers": [
+      {
+        "ProductReference": "MAGENTO",
+        "Identifier": "TESTMG"
+      },
+      {
+        "ProductReference": "SHOPIFY",
+        "Identifier": "TESTSH"
+      },
+      {
+        "ProductReference": "UPC",
+        "Identifier": "1234567"
+      }
+    ]
+  }
+}
+```
+
+## Response codes
+|Response Code               |Body     |                   
+|-------------------------------|--------------|
+|**200**                 |"message": "Item created"|              
+|**400**                 |"message": "Bad Request - Invalid URI parameters or querystring"|
+|**401**                 | "message": "Unauthorized Access - Invalid token or Authentication Header parameter"|
+|**429**                 |"message": "Too many requests in given amount of time"|
+|**503**                 |"message": "Service Unavailable"|
+
 
 + Request (application/json)
     
