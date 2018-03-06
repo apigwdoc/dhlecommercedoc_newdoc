@@ -5,7 +5,7 @@ AUTHOR: DHL eCOMMERCE
 VERSION: 0.1
 NAME OF THE CALL: Global DHL eCommerce API
 SUB CALLS WITHIN: Shipping, Fulfillment
-TARGET RELEASE OR GOLIVE: 01.06.2017
+TARGET RELEASE OR GOLIVE: 09.03.2018
 TYP: External Webservice
 BELONGS TO API DOMAIN: Main DHL eCommerce Domain
 MINIMUM INPUT PARAMETERS: Too many to list here... see individual calls
@@ -13,7 +13,6 @@ MINIMUM OUTPUTS PARAMETERS: Too many to list here... see individual calls
 FINAL LINK: http://api.dhlecommerce.com
 IT_LEAD: Martin Borriss & Pavel Holy
 BUSINESS_LEAD: Frank Josefiak
-
 
 # (NEW) Global DHL eCommerce API
 Welcome at the global DHL eCommerce API. <br/><br/>
@@ -135,11 +134,17 @@ ___
 
 ## Help, Links & Support
 Coding against logistic APIs is not always fun - we know! To ensure you the best possible support, we developed a variety of options for you, to resolve any issues experienced. Underneath, we give you an overview on where you might find help for any possible question comming up on your side of the screen: 
-- *Products and services* offered by DHL eCommerce and where to get more information on if they are available at your location, what they offer you and your customers etc. via: http://www.dhl.com/eCommerce 
-- *Glossary & Logistic terms* can be confusing too - so get a good, searchable overview on all the specific terms we use, please check the consolidated Glossary of DHL eCommerce here: http://www.dhl.com/integration-glossary
-- *Frequently asked questions* on our API are listed on http://www.dhl.com/integration-faqs - so please check if other user might have had the same question as you before.
+- *Products and services* offered by DHL eCommerce and where to get more information on if they are available at your location, what they offer you and your customers etc. via: www.dhl.com/eCommerce 
+- *Glossary & Logistic terms* can be confusing too - so get a good, searchable overview on all the specific terms we use, please check the consolidated Glossary of DHL eCommerce here: www.dhl.com/integration-glossary
+- *Frequently asked questions* on our API are listed on www.dhl.com/integration-faqs - so please check if other user might have had the same question as you before.
 - *Integration Alternatives* might come into place if you identify integration requirements on your side that can not be sufficiently covered by our API. So you might experience extremely growing shipping volumes that make you favor more efficienct file based integrations. DHL eCommerce also offers webbased user interfaces to manage and process your orders and shipments as well as a variety of standard integrations into the most commonly used webshop systems. If you need more information on those alternatives, check out our integration page via: http://www.dhl.com/integration. Furthermore, if you are a customer exclusivily working out of the Asia-Pacific region or out of the US, you can also use our DHL eCommerce regional APIs: (Asia-Pacific) https://sandbox.dhlecommerce.asia/API/docs/v2/overview.html or for the (US) http://api.dhlglobalmail.com/docs/v2/. Please also bear in mind that from a mid to longterm perspective we will migrate both regional APIs into our global one.
 - *Contacting us* somehow requires you to get in touch with your regional sales organisation since they can forward you to your local integration expert knowing your requirements best. Alternatively, you can also get in touch with us via an email to integration@dhl.com. To get most efficient support here, please let us know your DHL eCommerce customer account number as well as your local distribution center. Please bear in mind that we can only support your DHL eCommerce related inquires here, so for DHL Express, DHL Paket or other DHL business units, please approach your local business partner first - thanks in advance!
+
+## News & Upcoming Endpoints
+Our DHL eCommerce API is continously improved and enriched with functionality. So, please expect new Endpoints to be added here frequently. Upcoming functionality will be as displayed below: 
+- **Tracking** enabling updating as well as calling of shippment tracking status. 
+- **Pickups** Creating, canceling and updating request towards us, to pickup your shipments.
+- **Rating** Calling for overall as well as detailed rate indications for individual shipments.
 
 # Group API Responses
 Eachtime you request our API you receive one of HTTP response code listed underneath.<br/><br/>
@@ -377,16 +382,7 @@ ___
 `Request Schemas`     | Request schemas description           | [download](https://api-qa.dhlecommerce.com/efulfillment/v1/schema/request)       |
 `Response Schemas`    | Response schemas description           | [download](https://api-qa.dhlecommerce.com/efulfillment/v1/schema/response)       |
 `API definition`      | API definition in swagger 2.0           | [download](https://api-qa.dhlecommerce.com/efulfillment/v1/swagger)       |
-___
-**Required Parameters:** 
 
-| Parameter        | Type           | Description  |Example  |
-| -----------------|----------------|--------------|---------|
-`XXX`        | XXX                  | XXX       |XXX        |
-
-___
-**Available API calls:**
-INTRODUCTIONTEXT2
 
 ## Item [/efulfillment/v1/item]
 
@@ -2425,51 +2421,103 @@ There is no body for the request.
             }
 
 # Group Shipping
-Our global shipping API provides you with everything you need to bring your orders to your customers - for your domestic- as well as for your international ones.<br/><br/>
-Starting with receiving shipping options via label creation and manifesting of your shipments to ensure a smooth handover to the creation of tracking updates - all within one API. 
-You can use Shipping API for the Order Manifest and Label generation (PDF, PNG and ZPL formats).<br/><br/>
+The API services beeing grouped under "shipping" will enable you to organize your shipping process end to end, starting with: 
+- the determination what shipping services to use with our **[Productfinder](#reference/productfinder)** endpoint (coming soon) 
+- Endpoints to gather the individual shipping costs (**[Rating](#reference/rating)**) and delivery times (**[EstimatedDelveryTime](#reference/EstimatedDeliveryTime)**) for a shipment (coming soon) 
+- our **[Label](#reference/label)** API to create an individual label for a domestic or internatioanl shipment,
+- a manifesting or **[Shipping Order Manifest](#reference/SOM)** (SOM) API to transfer your precreated labels in case you have high volumes and do not want to autocloseout each label directly,
+- our **[Pick Up](#reference/pickup)** endpoints (coming soon) enableing you to automatically let us pickup your shipments based on 
+- and our **[Tracking](#reference/tracking)** services (coming soon) enabling you to tell your customers on the latest delivery status.
+- Last but not least you can also use the **[Return](#reference/authentication)** calls (coming soon) to automatically create return lables for the case that your customers do want to return their order to you or to a predefined location.<br/><br/>
 
-
-**API Authentication:** All API operations require `Access Token` to be passed in the Authorization Header for each request. The token type is an OAuth 2.0 Bearer token.<br/><br/> 
->**Note:** *[here](#reference/authentication) you can find more information how to to retrive the `Access Token`.* 
-
-The Access Token is valid for 5h so it is not necessary to request the token for each request. Developers should implement the client application in a way that the token will be requested again only after it expires.
-
-To use the Shipping calls, you may use the following accounts and additional settings.
-
-
-|                        | Pickup account | Distribution center | Product  | Currency | JSON Request Sample | JSON Response Sample | 
-| -----------------------|----------------|---------------------|----------|----------|---------------------|-------------------------|
-|International Shipping  | 5317861        | HKHKG1              |    PPS   |          |    |       |
-|US Domestic             | 5330434        | USATL1              |    631   |          |  [download](https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/label_json_samples/US_dom_request.json)   |    [download](https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/label_json_samples/US_dom_response.json)     |
-|Thailand Domestic       | 5999999130     | THBKK1              |    PDO   |  THB     |      |       |
-|Chile Domestic          | 1000000012     | CLSAN1              |    PDO   |  CLP     |  [download](https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/label_json_samples/Chile_dom_request.json)    |   [download](https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/label_json_samples/Chile_dom_request.json)    |
-|Vietnam Domestic        | 5248767454     | VNSGN1              |    PDO   |          |      |       |
-
-
->**Note:** *The data provided in the table below is **only** for testing purposes. For the Production API calls there must be used your individual Pickup account number and Distribution center identifier.*
-
+Each endpoint is explained in more detail underneath:
+___
 
 ## Label [/shipping/v1/label{?format,labelSize,pageSize,layout}]
 
-Now that you know the shipping product you want to use, you can use the API calls described here to create the labels you need for this.<br/><br/>
-No matter if they are domestic labels, labels for your international shipments or if it is a postal or a commercial shipment - here you will receive them all.<br/><br/>
-Furthermore, by creation of the shipping label you will receive a unique tracking code for your customer that is bound to the label you created.<br/><br/>
+Our global shipping API provides you with the ability to create labels for your shipments and orders - for  domestic- as well as for your international shipments. You can customize the labels you want to receive to your individual requirements, raning from format to the size and number of labels per sheet.<br/><br/>
+
+###**Get started & Examplaric use cases:**
+Understanding the scope of an API better, underneath we give some examples on how the label call can be apllied: 
+- **Printing a label:** To print a label via the usage of this API, you first use your clientId and ClientSecret to obtain your token using the authentication API - see `API Authentication` **[here](#reference/authentication)**. Then, you use your token and prepare your valid JSON request document as described in the underneath schemas. Depending on the label you are requesting, the country you ship from and the items you are shipping, the required parameters will vary and some parameters might become conditional mandatory as described in the parameter section. Next, within the header parameters you are defining the label format, size and if you want to autocloseout the label direclty (initiating the Label to become trackable) or if you want to do this later by calling the shipping order manifest call.In case you provided all required information for the label to be created, the response message will contain your requested label in your requested format and you can print and apply it to your order. 
+- **Reprinting a label: **In case you want to print the same label that you printed before again (e.g. because you printer had issu es or because you need two labels), ou
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- **Creation of a return label**
+
+###**Prerequisits & Requirements:** 
+- Creation of a shipping label requires you to have an `Access Token` to be passed in the Authorization Header for each request. The token type is an OAuth 2.0 Bearer token. **[Here](#reference/authentication)** you can find more information on how to to retrive and utilize the `Access Token`.
+- To use the label API operationally in production, you need to have an active customer account with DHL eCommerce. Testing the sandbox environment is possible also without beeing a customer of DHL eCommerce. To test our shipping API calls, you may use the following test accounts and setting:
+    |  Test Case             | Pickup account | Distribution center | Product  | Currency | 
+    | -----------------------|----------------|---------------------|----------|----------|
+    |International Shipping  | 5317861        | HKHKG1              |    PPS   |          |
+    |US Domestic             | 5330434        | USATL1              |    631   |          |
+    |Thailand Domestic       | 5999999130     | THBKK1              |    PDO   |  THB     |
+    |Chile Domestic          | 1000000012     | CLSAN1              |    PDO   |  CLP     |
+    |Vietnam Domestic        | 5248767454     | VNSGN1              |    PDO   |          |
+    **Note:** *The data provided in the table above is **only** for testing purposes. For the production API calls you must use your correct customer account information.*
+- To start using the label service, either use the pre build functionality to code against the API via your browser (**[here](#reference/createlabel)**), or alternatively use our schema descriptions for requests and responses as they available for download underneath:
+    | Schemas to download | Description    | URL Link  |
+    | --------------------|----------------|-----------|
+    `Label Request 1`     | Request schema US domestic |    [download](https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/label_json_samples/US_dom_request.json)
+    `Label Response 1`    | Response schema US domestic|    [download](https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/label_json_samples/US_dom_response.json)
+    `Label Request 2`     | Request schema Chile domestic |    [download](https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/label_json_samples/Chile_dom_request.json)
+    `Label Response 2`    | Response schema Chile domestic|    [download](https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/label_json_samples/Chile_dom_response.json)
 
 
 ### Create Label [POST]
 
-Purpose of this service is to generate labels for single mail item only (single package object).<br/><br/>
-The benefit of this service is that it is synchronous and returns label contents directly in the response, so it is no necessity to download the labels afterwards.<br/><br/>
 
+
+### Header request parameters  
+A typical API request includes the following parameters you have to provide via the http header:
+|Parameter|Type    |Length|Description   |Example               |M/O/C|                   
+|------------|--------|------|--------------|----------------------|-----|
+|**format**|string|3|Mandatory parameter for the format of your file format. Either PNG,ZPL or PDF|PDF|M|
+|**labelSize**|string|3|Define the size of the label itself. Can be 4x6 or 4x4|4x4|M|
+|**pageSize**|string|None|Size of the page in case you use the PDF format. Can be A4, 400x600 or 400x600|A4|M only for PDFs|
+|**layout**|string|None|Conditionaly mandatory, only for PDF format. Defines way how single labels are layouted on the PDF page. In case of pageSize=A4 it might be 4x1 or 1x1. Otherwise 1x1 is the only option.|4x1|M only for PDFs|
+|**autoClouse**|string|None|To request auto close-out you have to provide this parameter with value = 1 |0|M|
+
+
+### Body Request parameters
+The following properties are required at a minimum to create an item-
+|Element Name|Type    |Length|Description                  |M/O/C|   
+|-------------------------------|--------------|----------|---------------------------------|---------|
+|**accountNumber**|string|20|DHL assigned customer account number|M|
+
+### Availability & environments
+Label creation works from all regions and for all nodes within the sandbox environment as well as within the production environment. Enpoints to be called are: 
+    * **Sandbox:** https://api-qa.dhl.com
+    * **Production:** 
+
+
+### Related APIs
+[_UpdateItem_](updateitem) API to modify the item properties for an existing item in the Product Catalog.
+[_GetItemList_](getitemlist) API to get a list of items based on request parameters.
+
+### Alternative methods to create a label
+ Labels can be created also using the following methods:
+ * Creation of labels using the **EDI** process based on that you build labels yourself (only recommnded for highest volumes)
+ * Printing single Labels via the regional **Shipping portals** that can be found here: www.dhl.com/Portals 
+ * Installation of one of our **plugins, extensions or addons** in case you use a webshop like Magento, Shopify or WooCommerce from here: www.dhl.com/3pvs 
 ___
-
-Recommended sequence for the Label service call is following:
-        
-1. Use clientId to obtain token using the authentication API - see `API Authentication` description above.
-2. Prepare valid JSON request document per schema. Use data above depending on your use-case.
-3. Call Sandbox API. The response message will contain information form the request; additionally it may contain a tracking number (depending on product) and base64-encoded label.
-
 
 + Parameters
     + format: `PNG` (enum[string], required) - Mandatory parameter to define file format. One of PNG|ZPL|PDF
@@ -2796,7 +2844,6 @@ Recommended sequence for the Label service call is following:
             }
 
     + Attributes (ErrResponseFormatError)
-    
 
 
 ## Order Manifest [/shipping/v1/order/manifest]
