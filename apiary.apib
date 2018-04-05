@@ -19,7 +19,7 @@ Welcome at the global DHL eCommerce API. <br/><br/>
 To find out more about the logistic services we offer, please check out [DHL eCommerce Products](http://www.dhl.com/eCommerce). <br/><br/>
 To [Sign up](#introduction/access-&-sign-up) for becoming a DHL eCommerce API consumer and receive your credentials, please contact us via: [integration@dhl.com](mailto:Integration@dhl.com). 
 Ideally provide your DHL eCommerce customer account number.<br/><br/>
-You can contact us [here](#introduction/access-&-sign-up) for more details.<br/><br/> 
+You can contact us [here](#introduction/access-&-sign-up) for more details. <br/><br/> 
 
 To find out more about **alternative integration channels**, as for example our file-based EDI integrations for high volume data exchange or the multiple third party solutions, we offer towards typical ERP systems, Webshop systems, etc,. please check out our [global integration website](http://www.dhl.com/integration).
 ___
@@ -361,7 +361,6 @@ The Get All Users API call returns all user ids, which are stored in the particu
                 }
             ]
 
-
 # Group Fulfillment
 The Fulfillment API provides you an interface for the order management operations.
 
@@ -391,11 +390,9 @@ ___
 - *Change parameters within a selected item*: XXXXX
 - *Get the latest list of items managed*: XXXXX
 ___
-**Available API calls:**
+**Available API calls:** [here](#reference/fulfillment/item/related-apis)
 
-## Create Item
-
-
+### Create Item [GET /efulfillment/v1/item/create]
 ### What you should know about the Create Item API
 The Create Item API is used to add new items in the DHL Fulfillment Product Catalog. An item (also referred to as a Stock Keeping Unit or SKU) is unique because of one or more characteristics (such as brand, size, color, model) and must be stored and accounted for separately from the other items. 
 #### Important
@@ -410,14 +407,15 @@ This operation is available across all Nodes.
  Items can be created also using the following methods -
  * CSV File upload  
  * From the Fulfillment portal
+
 ## Request Parameters  
 A typical CreateItem API request contains the below elements:
 |Element Name|Type    |Length|Description                  |M/O/C|                   
 |-------------------------------|--------------|----------|---------------------------------|---------|
 |**accountNumber**|string|20|DHL assigned Customer Account number|M|
 |**ItemID**       |string|40|Unique identifier for the item. Must be in UPPER CASE only|M|
-|**ItemDetails**|object|NA|Type: [**ItemDetails**](#createitem-itemdetails) . Defines Additional Attributes for an item|M|
-|**IventoryParameters**|object|NA|Type: [**InventoryParameters**](#createitem-inventoryparameters). Defines Inventory related Attributes for an item like tag/serial controlled|O| 
+|**ItemDetails**|object|NA|Type: [**ItemDetails**](#reference/fulfillment/item/create-item/required-properties) . Defines Additional Attributes for an item|M|
+|**IventoryParameters**|object|NA|Type: [**InventoryParameters**](#createitem-inventoryparameters) Defines Inventory related Attributes for an item like tag/serial controlled|O| 
 |**Classification**|object|NA|Type: [**Classification**](#createitem-classification). Used to classify products as dangerous goods or to define harmonised code|O| 
 |**AdditionalProductReferenceIdentifiers**|object|NA|Type: [**AdditionalProductReferenceIdentifiers**](#createitem-additionalproductreferenceidentifiers). Defines additional Product reference numbers|C|
 > M/O/C indicates whether a datatype/property is Mandatory/Optional/Conditional  
@@ -428,6 +426,8 @@ The following properties are required at a minimum to create an item-
 |**accountNumber**|string|20|DHL assigned customer account number|M|
 |**ItemID**       |string|40|Unique SKU number or product code in catalogue|M|
 |**ItemDetails**|object|NA|Type: [**ItemDetails**](#createitem-itemdetails)  . Defines Additional Attributes for an item|M|
+
+#### TableX
 ### `CreateItem` `ItemDetails`    
 |Element Name|Type    |Max Length|Description                  |M/O/C|  
 |-------------------------------|--------------|----------|---------------------------------|---------|
@@ -460,6 +460,7 @@ ____
 |-------------------------------|--------------|----------|---------------------------------|---------|
 |**Code**|string|40|Unique code to identify the color|M|
 |**Name**|string|200|Description of the color|M|
+
 #### **`CreateItem` `ItemDetails` `Image`**
 |Element Name|Type    |Length|Description                  |M/O/C|  
 |-------------------------------|--------------|----------|---------------------------------|---------|
@@ -489,9 +490,10 @@ If an item is temperature sensitive, this may imply that the item requires to be
 • **`AdditionalQC`**:  
  This flag suggests if additional QC is required while handling the item during inbound. If it is true, Operations would follow customer specific special instructions while inbound of this item.  
 • **`AdditionalPackslipVerbiage`**:   
-Additional information can be printed on the packslip if required. This is configured in the system as default verbiage. When this flag is true, additional information provided here will be printed on the packslip.  Requires additional backend configuration before this field can be used.
+Additional information can be printed on the packslip if required. This is configured in the system as default verbiage. When this flag is true, additional information provided here will be printed on the packslip.  Requires additional backend configuration before this field can be used.  
 • **`GenderGroup & GenderAge`**:   
 Additional properties for Apparel brands. This is a customer specific feature. Please consult your CS manager if you require to use these properties.
+
 ## Optional properties
 |Attributes                 |Type     |Length|Description                 |M/O/C|                   
 |-------------------------------|--------------|----------|---------------------------------|---------|
@@ -499,6 +501,7 @@ Additional properties for Apparel brands. This is a customer specific feature. P
 |**Classification**|object|NA|Type: [**Classification**](#createitem-classification). Used to classify products as dangerous goods or to define harmonised code|O| 
 |**AdditionalProductReferenceIdentifiers**|object|NA|Type: [**AdditionalProductReferenceIdentifiers**](#createitem-additionalproductreferenceidentifiers). Defines additional Product reference numbers|O|
 ### **`CreateItem` `InventoryParameters`**
+
 |Attributes                 |Type     |Length|Description                 |M/O/C|  
 |-------------------------------|--------------|----------|---------------------------------|---------|
 |**IsSerialTracked**|boolean|TBC|Flag to define if item is serial tracked |O| 
@@ -506,14 +509,14 @@ Additional properties for Apparel brands. This is a customer specific feature. P
 |**TagControlFlag**|boolean|TBC| Flag to turn on Lot control logic |O| 
 |**UseUPCForInventory**|boolean|TBC|Flag to tell the system to use the UPC item id|O|
 #### Notes:  
- * **`IsSerialTracked`**: 
- This flag defines if an item is serial tracked or not. If the serial tracked flag is true, each unit of the item ID will be inbounded in the DHL system with a unique serial number and the shipped orders will have the serial number information in the GetShipmentAPI Call.  
- * **`OnhandSafetyFactorQuantity`**:
-  This number defines the value below which an inventory should not fall in a warehouse. This can be used as a threshold for inventory.  
- * **`TagControlFlag`**:
-  For certain itemIDs, if the customers wishes DHL to capture the lot/batch number while inbound and outbound, the flag for this property should be true. The inventory shall be stored in the system along with the lot number.  
- * **`UseUPCForInventory`**:
-  Inventory for one or more itemIDs can be maintained against one single UPC. With this flag as true, the orders can be created with itemIDs and all inventory will be used from the inventory against UPC. This can be used for easy scanning and faster processing of the order & also in cases when a Global single product (eg. 123456789123) is maintained against many Local ItemIDs(eg. SKU_US, SKU_AU, SKU_HK, SKU_VN etc.).  
+ > • **`IsSerialTracked`**:   
+This flag defines if an item is serial tracked or not. If the serial tracked flag is true, each unit of the item ID will be inbounded in the DHL system with a unique serial number and the shipped orders will have the serial number information in the GetShipmentAPI Call.  
+• **`OnhandSafetyFactorQuantity`**:  
+This number defines the value below which an inventory should not fall in a warehouse. This can be used as a threshold for inventory.  
+• **`TagControlFlag`**:  
+For certain itemIDs, if the customers wishes DHL to capture the lot/batch number while inbound and outbound, the flag for this property should be true. The inventory shall be stored in the system along with the lot number.  
+• **`UseUPCForInventory`**:  
+Inventory for one or more itemIDs can be maintained against one single UPC. With this flag as true, the orders can be created with itemIDs and all inventory will be used from the inventory against UPC. This can be used for easy scanning and faster processing of the order & also in cases when a Global single product (eg. 123456789123) is maintained against many Local ItemIDs(eg. SKU_US, SKU_AU, SKU_HK, SKU_VN etc.).  
 ### **`CreateItem` `Classification`**
 |Attributes                 |Type     |Length|Description                 |M/O/C|         
 |-------------------------------|--------------|----------|---------------------------------|---------|
@@ -2432,38 +2435,32 @@ The API services beeing grouped under "shipping" will enable you to organize you
 
 Each endpoint is explained in more detail underneath:
 ___
+## Label API [/shipping/v1/label{?format,labelSize,pageSize,layout}]
+Our global shipping API provides you with the ability to create labels for your shipments and orders - for  domestic- as well as for your international shipments. You can customize the labels you want to receive to your individual requirements, raning from format to the size and number of labels per sheet.
 
-## Label [/shipping/v1/label{?format,labelSize,pageSize,layout}]
+### Create Label [POST]
+The Api operation to create a standard label [POST].
+### Create Return Label [POST]
+The Api operation to create a label you can create for your customers to return shipments back to you. [POST]
+### Re-Create Label [GET]
+The Api operation to create a label, that you requested before (same tracking number without manifesting the shipment again). [GET]
 
-Our global shipping API provides you with the ability to create labels for your shipments and orders - for  domestic- as well as for your international shipments. You can customize the labels you want to receive to your individual requirements, raning from format to the size and number of labels per sheet.<br/><br/>
+### **Availability & environments**
+Label creation works from all regions globally, for all nodes and for every DHL eCommerce Customer on the sandbox environment as well as within the production environment. Addressable environments are:
+|Environment| Link             | Availability              | 
+|-----------|---------------------------|-----------------|
+Sandbox    | https://api-qa.dhl.com | Yes (With limitations)|
+Production | https://api.dhl.com| Yes (Fully)|
 
-###**Get started & Examplaric use cases:**
-Understanding the scope of an API better, underneath we give some examples on how the label call can be apllied: 
+### **Get started & Examplaric use cases:**
+Understanding the scope of this API better, underneath we give some examples on how the label call can be apllied: 
 - **Printing a label:** To print a label via the usage of this API, you first use your clientId and ClientSecret to obtain your token using the authentication API - see `API Authentication` **[here](#reference/authentication)**. Then, you use your token and prepare your valid JSON request document as described in the underneath schemas. Depending on the label you are requesting, the country you ship from and the items you are shipping, the required parameters will vary and some parameters might become conditional mandatory as described in the parameter section. Next, within the header parameters you are defining the label format, size and if you want to autocloseout the label direclty (initiating the Label to become trackable) or if you want to do this later by calling the shipping order manifest call.In case you provided all required information for the label to be created, the response message will contain your requested label in your requested format and you can print and apply it to your order. 
-- **Reprinting a label: **In case you want to print the same label that you printed before again (e.g. because you printer had issu es or because you need two labels), ou
+- **Reprinting a label:** In case you want to print the same label that you printed before again (e.g. because you printer had issues or because you need two labels), you have different options. In case you are locally stored the label you created, you can just print the same label again, but in case you did not store it, just call the API function of "reprint label" to create the same label again without having to manifest the information twice.
+- **Creation of a return label:** Imagine you have a customer that wants to return an order/shipment to you - how can you create a label for this shipment? Easily by calling the return label API. Here, printing one of your standard labels will not work since the sender information would not be correct. Just call the api for creating a return label and provide the outcome of this call (the label as png or pdf) to your customer to return your items to you.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-- **Creation of a return label**
-
-###**Prerequisits & Requirements:** 
+### **Prerequisits & Requirements:**
 - Creation of a shipping label requires you to have an `Access Token` to be passed in the Authorization Header for each request. The token type is an OAuth 2.0 Bearer token. **[Here](#reference/authentication)** you can find more information on how to to retrive and utilize the `Access Token`.
-- To use the label API operationally in production, you need to have an active customer account with DHL eCommerce. Testing the sandbox environment is possible also without beeing a customer of DHL eCommerce. To test our shipping API calls, you may use the following test accounts and setting:
+- To use any of the label APIs operationally in production, you need to have an active customer account with DHL eCommerce. Testing the sandbox environment is possible also without beeing a customer of DHL eCommerce. To test our shipping API calls, you may use the following test accounts and setting:
     |  Test Case             | Pickup account | Distribution center | Product  | Currency | 
     | -----------------------|----------------|---------------------|----------|----------|
     |International Shipping  | 5317861        | HKHKG1              |    PPS   |          |
@@ -2480,12 +2477,7 @@ Understanding the scope of an API better, underneath we give some examples on ho
     `Label Request 2`     | Request schema Chile domestic |    [download](https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/label_json_samples/Chile_dom_request.json)
     `Label Response 2`    | Response schema Chile domestic|    [download](https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/label_json_samples/Chile_dom_response.json)
 
-
-### Create Label [POST]
-
-
-
-### Header request parameters  
+### **Header request parameters:**
 A typical API request includes the following parameters you have to provide via the http header:
 |Parameter|Type    |Length|Description   |Example               |M/O/C|                   
 |------------|--------|------|--------------|----------------------|-----|
@@ -2495,24 +2487,17 @@ A typical API request includes the following parameters you have to provide via 
 |**layout**|string|None|Conditionaly mandatory, only for PDF format. Defines way how single labels are layouted on the PDF page. In case of pageSize=A4 it might be 4x1 or 1x1. Otherwise 1x1 is the only option.|4x1|M only for PDFs|
 |**autoClouse**|string|None|To request auto close-out you have to provide this parameter with value = 1 |0|M|
 
-
-### Body Request parameters
+### **Body request parameters:**
 The following properties are required at a minimum to create an item-
 |Element Name|Type    |Length|Description                  |M/O/C|   
 |-------------------------------|--------------|----------|---------------------------------|---------|
 |**accountNumber**|string|20|DHL assigned customer account number|M|
 
-### Availability & environments
-Label creation works from all regions and for all nodes within the sandbox environment as well as within the production environment. Enpoints to be called are: 
-    * **Sandbox:** https://api-qa.dhl.com
-    * **Production:** 
+### **Related APIs:**
+ * [_SOM_](updateitem) API to modify the item properties for an existing item in the Product Catalog.
+ * [_GetItemList_](getitemlist) API to get a list of items based on request parameters.
 
-
-### Related APIs
-[_UpdateItem_](updateitem) API to modify the item properties for an existing item in the Product Catalog.
-[_GetItemList_](getitemlist) API to get a list of items based on request parameters.
-
-### Alternative methods to create a label
+### **Alternative methods to create labels:**
  Labels can be created also using the following methods:
  * Creation of labels using the **EDI** process based on that you build labels yourself (only recommnded for highest volumes)
  * Printing single Labels via the regional **Shipping portals** that can be found here: www.dhl.com/Portals 
@@ -2846,7 +2831,7 @@ ___
     + Attributes (ErrResponseFormatError)
 
 
-## Order Manifest [/shipping/v1/order/manifest]
+## Shipping Order Manifest API [/shipping/v1/order/manifest]
 **Manifesting** (sometimes refered to as *Close-out*) describes the process of transmitting your final shipments to us before the physical transfer of the shipments.<br/><br/>
 Within this process, a document (**the Manifest**) is beeing created sumarizing all the to be shipped items, their total weight as well as associated information on your account.<br/><br/>
 The created document also includes your signature and a barcode. During drop-off or pick-up, this document is scanned by us.<br/><br/>
