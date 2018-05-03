@@ -2477,21 +2477,86 @@ Understanding the scope of this API better, underneath we give some examples on 
     `Label Request 2`     | Request schema Chile domestic |    [download](https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/label_json_samples/Chile_dom_request.json)
     `Label Response 2`    | Response schema Chile domestic|    [download](https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/label_json_samples/Chile_dom_response.json)
 
-### **Header request parameters:**
-A typical API request includes the following parameters you have to provide via the http header:
+### **URL request parameters:**
+A typical API label request includes the following parameters you have to provide via the URL:
 |Parameter|Type    |Length|Description   |Example               |M/O/C|                   
 |------------|--------|------|--------------|----------------------|-----|
-|**format**|string|3|Mandatory parameter for the format of your file format. Either PNG,ZPL or PDF|PDF|M|
-|**labelSize**|string|3|Define the size of the label itself. Can be 4x6 or 4x4|4x4|M|
-|**pageSize**|string|None|Size of the page in case you use the PDF format. Can be A4, 400x600 or 400x600|A4|M only for PDFs|
-|**layout**|string|None|Conditionaly mandatory, only for PDF format. Defines way how single labels are layouted on the PDF page. In case of pageSize=A4 it might be 4x1 or 1x1. Otherwise 1x1 is the only option.|4x1|M only for PDFs|
-|**autoClouse**|string|None|To request auto close-out you have to provide this parameter with value = 1 |0|M|
+|**format**|string|3|Mandatory parameter for the format of your file format. Either PNG,ZPL or PDF. Default:**PDF** |PDF|M|
+|**labelSize**|string|3|Define the size of the label itself. Can be 4x6 or 4x4. Default:**4x6**|4x4|M|
+|**pageSize**|string|None|Size of the page in case you use the PDF format. Can be A4, 400x600 or 400x600. Default:**A4**|A4|M only for PDFs|
+|**layout**|string|None|Conditionaly mandatory, only for PDF format. Defines way how single labels are layouted on the PDF page. In case of pageSize=A4 it might be 4x1 or 1x1. Otherwise 1x1 is the only option. Default:**1x1**|4x1|M only for PDFs|
+|**autoClouse**|string|None|To request auto close-out you have to provide this parameter with value = 1. Default:**1** |0|M|
+
+### **Header request parameters:**
+A typical API label request includes the following parameters you have to provide via the http header:
+|Parameter|Type    |Description   |Example               |M/O/C|                   
+|------------|--------|--------------|----------------------|-----|
+|**Content-Type**|string|application/json. Default:**None** |application/json|M|
+|**Accept**|string|application/json. Default:**None**|application/json|M|
+|**Authorization**|string|application/json [place OAuth access token here, without brackets]. Default:**None**|Bearer YOURINDIVIDUALTOKENRECEIVEDFROMOAUTH|M|
 
 ### **Body request parameters:**
 The following properties are required at a minimum to create an item-
-|Element Name|Type    |Length|Description                  |M/O/C|   
-|-------------------------------|--------------|----------|---------------------------------|---------|
-|**accountNumber**|string|20|DHL assigned customer account number|M|
+|Element Name|Type    |Length|Description & Defaults        |Example           |M/O/C|   
+|-------------------------------|--------------|-----|-----|---------------------------------|---------|
+|-------------------------------|--------------|-----|-----|---------------------------------|---------|
+|**Shipments**|array|-|The array consolidating all the different shipments you want to create labels for.|NA|M|
+|**pickupAccount**|numerical|10|DHL assigned customer pickup account number - please not that depending on the number of pickup locations served, you might have multiple pickup locations and therefore also IDs. **Defaults:** None|5317861|M|
+|**distributionCenter**|string|6|The distribution center you want to distribute your items through. In some cases especially for large merchants with multiple locations in multiple countries, the selection of the most suitable distribution center can be done here via providing the short code of your requested distribution centre. **Defaults:** None|HKHKG1|M|
+|**consignmentNumber**|string|20|Customer defined number for identifying the consignment (i.e. a consolidation of parcels. **Defaults:** None|uTZFu-Rocks12345|O|
+
+|**packages**|array|-|The number of packages being summarized under one shipment / v1 of the API did only support one package per call by the label service.|NA|M|
+|**consigneeAddress**|array|-|Address of your customer where your shipment is supposed to be delivered to. **Defaults:** None|NA|M|
+|**name**|string|10|Name of the recipient of your shipment with full name information|Dr. Frank Josefiak|M|
+|**companyName**|string|15|Name of the recipients company |AntikRaum - Möbelrestaurierungen|O|
+|**phone**|string|15|Phone number with the required local prefix of the recipient of the shipment - With some countries and products required either by the local customs authorities or by the delivery company in case of e.g. cash on delivery services |+49 123-4567890|C|
+|**email**|string|20|Email address of the recipient - also required in some countries for customs clearance |Integration@dhl.com|C|
+|**idNumber**|string|30|ID Number of the recipient -  eg. required for some shipping product importing into India or other countries |IDT-DPDHL123456|C|
+|**idType**|string|30|ID Type of the ID the recipient provided. |National Passport ID |C|
+|**address1**|string|30|Line 1 of the consignee's street address or delivery location. |Woerthstrasse 64|M|
+|**address2**|string|30|Line 1 of the consignee's street address or delivery location.|Backyard - Access to the company AntikRaum|O|
+|**address3**|string|20|Line 1 of the consignee's street address or delivery location - typically used for addresses to designate province, district, or neighborhood|Yellow Door on the right side|O|
+|**city**|string|20|The city of the recipients address. |Bonn|M|
+|**postalCode**|string|20|The specific ZIP or postal code for the address of your recipient.|53177|M|
+|**state**|string|10|The state but also region, communa, section, province or territory of the recipient - in some countries mandatory.|NRW|C|
+|**country**|string|2|ISO2 (2 digits) Country code of the country you want to ship to - required for international shipments. |DE|C|
+
+|**packageDetails**|array|-|Details to be provided per package for customs clearance, product features, etc. |NA|M|
+|**billingRef1**|string|30|String of characters that can be used to aggregate billing data (may not be unique per parcel). BillingRef1 is also referred to as Reference|Reference: As advised in Bill: 123331223 - ID12|O|
+|**billingRef2**|string|30|Secondary string of characters that can be used to aggregate billing data (may not be unique per parcel). BillingRef2 is also referred to as Batch.|Batch 122322|O|
+|**packageDesc**|string|60|Description of the contents of the package (See reference for general categories)|Collection of finest art furniture parts for restoration businesses.|C|
+|**packageId**|string|14|Unique reference ID for shipment; also referred to as Customer Confirmation Number.|uTZFu-1234567|M|
+|**currency**|string|3|DIN-ISO 3 letter currency code|EUR|M|
+|**codAmount**|number|20|Amount to collect upon delivery of goods|250,00|C|
+|**insuredValue**|number|20|Total insured value of the package|250,00|C|
+|**declaredValue**|number|20|Total declared value for the package. While not mandatory, best practice is to provide if available.|245,00|C|
+|**dutiesPaid**|enum|3|Indicates whether duties and taxes for the shipment are paid by the shipper - DDP (Delivered Duties Paid), DDU (Delivered Duties Unpaid), DAP (Delivered at Place). Default: DDU|DDP|C|
+|**weight**|number|10|Total shipment content weight|12,98|M|
+|**height**|string|3|Height dimension of the package (provide if available)|YYYYYY|C|
+|**length**|string|3|Longest measurement of package (provide if available)|YYYYYY|C|
+|**width**|string|3|Width dimension of the package (provide if available)|YYYYYY|C|
+|**dimensionUom**|string|5|Dimensional unit of measure for length, width, and height of the package|CM|M|
+|**weightUom**|string|2|The unit of measure for the weight|KG|M|
+|**dgCategory**|string|20|Can contain the dangerous goods category but also more generic information on the contents like for example fragile. In the US just contains the dg category.|00|C|
+|**mailType**|number|2|Identifies the mail type of the shipment. Refer to the mail type matrix for a list of valid mail types.|01|C|
+|**orderedProduct**|string|3|Identifies the DHL eCommerce product that is to be applied to the shipment. Refer to the product matrix for a list of all available and valid products.|PSD|M|
+|**service**|string|10|Shipments originating and destined to the United States will default to DELCON. Signature confirmation* is also available for certain products at an additional cost (please contact your Sales representative for more details). International shipments will default to the tracking capabilties available to the product/service selected. Shipment tracking is available for all parcel products. Tracking is available through the DHL eCommerce web portal, or through the USPS tracking site.|DELCON|C|
+|**serviceEndorsement**|enum|3|Ancillary service endorsements are used to request an addressees new address and to provide the USPS with instructions on how to handle undeliverable-as-addressed pieces. The endorsements are the same for all classes of US Domestic mail, but the treatment and cost differ by class of mail. Use of an ancillary service endorsement on a mailpiece obligates the mailer to pay any applicable charges for forwarding, return, and separate address notification charges.|4|C|
+
+|**returnAddress**|array|-|Same content and parameters as within the standard "consigneeAddress" array  - only required for the case that you want your shipments to be returned to a different address then your company address in case a delivery is not successfully | - |M|
+
+|**customsDetails**|array|-|Details for one or more customs commodities. Only applicable if orderedProduct is an International Product|-|C|
+|**itemDescription**|string|30|Detailed description of the commodity item - Used for customs clearance. Accuracy and Detail are required.|Materials made from plain steel wool for restoration purposes and cleaning of copper and wood|M|
+|**descriptionExport**|string|30|Dedicated description for export customs clearance (if required to be different from item description)|Komponenten für die Verarbeitung und Restaurierung von Möbeln aus Holz und Kupfer.|c|
+|**descriptionImport**|string|30|Dedicated description for import customs clearance (if required to be different from item description)|Items of wood and copper for restoring purposes.|c|
+|**countryOfOrigin**|string|2|2-Character Country Code for Origin Manufacturer Country of the product|US|M|
+|**hsCode**|string|16|The Harmonized Tariff Schedule is a number assigned to every possible commodity that can be imported or exported from any country. Please do not include any decimals "." in this field.|0010202020202|M|
+|**packagedQuantity**|number|20|Quantity of the same item in the package|1|M|
+|**itemValue**|number|20|The commercial value of the commodity (per each)|230,00|M|
+|**skuNumber**|string|20|SKU #, or item code - Used for product verification on clients website during customs clearance process.|u-do-009|O|
+
+
+
 
 ### **Related APIs:**
  * [_SOM_](updateitem) API to modify the item properties for an existing item in the Product Catalog.
