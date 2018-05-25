@@ -2499,12 +2499,10 @@ A typical API label request includes the following parameters you have to provid
 The following properties are required at a minimum to create an item-
 |Element Name|Type    |Length|Description & Defaults        |Example           |M/O/C|   
 |-------------------------------|--------------|-----|-----|---------------------------------|---------|
-|-------------------------------|--------------|-----|-----|---------------------------------|---------|
 |**Shipments**|array|-|The array consolidating all the different shipments you want to create labels for.|NA|M|
 |**pickupAccount**|numerical|10|DHL assigned customer pickup account number - please not that depending on the number of pickup locations served, you might have multiple pickup locations and therefore also IDs. **Defaults:** None|5317861|M|
 |**distributionCenter**|string|6|The distribution center you want to distribute your items through. In some cases especially for large merchants with multiple locations in multiple countries, the selection of the most suitable distribution center can be done here via providing the short code of your requested distribution centre. **Defaults:** None|HKHKG1|M|
 |**consignmentNumber**|string|20|Customer defined number for identifying the consignment (i.e. a consolidation of parcels. **Defaults:** None|uTZFu-Rocks12345|O|
-
 |**packages**|array|-|The number of packages being summarized under one shipment / v1 of the API did only support one package per call by the label service.|NA|M|
 |**consigneeAddress**|array|-|Address of your customer where your shipment is supposed to be delivered to. **Defaults:** None|NA|M|
 |**name**|string|10|Name of the recipient of your shipment with full name information|Dr. Frank Josefiak|M|
@@ -2520,7 +2518,6 @@ The following properties are required at a minimum to create an item-
 |**postalCode**|string|20|The specific ZIP or postal code for the address of your recipient.|53177|M|
 |**state**|string|10|The state but also region, communa, section, province or territory of the recipient - in some countries mandatory.|NRW|C|
 |**country**|string|2|ISO2 (2 digits) Country code of the country you want to ship to - required for international shipments. |DE|C|
-
 |**packageDetails**|array|-|Details to be provided per package for customs clearance, product features, etc. |NA|M|
 |**billingRef1**|string|30|String of characters that can be used to aggregate billing data (may not be unique per parcel). BillingRef1 is also referred to as Reference|Reference: As advised in Bill: 123331223 - ID12|O|
 |**billingRef2**|string|30|Secondary string of characters that can be used to aggregate billing data (may not be unique per parcel). BillingRef2 is also referred to as Batch.|Batch 122322|O|
@@ -2532,9 +2529,9 @@ The following properties are required at a minimum to create an item-
 |**declaredValue**|number|20|Total declared value for the package. While not mandatory, best practice is to provide if available.|245,00|C|
 |**dutiesPaid**|enum|3|Indicates whether duties and taxes for the shipment are paid by the shipper - DDP (Delivered Duties Paid), DDU (Delivered Duties Unpaid), DAP (Delivered at Place). Default: DDU|DDP|C|
 |**weight**|number|10|Total shipment content weight|12,98|M|
-|**height**|string|3|Height dimension of the package (provide if available)|YYYYYY|C|
-|**length**|string|3|Longest measurement of package (provide if available)|YYYYYY|C|
-|**width**|string|3|Width dimension of the package (provide if available)|YYYYYY|C|
+|**height**|string|3|Height dimension of the package (provide if available)|120|C|
+|**length**|string|3|Longest measurement of package (provide if available)|180|C|
+|**width**|string|3|Width dimension of the package (provide if available)|20|C|
 |**dimensionUom**|string|5|Dimensional unit of measure for length, width, and height of the package|CM|M|
 |**weightUom**|string|2|The unit of measure for the weight|KG|M|
 |**dgCategory**|string|20|Can contain the dangerous goods category but also more generic information on the contents like for example fragile. In the US just contains the dg category.|00|C|
@@ -2542,9 +2539,7 @@ The following properties are required at a minimum to create an item-
 |**orderedProduct**|string|3|Identifies the DHL eCommerce product that is to be applied to the shipment. Refer to the product matrix for a list of all available and valid products.|PSD|M|
 |**service**|string|10|Shipments originating and destined to the United States will default to DELCON. Signature confirmation* is also available for certain products at an additional cost (please contact your Sales representative for more details). International shipments will default to the tracking capabilties available to the product/service selected. Shipment tracking is available for all parcel products. Tracking is available through the DHL eCommerce web portal, or through the USPS tracking site.|DELCON|C|
 |**serviceEndorsement**|enum|3|Ancillary service endorsements are used to request an addressees new address and to provide the USPS with instructions on how to handle undeliverable-as-addressed pieces. The endorsements are the same for all classes of US Domestic mail, but the treatment and cost differ by class of mail. Use of an ancillary service endorsement on a mailpiece obligates the mailer to pay any applicable charges for forwarding, return, and separate address notification charges.|4|C|
-
 |**returnAddress**|array|-|Same content and parameters as within the standard "consigneeAddress" array  - only required for the case that you want your shipments to be returned to a different address then your company address in case a delivery is not successfully | - |M|
-
 |**customsDetails**|array|-|Details for one or more customs commodities. Only applicable if orderedProduct is an International Product|-|C|
 |**itemDescription**|string|30|Detailed description of the commodity item - Used for customs clearance. Accuracy and Detail are required.|Materials made from plain steel wool for restoration purposes and cleaning of copper and wood|M|
 |**descriptionExport**|string|30|Dedicated description for export customs clearance (if required to be different from item description)|Komponenten für die Verarbeitung und Restaurierung von Möbeln aus Holz und Kupfer.|c|
@@ -3054,6 +3049,695 @@ The recommended sequence for the SOM call is following:
     
     + Attributes (ErrResponseFormatError)
 
+## Productfinder [/info/v1/products/]
+Our DHL Productfinder & Rating API enables the user both to determine which DHL shipping products are applicable for a given shipping request including associated rate. You can also utilize it when you know which DHL shipping product you want to ship with to get your account specific rate.<br/><br/>
+The DHL Productfinder & Rating API covers all DHL eCommerce shipping products, across all regions and countries, from domestic to international shipments. It provides instant information back to the user into the world of shipping at DHL eCommerce. <br/><br/>
+Mandatory inputs have been reduced to a minimum (e.g. origin, destination, weight) to return applicable DHL shipping products for as many use cases as possible. The ability to calculate your account-specific rate though may vary from that meaning that further input might be required to calculate and return rate information.<br/><br/>
+
+### Product Finder [POST]
+API operation to determine applicable products and / or corresponding rate.
+
+
+### **Availability & environments**
+Rating & Productfinder functionality works from all regions globally, for all nodes and for every DHL eCommerce Customer on the sandbox environment as well as within the production environment. Addressable environments are:<br/><br/>
+
+| Environment           | Link    | Availability       |
+| ----------------------|-----------|---------------|
+**Sandbox**   |  (https://api-qa.dhl.com)   |    Yes (With limitations)      |
+**Production**            |  (https://api.dhl.com)    |    Yes (Fully)      |
+
+### **Get started & Examplaric use cases:**
+We’d like to provide a better understanding of this API’s scope and functionality by explaining selected use cases covered. Please note that this is not an exhaustive list but rather selection of most important and relevant cases:<br/><br/>
+- **Find out which DHL eCommerce shipping products apply:** By specifying your shipping need in your API request, our API returns applicable DHL eCommerce shipping products which are able to fulfill your requirements. This use case covers broadly defined requests at an early stage within the shipping process where only a subset of all information is available (e.g. origin country, destination country and weight only). The design is intended to offer a response of applicable products for a variety of requests. Please note that the response can only be based on information provided and additional restrictions for use of products returned in response may apply.
+- **Get options of DHL eCommerce shipping products with rates:** You have a shipping request which is detailed enough to determine a rate but are not sure which product would be the best choice. The Productfinder & Rating API handles this specific request where requirements are detailed enough (additionally to above e.g. incoterms, tracking, delivery confirmation, etc.) to determine your rate. Response will include both applicable shipping product(s) of DHL eCommerce and corresponding rate(s) based on your signed agreement. This enables the user to leverage the API to use product which exactly fits the requirements and suits customer needs. Note that required information can vary by product.
+- **Get rates for your account by DHL eCommerce shipping products:** You know which product you want to use, but you are looking to get your account specific rate for DHL eCommerce shipping products which you have signed a contract for. Our API provides this functionality based on a minimum required input parameters for your ordered product. This allows you to effectively manage your shipping and automatically include this information at various stages across your environments. Note that required information can vary by product.
+
+### **Prerequisits & Requirements:**
+- Using Productfinder & Rating API requires  requires you to have an `Access Token` to be passed in the Authorization Header for each request. The token type is an OAuth 2.0 Bearer token. **[Here](#reference/authentication)** you can find more information on how to to retrive and utilize the `Access Token`.<br/><br/>
+- To use Productfinder & Rating API operationally in production, you need to have an active customer account with DHL eCommerce.<br/><br/>
+- To start using Productfinder & Rating API service, either use the pre build functionality to code against the API via your browser (here), or alternatively use our schema descriptions for requests and responses as they available for download underneath:<br/><br/>
+**API JSON Schemas:** Here you can download full archive of the JSON Schemas for the ProductFinder & Rating API.
+___
+| Schemas to download | Description    | URL Link  |
+| --------------------|----------------|-----------|
+`ProductFinder Request Schemas`     | Request schemas description           | [download](https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/productfinder_json_schemas/ProductFinderRequest.json)      |
+`ProductFinder Response Schemas`    | Response schemas description          | [download](https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/productfinder_json_schemas/ProductFinderResponse.json)      |
+`ProductFinder Error Schemas`    | Error schemas description          | [download](https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/productfinder_json_schemas/FindProductsError.json)      |
+
+### **Header request parameters:**
+A typical API label request includes the following parameters you have to provide via the http header:
+|Parameter|Type    |Description   |Example               |M/O/C|                   
+|------------|--------|--------------|----------------------|-----|
+|**Content-Type**|string|application/json. Default:**None** |application/json|M|
+|**Accept**|string|application/json. Default:**None**|application/json|M|
+|**Authorization**|string|application/json [place OAuth access token here, without brackets]. Default:**None**|Bearer YOURINDIVIDUALTOKENRECEIVEDFROMOAUTH|M|
+
+### **Body request parameters:**
+!TBD based on the most current schema!
+
+### **Related APIs:**
+ * [_Label_](label) API to create labels for shippments and orders.
+ * [_Shipping Order Manifest_](SOM) API to create shipping order manifest for shipments.
+ * [_FLC_](flc)  
+
++ Request (application/json)
+
+    + Body
+        
+
+    + Schema
+        
+            {
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "title": "Product Finder Request",
+                "description": "$Date: 2018-04-09 11:07:29 +0100 $ $Revision: 0006 $",
+                "type": "object",
+                "properties": {
+                "pickupAddress": {
+                "description": "Information about the origin of the package",
+                "type": "object",
+                "properties": {
+                "country": {
+                "description": "Two-character ISO consignee address country code.",
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 2
+                },
+                "state": {
+                "description": "Consignee's state, province or territory.",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 20
+                },
+                "postalCode": {
+                "description": "Consignee's postal code",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 11
+                },
+                "city": {
+                "description": "Consignee's city",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 40
+                },
+                "companyName": {
+                "description": "Name of the institution receiving the returned package",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 50
+                },
+                "name": {
+                "description": "Name of the person receiving the returned package",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 30
+                },
+                "email": {
+                "description": "Consignee's email address",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 80
+                },
+                "phone": {
+                "description": "Consignee's phone number",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 20
+                },
+                "address1": {
+                "description": "Line 1 of the return street address",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 60
+                },
+                "address2": {
+                "description": "Line 2 of the return street address",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 60
+                },
+                "address3": {
+                "description": "(International Only) Line 3 of the return street address",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 60
+                }
+                },
+                "required": [
+                "country"
+                ]
+                },
+                "consigneeAddress": {
+                "description": "Information about the destination",
+                "type": "object",
+                "properties": {
+                "country": {
+                "description": "Two-character ISO consignee address country code.",
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 2
+                },
+                "state": {
+                "description": "Consignee's state, VN: Province UAE: Emirates",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 20
+                },
+                "city": {
+                "description": "Consignee's City, CL: Comuna, VN: District, AU: Suburb",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 40
+                },
+                "postalCode": {
+                "description": "Consignee's postal code",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 11
+                },
+                "name": {
+                "description": "Name of the person receiving the shipment",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 50
+                },
+                "phone": {
+                "description": "Consignee's phone number",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 20
+                },
+                "companyName": {
+                "description": "Name of the institution receiving the shipment",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 30
+                },
+                "address1": {
+                "description": "Line 1 of the consignee's street address or delivery location",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 60
+                },
+                "address2": {
+                "description": "Line 2 of the consignee's street address or delivery location",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 60
+                },
+                "address3": {
+                "description": "Line 3 of the consignee's street address or delivery location - typically used for addresses to designate province, district, or neighborhood",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 60
+                }
+                }
+                },
+                "packageDetails": {
+                "description": "Information about the parcel",
+                "type": "object",
+                "properties": {
+                "weight": {
+                "description": "Total shipment content weight.",
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1000000,
+                "exclusiveMinimum": true,
+                "exclusiveMaximum": true
+                },
+                "weightUom": {
+                "description": "The unit of measure for the weight.",
+                "type": "string",
+                "enum": [
+                "kg", "g", "lb", "oz", "KG", "G", "LB", "OZ"
+                ]
+                },
+                "declaredValue": {
+                "description": "Total declared value for the package. While not mandatory, best practice is to provide if available.",
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1000000000,
+                "exclusiveMinimum": true,
+                "exclusiveMaximum": true
+                },
+                "insuredValue": {
+                "description": "Total insured value of the package",
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1000000000,
+                "exclusiveMinimum": true,
+                "exclusiveMaximum": true
+                },
+                "codAmount": {
+                "description": "Max amount for CoD",
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1000000000,
+                "exclusiveMinimum": true,
+                "exclusiveMaximum": true
+                },
+                "currency": {
+                "description": "Three-letter ISO Currency code",
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 3
+                },
+                "dutiesPaid": {
+                "description": "Indicates whether duties and taxes for the shipment are paid by the shipper - DDP (Delivered Duties Paid), DDU (Delivered Duties Unpaid), DAP (Delivered at Place).",
+                "type": "string",
+                "enum": [
+                "DDU", "DDP", "DAP"
+                ]
+                },
+                "dgCategory": {
+                "description": "Can contain the dangerous goods category but also more generic information on the contents like for example fragile. In the US just contains the dg category.",
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 2
+                },
+                "packagingFormat": {
+                "description": "Defined pre-defined package sizes",
+                "type": "string",
+                "enum": [
+                "SML", "MED", "XS", "XXL", "LRG", "JIF", "XLG"
+                ]
+                },
+                "trackingOption": {
+                "description": "Tracking option for the product",
+                "type": "string",
+                "enum": [
+                "NO", "PARTIAL", "FULL", "no", "partial", "full"
+                ]
+                },
+                "height": {
+                "description": "Height dimension of the package (provide if available)",
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1000000000,
+                "exclusiveMinimum": true,
+                "exclusiveMaximum": true
+                },
+                "length": {
+                "description": "Longest measurement of package (provide if available)",
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1000000000,
+                "exclusiveMinimum": true,
+                "exclusiveMaximum": true
+                },
+                "width": {
+                "description": "Width dimension of the package (provide if available)",
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1000000000,
+                "exclusiveMinimum": true,
+                "exclusiveMaximum": true
+                },
+                "dimensionUom": {
+                "description": "Dimensional unit of measure for length, width, and height of the package",
+                "type": "string",
+                "enum": [
+                "IN", "CM", "MM", "FT", "M", "YD", "in", "cm", "mm", "ft", "m", "yd"
+                ]
+                },
+                "valueAddedServices": {
+                "type": "object",
+                "description": "Value add services: supported service names: isOpenBox, isPaperPOD, deliveryConfirmation, isNonQualifiedDimension, isPickupWanted",
+                "patternProperties": {
+                "str.*": {
+                "type": "string"
+                },
+                "is.*": {
+                "type": "boolean"
+                },
+                ".*Amount": {
+                "type": "number"
+                },
+                "deliveryConfirmation": {
+                "type": "string",
+                "enum": [
+                "NONE", "SCAN", "SIGNATURE", "none", "scan", "signature"
+                ]
+                },
+                "isOpenBox": {
+                "type": "boolean"
+                },
+                "isPaperPOD": {
+                "type": "boolean"
+                },
+                "isPickupWanted": {
+                "type": "boolean"
+                },
+                "isNonQualifiedDimension": {
+                "type": "boolean"
+                }
+                },
+                "additionalProperties": false
+                }
+                }
+                },
+                "pickupAccount": {
+                "description": "The DHL eCommerce pickup account number. You will receive this after doing the onboarding with DHL sales.",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 30
+                },
+                "orderedProduct": {
+                "description": "Identifies the DHL eCommerce product that is to be applied to the shipment. Refer to the product matrix for a list of all available and valid products.",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 6
+                },
+                "distributionChannel": {
+                "description": "Distribution channel",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 20
+                },
+                "maxPrice": {
+                "description": "maximum price of the product",
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1000000000,
+                "exclusiveMinimum": true,
+                "exclusiveMaximum": true
+                },
+                "currency": {
+                "description": "Three-letter ISO Currency code",
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 3
+                },
+                "rate": {
+                "description": "Should the response include price information",
+                "type": "object",
+                "properties": {
+                "calculateRate": {
+                "type": "boolean",
+                "description": "Enable rate calculation (default: false)",
+                "default": false
+                },
+                "rateDate": {
+                "description": "Date for which the rate should be calculated in UTC, format ISO-8601 (YYYY-MM-DD) ",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 10
+                }
+                }
+                },
+                "estimatedDeliveryDate": {
+                "description": "Should the response include estimated delivery date information",
+                "type": "object",
+                "properties": {
+                "expectedShipDate": {
+                "type": "string",
+                "description": "Customer may define when he wants to send the package in UTC, format ISO-8601 (YYYY-MM-DD)"
+                },
+                "expectedTransit": {
+                "type": "integer",
+                "description": "Filter for maximum days in transit",
+                "minimum": 0,
+                "maximum": 100,
+                "exclusiveMinimum": true,
+                "exclusiveMaximum": true
+                },
+                "deliveryBy": {
+                "type": "string",
+                "description": "Filter for latest acceptable day of delivery in UTC, format ISO-8601 (YYYY-MM-DD)"
+                }
+                }
+                }
+                },
+                "required": [
+                "pickupAddress"
+                ]
+                }
+
++ Response 200 (application/json)
+
+    + Body
+
+
+    + Schema
+            
+            {
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "title": "Product Finder Response",
+                "description": "$Date: 2018-04-06 11:07:29 +0100 $ $Revision: 0002 $",
+                "type": "object",
+                "properties": {
+                "description": {
+                "description": "fixed value 'List of available DHLeC products'",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 30
+                },
+                "carrier": {
+                "description": "fixed value 'DHL eCommerce'",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 20
+                },
+                "scac": {
+                "description": "fixed value 'DHLJ'",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4
+                },
+                "createdOn": {
+                "description": "Timestamp in UTC when the rate was calculated",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 20
+                },
+                "products": {
+                "type": "array",
+                "items": [
+                {
+                "type": "object",
+                "product": {
+                "orderedProduct": {
+                "description": "Identifies the DHL eCommerce product that is to be applied to the shipment. Refer to the product matrix for a list of all available and valid products.",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 6
+                },
+                "productId": {
+                "description": "Identifies the DHL eCommerce product by it's unique identifier.",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 11
+                },
+                "productName": {
+                "description": "Name of the product",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 30
+                },
+                "description": {
+                "description": "Description of the product",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+                },
+                "trackingOption": {
+                "description": "Tracking option for the product",
+                "type": "string",
+                "enum": [
+                "NO", "PARTIAL", "FULL", "no", "partial", "full"
+                ]
+                },
+                "deliveryConfirmation": {
+                "description": "Level of delivery confirmation: NONE, SCAN, SIGNATURE",
+                "type": "string",
+                "enum": [
+                "NONE", "SCAN", "SIGNATURE", "none", "scan", "signature"
+                ]
+                },
+                "estimatedDeliveryDate": {
+                "description": "estimated delivery date details",
+                "type": "object",
+                "properties": {
+                "estimatedTransitdays": {
+                "description": "Estimated days in transit",
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100,
+                "exclusiveMinimum": false,
+                "exclusiveMaximum": true
+                },
+                "estimatedDelivery": {
+                "description": "estimated day of delivery for this shipment (if shipdate is provided) in UTC",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 20
+                },
+                "isGuranteed": {
+                "description": " indicates a guranteed delivery ",
+                "type": "boolean",
+                "default": false
+                }
+                }
+                },
+                "rate": {
+                "description": "Rating details",
+                "type": "object",
+                "properties": {
+                "createdOn": {
+                "description": "Timestamp in UTS when the rate was calculated",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 20
+                },
+                "rateGUID": {
+                "description": "Unique identifier for the calculated rate",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 30
+                },
+                "rateDate": {
+                "description": "Date for which the rate was calculated in UTC",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 20
+                },
+                "priceZone": {
+                "description": "PriceZone used for calculating the price in US Domestic/CrossBorder services",
+                "type": "string",
+                "maxLength": 6
+                },
+                "orderedProduct": {
+                "description": "Identifies the DHL eCommerce product that is to be applied to the shipment. Refer to the product matrix for a list of all available and valid products.",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 6
+                },
+                "productId": {
+                "description": "Identifies the DHL eCommerce product by it's unique identifier.",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 11
+                },
+                "rate": {
+                "description": "Overall rate for the product including all surcharges, etc.",
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1000000,
+                "exclusiveMinimum": false,
+                "exclusiveMaximum": true
+                },
+                "currency": {
+                "description": "Three-letter ISO Currency code",
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 3
+                },
+                "rateComponents": {
+                "description": "individual components which make up the final rate",
+                "type": "array",
+                "items": [
+                {
+                "rateComponentId": {
+                "description": "unique identifier for the type of the component",
+                "type": "string",
+                "minLength": 0,
+                "maxLength": 3
+                },
+                "partId": {
+                "description": "identifier for the type of the price part",
+                "type": "string",
+                "minLength": 0,
+                "maxLength": 18
+                },
+                "description": {
+                "description": "description for the rate component",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 40
+                },
+                "amount": {
+                "description": "amount of the rate component",
+                "type": "number",
+                "minimum": -1000000,
+                "maximum": 1000000,
+                "exclusiveMinimum": false,
+                "exclusiveMaximum": false
+                }
+                }
+                ]
+                }
+                }
+                }, 
+                "messages": {
+                "description": "Messages from underlying services (e.g. rating) related to the product request.",
+                "type": "array",
+                "items": [
+                {
+                "messageId": {
+                "description": "unique identifier for the message",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 10
+                },
+                "messageText": {
+                "description": "Text of the message",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+                },
+                "required": [
+                "messageId", "messageText"
+                ]
+                }
+                ]
+                }
+                }
+                }
+                ]
+                }
+                }
+                }
+           
+
++ Response 400 (application/json)
+
+    + Body
+
+
+    + Schema
+        
+            {
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "title": "Product Finder Error Response",
+                "description": "$Date: 2017-12-05 16:26:09 +0100 (Tue, 05 Dec 2017) $ $Revision: 5401 $",
+                "properties": {
+                "messageId": {
+                "properties": {
+                "code": {
+                "type": "integer"
+                },
+                "message": {
+                "type": "string"
+                },
+                "system": {
+                "type": "string"
+                }
+                },
+                "required": [
+                "message", "code", "system"
+                ],
+                "type": "object"
+                },
+                "message": {
+                "type": "string"
+                }
+                },
+                "required": [
+                "message"
+                ],
+                "type": "object"
+                }
 
 # Data Structures
 
