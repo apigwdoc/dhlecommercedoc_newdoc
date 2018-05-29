@@ -14,7 +14,7 @@ FINAL LINK: http://api.dhlecommerce.com
 IT_LEAD: Martin Borriss & Pavel Holy
 BUSINESS_LEAD: Frank Josefiak
 
-# (NEW) Global DHL eCommerce API
+# Global DHL eCommerce API
 Welcome at the global DHL eCommerce API. <br/><br/>
 To find out more about the logistic services we offer, please check out [DHL eCommerce Products](http://www.dhl.com/eCommerce). <br/><br/>
 To [Sign up](#introduction/access-&-sign-up) for becoming a DHL eCommerce API consumer and receive your credentials, please contact us via: [integration@dhl.com](mailto:Integration@dhl.com). 
@@ -28,7 +28,7 @@ ___
 ## About this API
 DHL eCommerce provides this **global API** to enable open integration channels for our customers, clients and partners. <br/><br/>
 The API is provided as **REST API** using **OAuth 2.0** for authentication and authorization and **JSON format** for request and response messages.<br/><br/>
-The API uses **HTTPS (over SSL) protocol**, the HTTP GET is used to retrieve data and HTTP POST is used to create, update or delete data. 
+The API uses **HTTPS protocol**, the HTTP GET is used to retrieve data and HTTP POST is used to create, update or delete data. 
 <br/>
     
     >**Note:** *Usage of HTTP PUT and DELETE is not enabled.*
@@ -2425,7 +2425,7 @@ There is no body for the request.
 
 # Group Shipping
 The API services beeing grouped under "shipping" will enable you to organize your shipping process end to end, starting with: 
-- the determination what shipping services to use with our **[Productfinder](#reference/productfinder)** endpoint (coming soon) 
+- the determination what shipping services to use with our **[Productfinder & Rating API](#reference/shipping/productfinder-rating-api)** endpoint (coming soon) 
 - Endpoints to gather the individual shipping costs (**[Rating](#reference/rating)**) and delivery times (**[EstimatedDelveryTime](#reference/EstimatedDeliveryTime)**) for a shipment (coming soon) 
 - our **[Label](#reference/label)** API to create an individual label for a domestic or internatioanl shipment,
 - a manifesting or **[Shipping Order Manifest](#reference/SOM)** (SOM) API to transfer your precreated labels in case you have high volumes and do not want to autocloseout each label directly,
@@ -3049,17 +3049,17 @@ The recommended sequence for the SOM call is following:
     
     + Attributes (ErrResponseFormatError)
 
-## Productfinder [/info/v1/products/]
+## Productfinder & Rating API [/info/v1/products/]
 Our DHL Productfinder & Rating API enables the user both to determine which DHL shipping products are applicable for a given shipping request including associated rate. You can also utilize it when you know which DHL shipping product you want to ship with to get your account specific rate.<br/><br/>
 The DHL Productfinder & Rating API covers all DHL eCommerce shipping products, across all regions and countries, from domestic to international shipments. It provides instant information back to the user into the world of shipping at DHL eCommerce. <br/><br/>
 Mandatory inputs have been reduced to a minimum (e.g. origin, destination, weight) to return applicable DHL shipping products for as many use cases as possible. The ability to calculate your account-specific rate though may vary from that meaning that further input might be required to calculate and return rate information.<br/><br/>
 
-### Product Finder [POST]
+### Productfinder & Rating API [POST]
 API operation to determine applicable products and / or corresponding rate.
 
 
 ### **Availability & environments**
-Rating & Productfinder functionality works from all regions globally, for all nodes and for every DHL eCommerce Customer on the sandbox environment as well as within the production environment. Addressable environments are:<br/><br/>
+Productfinder & Rating API functionality works from all regions globally, for all nodes and for every DHL eCommerce Customer on the sandbox environment as well as within the production environment. Addressable environments are:<br/><br/>
 
 | Environment           | Link    | Availability       |
 | ----------------------|-----------|---------------|
@@ -3080,9 +3080,9 @@ We’d like to provide a better understanding of this API’s scope and function
 ___
 | Schemas to download | Description    | URL Link  |
 | --------------------|----------------|-----------|
-`ProductFinder Request Schemas`     | Request schemas description           | [download](https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/productfinder_json_schemas/ProductFinderRequest.json)      |
-`ProductFinder Response Schemas`    | Response schemas description          | [download](https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/productfinder_json_schemas/ProductFinderResponse.json)      |
-`ProductFinder Error Schemas`    | Error schemas description          | [download](https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/productfinder_json_schemas/FindProductsError.json)      |
+`Productfinder & Rating API Request Schemas`     | Request schemas description           | [download](https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/productfinder_json_schemas/ProductFinderRequest.json)      |
+`Productfinder & Rating API Response Schemas`    | Response schemas description          | [download](https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/productfinder_json_schemas/ProductFinderResponse.json)      |
+`Productfinder & Rating API Error Schemas`    | Error schemas description          | [download](https://czchoapint222.prg-dc.dhl.com:6443/newapidoc/productfinder_json_schemas/FindProductsError.json)      |
 
 ### **Header request parameters:**
 A typical API label request includes the following parameters you have to provide via the http header:
@@ -3096,9 +3096,9 @@ A typical API label request includes the following parameters you have to provid
 !TBD based on the most current schema!
 
 ### **Related APIs:**
- * [_Label_](label) API to create labels for shippments and orders.
- * [_Shipping Order Manifest_](SOM) API to create shipping order manifest for shipments.
- * [_FLC_](flc)  
+ * [_Label_](#reference/label) API to create labels for shippments and orders.
+ * [_Shipping Order Manifest_](#reference/SOM) API to create shipping order manifest for shipments.
+ * [_FLC_] is cooming soon. 
 
 + Request (application/json)
 
