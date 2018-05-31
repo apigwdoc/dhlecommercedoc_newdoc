@@ -3099,43 +3099,43 @@ The following are properties of request body:
 |-------------------------------|--------------|-----|-----|---------------------------------|---------|
 |**pickupAddress**|object| -|Information about the origin of the package| -|M|
 |**country**|string|2|Two-character ISO consignee address country code.||M|
-|**state**|string|1-20|Consignee's state| province or territory.||O|
-|**postalCode**|string|1-11|Consignee's postal code||O|
-|**city**|string|1-40|Consignee's city||O|
-|**companyName**|string|1-50|Name of the institution receiving the returned package||O|
-|**name**|string|1-30|Name of the person receiving the returned package||O|
-|**email**|string|1-80|Consignee's email address||O|
-|**phone**|string|1-20|Consignee's phone number||O|
-|**address1**|string|1-60|Line 1 of the return street address||O|
-|**address2**|string|1-60|Line 2 of the return street address||O|
-|**address3**|string|1-60|(International Only) Line 3 of the return street address||O|
+|**state**|string|1-20|Consignee's state province or territory.|||
+|**postalCode**|string|1-11|Consignee's postal code|||
+|**city**|string|1-40|Consignee's city|||
+|**companyName**|string|1-50|Name of the institution receiving the returned package|||
+|**name**|string|1-30|Name of the person receiving the returned package|||
+|**email**|string|1-80|Consignee's email address|||
+|**phone**|string|1-20|Consignee's phone number|||
+|**address1**|string|1-60|Line 1 of the return street address|||
+|**address2**|string|1-60|Line 2 of the return street address|||
+|**address3**|string|1-60|(International Only) Line 3 of the return street address|||
 |**consigneeAddress**|object||Information about the destination|||
 |**country**|string|2|Two-character ISO consignee address country code.|||
-|**state**|string|1-20|Consignee's state| VN: Province UAE: Emirates|||
-|**city**|string|1-40|Consignee's City| CL: Comuna| VN: District| AU: Suburb|||
+|**state**|string|1-20|Consignee's state VN: Province UAE: Emirates|||
+|**city**|string|1-40|Consignee's City, CL: Comuna VN: District AU: Suburb|||
 |**postalCode**|string|1-11|Consignee's postal code|||
 |**name**|string|1-50|Name of the person receiving the shipment|||
 |**phone**|string|1-20|Consignee's phone number|||
 |**companyName**|string|1-30|Name of the institution receiving the shipment|||
 |**address1**|string|1-60|Line 1 of the consignee's street address or delivery location|||
 |**address2**|string|1-60|Line 2 of the consignee's street address or delivery location|||
-|**address3**|string|1-60|Line 3 of the consignee's street address or delivery location - typically used for addresses to designate province| district| or neighborhood|||
+|**address3**|string|1-60|Line 3 of the consignee's street address or delivery location - typically used for addresses to designate province district or neighborhood|||
 |**packageDetails**|object||Information about the parcel|||
 |**weight**|number|0-1000000|Total shipment content weight. ExclusiveMinimum TRUE. ExclusiveMaximum TRUE|||
 |**weightUom**|enum||The unit of measure for the weight. Values:kg,kg,lb,oz,KG,G,LB,OZ|||
-|**declaredValue**|number|0-1000000000|Total declared value for the package. While not mandatory| best practice is to provide if available. ExclusiveMinimum TRUE. ExclusiveMaximum TRUE|||
+|**declaredValue**|number|0-1000000000|Total declared value for the package. While not mandatory best practice is to provide if available. ExclusiveMinimum TRUE. ExclusiveMaximum TRUE|||
 |**insuredValue**|number|0-1000000000|Total insured value of the package. ExclusiveMinimum TRUE. ExclusiveMaximum TRUE|||
 |**codAmount**|number|0-1000000000|Max amount for CoD. ExclusiveMinimum TRUE. ExclusiveMaximum TRUE|||
 |**currency**|string|3|Three-letter ISO Currency code|||
-|**dutiesPaid**|enum||Indicates whether duties and taxes for the shipment are paid by the shipper - DDP (Delivered Duties Paid)| DDU (Delivered Duties Unpaid)| DAP (Delivered at Place).|||
+|**dutiesPaid**|enum||Indicates whether duties and taxes for the shipment are paid by the shipper - DDP (Delivered Duties Paid), DDU (Delivered Duties Unpaid), DAP (Delivered at Place).|||
 |**dgCategory**|string|2|Can contain the dangerous goods category but also more generic information on the contents like for example fragile. In the US just contains the dg category.|||
 |**packagingFormat**|enum||Defined pre-defined package sizes. Values: SML,MED,XS,XXL,LRG,JIF,XLG|||
 |**trackingOption**|enum||Tracking option for the product. Values: NO,PARTIAL,FULL,no,partial,full|||
 |**height**|number|0-1000000000|Height dimension of the package (provide if available)|||
 |**length**|number|0-1000000000|Longest measurement of package (provide if available)|||
 |**width**||0-1000000000|Width dimension of the package (provide if available). ExclusiveMinimum TRUE. ExclusiveMaximum TRUE|||
-|**dimensionUom**|enum||Dimensional unit of measure for length| width| and height of the package. Values: IN,CM,MM,FT,M,YD,in,cm,mm,ft,m,yd|||
-|**valueAddedServices**|object||Value add services: supported service names: isOpenBox| isPaperPOD| deliveryConfirmation| isNonQualifiedDimension| isPickupWanted|||
+|**dimensionUom**|enum||Dimensional unit of measure for length, width and height of the package. Values: IN,CM,MM,FT,M,YD,in,cm,mm,ft,m,yd|||
+|**valueAddedServices**|object||Value add services: supported service names: isOpenBox, isPaperPOD, deliveryConfirmation, isNonQualifiedDimension, isPickupWanted|||
 |**pickupAccount**|string|1-30|The DHL eCommerce pickup account number. You will receive this after doing the onboarding with DHL sales.|||
 |**orderedProduct**|string|1-6|Identifies the DHL eCommerce product that is to be applied to the shipment. Refer to the product matrix for a list of all available and valid products.|||
 |**distributionChannel**|string|1-20|Distribution channel|||
@@ -3143,11 +3143,11 @@ The following are properties of request body:
 |**currency**|string|3|Three-letter ISO Currency code|||
 |**rate**|object||Should the response include price information|||
 |**calculateRate**|boolean||Enable rate calculation (default: false)|FALSE||
-|**rateDate**|string|1-10|Date for which the rate should be calculated in UTC| format ISO-8601 (YYYY-MM-DD) |||
+|**rateDate**|string|1-10|Date for which the rate should be calculated in UTC, format ISO-8601 (YYYY-MM-DD) |||
 |**estimatedDeliveryDate**|object||Should the response include estimated delivery date information|||
-|**expectedShipDate**|string||Customer may define when he wants to send the package in UTC| format ISO-8601 (YYYY-MM-DD)|||
+|**expectedShipDate**|string||Customer may define when he wants to send the package in UTC, format ISO-8601 (YYYY-MM-DD)|||
 |**expectedTransit**|integer|1-100|Filter for maximum days in transit. ExclusiveMinimum TRUE. ExclusiveMaximum TRUE|||
-|**deliveryBy**|string||Filter for latest acceptable day of delivery in UTC| format ISO-8601 (YYYY-MM-DD)|||
+|**deliveryBy**|string||Filter for latest acceptable day of delivery in UTC, format ISO-8601 (YYYY-MM-DD)|||
 
 ### **Related APIs:**
  * [_Label_](#reference/label) API to create labels for shippments and orders.
